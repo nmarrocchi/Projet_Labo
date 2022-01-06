@@ -1,0 +1,18 @@
+.nav{
+    background-color: #343a40;
+    height: 6vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .nav-slot{
+    line-height: 6vh;
+    padding: 0vh 1vw;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .nav-slot:hover{
+    color: #ffc107;
+  }
