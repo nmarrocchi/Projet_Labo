@@ -18,7 +18,7 @@ input{
   width: 80%;
   display: block;
   text-align: center;
-  margin: 5vh auto;
+  margin: 3vh auto 3vh auto;
   background-color: transparent;
   border: solid black 2px;
   font-size: medium;
@@ -40,4 +40,13 @@ input[type="submit"]{
   padding: 1vh 1vw;
   font-weight: bold;
   background-image: linear-gradient(160deg, #8ceabb 0%, #378f7b 100%);
+}
+
+p{  
+  margin: 1vh auto;
+  width: 80%;
+  text-align: center;
+  font-weight: bold;
+  color:#d42300;
+  text-shadow: #8f0000 1px 1px;
 }
