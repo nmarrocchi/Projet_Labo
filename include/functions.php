@@ -2,7 +2,8 @@
     //connexion à la bdd
     try
     {
-        $BDD = new PDO('mysql:host=192.168.65.219; dbname=labo; charset=utf8','admin', 'admin');
+        //$BDD = new PDO('mysql:host=192.168.65.219; dbname=labo; charset=utf8','admin', 'admin');
+        $BDD = new PDO('mysql:host=192.168.65.201; dbname=labo; charset=utf8','admin', 'admin');
     }
 
     catch(Exception $e)
