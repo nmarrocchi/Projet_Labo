@@ -1,27 +1,26 @@
 
 <?php
-    header("location: system.php ");
     session_start();
     include "include/functions.php";
     $LoginError = "";
-    /*
+    
     if(isset($_POST['submit']))
     {
-        $login = $BDD->query("SELECT * FROM `users` WHERE `username` = '".$_POST['username']."' AND `MDP` = '".$_POST['password']."'");
-        if($login->rowCount()>0)
-        {
-            $tab = $login->fetch();
+      $login = $BDD->query("SELECT * FROM `user` WHERE `mail` = '".$_POST['mail']."' AND `password` = '".$_POST['password']."'");
+      if($login->rowCount()>0)
+      {
+          $tab = $login->fetch();
 
-            $_SESSION["Logged"] = true;
-            $_SESSION["isAdmin"] = $tab['isAdmin'];
-            //réponse a la connection
-            header("location: system.php ");
+          $_SESSION["Logged"] = true;
+          $_SESSION["isAdmin"] = $tab['isAdmin'];
+          //réponse a la connection
+          header("location: system.php ");
 
-        }
-        else{
-          $LoginError = "Nom d'utilisateur ou mot de passe incorrect";
-        }
-    }*/
+      }
+      else{
+        $LoginError = "Nom d'utilisateur ou mot de passe incorrect";
+      }
+    }
 ?>
 
 <!DOCTYPE html>
