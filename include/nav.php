@@ -5,7 +5,7 @@
         ?>  
           <a href="logout.php"><div class="nav-slot">Déconnexion</div> </a> 
         <?php
-          if($_SESSION["isAdmin"] == 1)
+          if($_SESSION["isAdmin"] == true)
           {
             ?>  <a href="admin_panel.php"><div class="nav-slot">Gestion des utilisateurs</div></a>  <?php
           }
