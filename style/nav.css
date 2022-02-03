@@ -2,11 +2,11 @@
     background-color: #343a40;
     height: 6vh;
     width: 100%;
-    display: flex;
     flex-direction: row-reverse;
   }
   
   .nav-slot{
+    display: inline-flex;
     line-height: 6vh;
     padding: 0vh 1vw;
     font-weight: bold;
