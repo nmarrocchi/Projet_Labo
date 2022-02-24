@@ -1,0 +1,19 @@
+.histoPassages{
+    margin: 10vh auto;
+    width: 40%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.histoPassages td{
+    background-color: #4d596b;
+    border: solid rgb(0, 0, 0) 2px;
+    padding: 1vh 0vw;
+    color: white;
+    
+}
+
+.histoPassages thead td{
+    background-color: rgb(204, 195, 183);
+    color: black;
+}
