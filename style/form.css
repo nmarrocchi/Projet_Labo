@@ -1,0 +1,102 @@
+.Form{
+    margin: 15vh auto;
+    width: 25vw;
+    border: double rgb(0, 0, 0) 2px;
+    border-radius: 20px;
+    background-color: #2b3747;
+    font-weight: bold;
+}
+
+.Form label, .Form input{
+    display: block;
+    text-align: center;
+}
+
+.Form label{
+    margin: 5vh auto 2vh auto;
+    color: rgb(229, 204, 140);
+}
+
+.Form input{
+    margin: 1vh auto;
+    padding: 0.3vh 1vw;
+    width: 15vw;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid white 1px;
+    color: rgb(229, 204, 140);
+    font-size: larger;
+}
+
+.Form input:focus{
+    border: none;
+    border-bottom: solid white 1px;
+    outline: none;
+    background-color: transparent;
+}
+
+.Form input[type="submit"]{
+    margin: 5vh auto;
+    width: 15vw;
+    height: 5vh;
+    font-size: large;
+    font-weight: bold;
+    background-color: #2b3747;
+    color: rgb(229, 204, 140);
+    border: solid white 1px;
+    border-radius: 5px;
+}
+
+.Form input[type="submit"]:hover{
+    background-color: #334255;
+}
+
+/* ----- Responsive max-width screen : 1480px ----- */
+@media screen and (max-width: 1480px) {
+
+    .Form{
+        width: 35vw;
+    }
+
+    .Form input{
+        width: 25vw;
+    }
+
+    .Form input[type="submit"]{
+        width: 25vw;
+    }
+}
+
+
+/* ----- Responsive max-width screen : 890px ----- */
+@media screen and (max-width: 890px) {
+
+    .Form{
+        width: 55vw;
+    }
+
+    .Form input{
+        width: 35vw;
+    }
+
+    .Form input[type="submit"]{
+        width: 35vw;
+    }
+}
+
+
+/* ----- Responsive max-width screen : 420px ----- */
+@media screen and (max-width: 420px) {
+
+    .Form{
+        width: 75vw;
+    }
+
+    .Form input{
+        width: 45vw;
+    }
+
+    .Form input[type="submit"]{
+        width: 45vw;
+    }
+}
