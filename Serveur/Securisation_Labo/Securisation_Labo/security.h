@@ -4,6 +4,10 @@
 
 class security
 {
+
+	//Q_OBJECT
+		//bddserver *db;
+
 	public:
 
 		/* Constructeur */
@@ -36,10 +40,10 @@ class security
 		void histoSecurity();
 
 		/* Send the statut on the client */
-		void selectStatut();
+		virtual void selectStatut() = 0;
 
 		/* Update the statut in database */
-		void updateStatut();
+		virtual void updateStatut() = 0;
 
 	private:
 
@@ -53,3 +57,37 @@ class security
 
 };
 
+class continuity : public security
+{
+
+public:
+
+	continuity(int room)
+	{
+		this->room = room;
+	}
+
+	virtual void selectStatut();
+
+	virtual void updateStatut();
+
+private:
+
+	int room;
+
+};
+
+class sensor : public security
+{
+
+};
+
+class tamper : public security
+{
+
+};
+
+class presence : public security
+{
+
+};

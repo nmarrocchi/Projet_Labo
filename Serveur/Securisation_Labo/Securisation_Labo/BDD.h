@@ -10,9 +10,9 @@
 
 class BDD
 {
-	BDD(QString Hostname, QString Username, QString Password, QString Database);
+	//BDD(QString Hostname, QString Username, QString Password, QString Database);
 
-	~BDD();
+	//~BDD();
 
 	private:
 		QString Hostname = "192.168.65.219";
@@ -25,56 +25,9 @@ class BDD
 
 		void selectdb(QString table);
 		void insertdb(QString table, QString value);
-		void updatedb(QString table, int id, QString value);
-		void deletedb(QString table, int id);
+		void updatedb(QString table, QString value);
+		void deletedb(QString table, QString value);
 
 };
-
-// - Construct Of BDD class
-BDD::BDD(QString Hostname, QString Username, QString Password, QString Database)
-{
-	QSqlDatabase BDD = QSqlDatabase::addDatabase("QMYSQL");
-	BDD.setHostName(Hostname);
-	BDD.setUserName(Username);
-	BDD.setPassword(Password);
-	BDD.setDatabaseName(Database);
-	if (BDD.open())
-	{
-		printf("Vous êtes maintenant connecté");
-		BDD.close();
-	}
-	else
-	{
-		printf("La connexion a échouée, désolé");
-	}
-}
-
-
-// - Select Query
-void BDD::selectdb(QString table)
-{
-	QString requete = "SELECT * FROM" + table ;
-}
-
-
-// - Insert Query
-void insertdb(QString table, QString value)
-{
-	QString requete = "INSERT INTO" + table;
-}
-
-
-// - Update Query
-void updatedb(QString table, int id, QString value)
-{
-}
-
-
-// - Delete Query
-void deletedb(QString table, int id)
-{
-}
-
-
 
 

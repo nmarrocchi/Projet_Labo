@@ -18,6 +18,7 @@ void security::setSecurityById(int idSecurity)
 /* Setup security class by ID */
 void security::getIdSecurity()
 {
+	//selectdb();
 }
 
 /* Return the room in database */
@@ -41,11 +42,11 @@ void security::histoSecurity()
 }
 
 /* Send the statut on the client */
-void security::selectStatut()
+void continuity::selectStatut()
 {
 }
 
 /* Update the statut in database */
-void security::updateStatut()
+void continuity::updateStatut()
 {
 }

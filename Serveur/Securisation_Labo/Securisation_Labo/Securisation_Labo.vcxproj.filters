@@ -45,13 +45,13 @@
     <ClInclude Include="PCI_7248.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="security.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="user.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BDD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="security.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
