@@ -11,7 +11,7 @@ private:
 	int _idCard;
 	QString _mail;
 	QString _password;
-	bool isAdmin;
+	bool _isAdmin;
 
 public:
 	user();
