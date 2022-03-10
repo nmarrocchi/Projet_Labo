@@ -5,8 +5,8 @@
 class security
 {
 
-	//Q_OBJECT
-		//bddserver *db;
+	Q_OBJECT
+		BDD *db;
 
 	public:
 
@@ -40,12 +40,12 @@ class security
 		void histoSecurity();
 
 		/* Send the statut on the client */
-		virtual void selectStatut() = 0;
+		virtual bool selectStatut() = 0;
 
 		/* Update the statut in database */
 		virtual void updateStatut() = 0;
 
-	private:
+	protected:
 
 		int idSecurity;
 
@@ -53,7 +53,7 @@ class security
 
 		int bit;
 
-		int statut;
+		bool statut;
 
 };
 
@@ -67,7 +67,7 @@ public:
 		this->room = room;
 	}
 
-	virtual void selectStatut();
+	virtual bool selectStatut();
 
 	virtual void updateStatut();
 

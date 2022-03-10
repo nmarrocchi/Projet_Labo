@@ -3,6 +3,9 @@
 /* Constructeur */
 security::security()
 {
+
+	//this->db = db;
+
 }
 
 /* Destructeur */
@@ -42,8 +45,17 @@ void security::histoSecurity()
 }
 
 /* Send the statut on the client */
-void continuity::selectStatut()
+bool continuity::selectStatut()
 {
+
+	continuity continuity(room);
+
+	QString condition = "WHERE room = " + room;
+
+	db->selectdb(security_table, condition);
+
+	return this->statut = query.value(3).toBool();
+
 }
 
 /* Update the statut in database */
