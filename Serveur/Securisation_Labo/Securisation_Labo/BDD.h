@@ -2,7 +2,6 @@
 #include <qobject.h>
 #include <qdebug.h>
 
-#include <qtsqlglobal.h>
 #include <QtSql/qtsqlglobal.h>
 #include <QtSql/qsqldriver.h>
 #include <QtSql/qsqldatabase.h>
@@ -10,24 +9,30 @@
 
 class BDD
 {
-	//BDD(QString Hostname, QString Username, QString Password, QString Database);
 
-	//~BDD();
+private:
+	QSqlDatabase db;
+	QString _Hostname = "192.168.65.219";
+	QString _Username = "admin";
+	QString _Password = "admin";
+	QString _Database = "labo";
 
-	private:
-		QString Hostname = "192.168.65.219";
-		QString Username = "admin";
-		QString Password = "admin";
-		QString Database = "labo";
 
-	public:
-		
+public:
 
-		void selectdb(QString table);
-		void insertdb(QString table, QString value);
-		void updatedb(QString table, QString value);
-		void deletedb(QString table, QString value);
+	BDD();
+	~BDD();
+
+	void selectdb(QString table, QString condition);
+	void insertdb(QString table, QString value1, QString value2);
+	void updatedb(QString table, QString value);
+	void deletedb(QString table, QString value);
+
+protected:
+	QString user_table = "user";
+	QString passage_table = "passage";
+	QString timeSlot_table = "timeSlot";
+	QString security_table = "security";
+	QString histo_Security_Table = "histo-Security";
 
 };
-
-
