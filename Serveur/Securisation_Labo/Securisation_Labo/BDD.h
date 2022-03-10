@@ -23,12 +23,13 @@ public:
 	BDD();
 	~BDD();
 
-	void selectdb(QString table, QString condition);
-	void insertdb(QString table, QString value1, QString value2);
+	QString * selectdb(QString table, QString condition);
+	void insertdb(QString table, QString value1, QString value2, QString condition);
 	void updatedb(QString table, QString value);
 	void deletedb(QString table, QString value);
 
 protected:
+	QSqlQuery query;
 	QString user_table = "user";
 	QString passage_table = "passage";
 	QString timeSlot_table = "timeSlot";
