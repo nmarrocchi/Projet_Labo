@@ -12,27 +12,27 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 	this->_idCard = idCard.toInt();
 	this->_mail = mail;
 	this->_password = password;
-	this->isAdmin = isAdmin.toInt();
+	this->_isAdmin = isAdmin.toInt();
 }
 
 // - get user infos by idCard
 void user::setUserByIdCard(QString idCard)
 {
 	QSqlQuery getUsercount;
+	getUsercount.prepare("SELECT COUNT(*) FROM " + BDD::user_table + " WHERE idCard = '" + idCard + "'");
 
-	getUsercount.prepare("SELECT COUNT(*) FROM " + BDD::user_table +" WHERE idCard = '" + idCard + "'");
-
-	if (getUsercount.exec()) 
+	if (getUsercount.exec())
 	{
-		if (getUsercount.next())
+		getUsercount.next();
+
+		if (getUsercount.value(0).toInt())
 		{
-			//setUser(/* set parameters by selectdb() */);
+			qDebug() << "User Exist\n" << endl;
+			//qDebug() << BDD::selectdb(BDD::user_table, " WHERE idCard = " + idCard) << endl;
 		}
+		else { qDebug() << "User not Exist\n" << endl; }
 	}
-	else {
-		qDebug() << "Query not executed \n" << endl;
-	}
-	
+
 }
 
 void user::getIdCard(QString user)
