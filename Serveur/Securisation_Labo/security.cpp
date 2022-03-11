@@ -47,7 +47,7 @@ bool continuity::selectStatut()
 {
 	for (int i = 0; i <= 2; i++)
 	{
-		//actualState[i] = DO_ReadLine(CardNumber, i, 0, &continuty);
+		actualState[i] = PCI_7248->readCard(i, 0, 0);
 
 		qDebug() << actualState[i];
 

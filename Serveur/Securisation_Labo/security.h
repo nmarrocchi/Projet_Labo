@@ -1,6 +1,7 @@
 #pragma once
 
 #include "database.h"
+#include "PCI_7248.h"
 
 class security
 {
@@ -53,6 +54,8 @@ protected:
 	bool statut;
 
 	database *db;
+
+	PCI_7248 *PCI_7248;
 
 };
 
