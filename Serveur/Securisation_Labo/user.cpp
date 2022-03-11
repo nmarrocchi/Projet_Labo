@@ -19,7 +19,7 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 void user::setUserByIdCard(QString idCard)
 {
 	QSqlQuery getUsercount;
-	getUsercount.prepare("SELECT COUNT(*) FROM " + BDD::user_table + " WHERE idCard = '" + idCard + "'");
+	getUsercount.prepare("SELECT COUNT(*) FROM " + database::user_table + " WHERE idCard = '" + idCard + "'");
 
 	if (getUsercount.exec())
 	{
@@ -28,7 +28,7 @@ void user::setUserByIdCard(QString idCard)
 		if (getUsercount.value(0).toInt())
 		{
 			qDebug() << "User Exist\n" << endl;
-			//qDebug() << BDD::selectdb(BDD::user_table, " WHERE idCard = " + idCard) << endl;
+			//qDebug() << database::selectdb(database::user_table, " WHERE idCard = " + idCard) << endl;
 		}
 		else { qDebug() << "User not Exist\n" << endl; }
 	}

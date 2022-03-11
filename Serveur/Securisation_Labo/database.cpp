@@ -1,10 +1,10 @@
-#include "BDD.h"
+#include "database.h"
 
 #include <qsqlquery.h>
 
 
-// - Construct Of BDD class
-BDD::BDD()
+// - Construct Of database class
+database::database()
 {
 
 	// - Connecting to mysql database
@@ -23,12 +23,12 @@ BDD::BDD()
 	}
 }
 
-BDD::~BDD()
+database::~database()
 {}
 
 
 // - Select Query
-QString * BDD::selectdb(QString table, QString condition)
+QString * database::selectdb(QString table, QString condition)
 {
 	query.prepare("SELECT * FROM " + table + condition);
 	qDebug() << query.lastQuery() << endl;
@@ -54,20 +54,20 @@ QString * BDD::selectdb(QString table, QString condition)
 
 
 // - Insert Query
-void  BDD::insertdb(QString table, QString value1, QString value2, QString condition)
+void  database::insertdb(QString table, QString value1, QString value2, QString condition)
 {
 	QString query = "INSERT INTO " + table + " " + condition;
 }
 
 // - Delete Query
-void  BDD::deletedb(QString table, QString value)
+void  database::deletedb(QString table, QString value)
 {
 	QString query = "DELETE FROM " + table + " WHERE " + value;
 }
 
 
 // - Update Query
-void  BDD::updatedb(QString table, QString value)
+void  database::updatedb(QString table, QString value)
 {
 	QString query = "UPDATE " + table + " SET " + value;
 }

@@ -85,7 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BDD.cpp" />
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PCI_7248.cpp" />
@@ -93,7 +93,7 @@
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BDD.h" />
+    <ClInclude Include="database.h" />
     <ClInclude Include="mail.h" />
     <ClInclude Include="PCI_7248.h" />
     <ClInclude Include="security.h" />

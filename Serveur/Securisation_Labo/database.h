@@ -7,7 +7,7 @@
 #include <QtSql/qsqldatabase.h>
 #include <QtSql/qsqlquery.h>
 
-class BDD
+class database
 {
 
 private:
@@ -20,8 +20,8 @@ private:
 
 public:
 
-	BDD();
-	~BDD();
+	database();
+	~database();
 
 	QString * selectdb(QString table, QString condition);
 	void insertdb(QString table, QString value1, QString value2, QString condition);

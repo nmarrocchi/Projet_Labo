@@ -2,9 +2,9 @@
 #include <qobject.h>
 #include <qdebug.h>
 
-#include "BDD.h"
+#include "database.h"
 
-class user : BDD
+class user : database
 {
 
 private:
