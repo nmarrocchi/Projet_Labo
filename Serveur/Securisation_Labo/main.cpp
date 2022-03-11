@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
 	BDD *db = new BDD();
 	user * User = new user();
 
+	User->setUserByIdCard("1");
+
 	//security security(db);
 
     return a.exec();
