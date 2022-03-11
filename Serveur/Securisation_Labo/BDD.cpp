@@ -39,11 +39,11 @@ QString * BDD::selectdb(QString table, QString condition)
 		query.next();
 
 		QString results[4];
-		
-		results[1] =  query.value(0).toString();
-		results[2] =  query.value(1).toString();
-		results[3] =  query.value(2).toString();
-		results[4] =  query.value(3).toString();
+
+		results[1] = query.value(0).toString();
+		results[2] = query.value(1).toString();
+		results[3] = query.value(2).toString();
+		results[4] = query.value(3).toString();
 
 		return results;
 	}
