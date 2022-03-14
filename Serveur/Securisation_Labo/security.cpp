@@ -1,67 +1,43 @@
 #include "security.h"
 
-/* Constructeur */
-security::security(database * db)
-{
-	this->db = db;
-}
-
-/* Destructeur */
-security::~security()
-{
-}
-
-/* Setup security class */
-void security::setSecurityById(int idSecurity)
-{
-}
-
-/* Setup security class by ID */
-void security::getIdSecurity()
-{
-	//selectdb();
-}
-
-/* Return the room in database */
-void security::getRoom()
-{
-}
-
-/* Return the bit in database */
-void security::getBit()
-{
-}
-
-/* Return the bit in database */
-void security::getStatut()
-{
-}
-
-/* Return a historic table of sensor/activator in database */
-void security::histoSecurity()
-{
-}
-
 /* Send the statut on the client */
-bool continuity::selectStatut()
+void continuity::selectStatut()
 {
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = PCI_7248->readCard(i, 0, 0);
 
-		qDebug() << actualState[i];
-
-		if (lastState[i] != actualState[i])
+		if (actualState[i] == 0)
 		{
-
+			qDebug() << "Etat continuty false room: " << i;
+			if (lastState[i] != actualState[i])
+			{
+				qDebug() << "Etat continuty change room: " << i;
+				//continuity::updateStatue(actualState[i], i);
+				//mail::sendMail();
+			}
+		}
+		else
+		{
+			qDebug() << "Etat continuty true room: " << i;
+			if (lastState[i] != actualState[i])
+			{
+				qDebug() << "Etat continuty change room: " << i;
+				//continuity::updateStatut(actualState[i], i);
+			}
 		}
 
 		lastState[i] = actualState[i];
+
 	}
-	return 0;
 }
 
 /* Update the statut in database */
-void continuity::updateStatut()
+void continuity::updateStatut(bool status, int room)
 {
+
+	QString value = "status = " + QString::number(status) + " WHERE room = " + QString::number(room);
+	db->updatedb("security", value);
+	
 }
+

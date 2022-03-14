@@ -8,40 +8,11 @@ class security
 
 public:
 
-	/* Constructeur */
-	security(database * db);
-
-	/* Destructeur */
-	~security();
-
-private slots:
-
-	/* Setup security class */
-	void setSecurity();
-
-	/* Setup security class by ID */
-	void setSecurityById(int idSecurity);
-
-	/* Return the ID in database */
-	void getIdSecurity();
-
-	/* Return the room in database */
-	void getRoom();
-
-	/* Return the bit in database */
-	void getBit();
-
-	/* Return the statut in database */
-	void getStatut();
-
-	/* Return a historic table of sensor/activator in database */
-	void histoSecurity();
-
 	/* Send the statut on the client */
-	virtual bool selectStatut() = 0;
+	virtual void selectStatut() = 0;
 
 	/* Update the statut in database */
-	virtual void updateStatut() = 0;
+	virtual void updateStatut(bool status, int room) = 0;
 
 protected:
 
@@ -67,9 +38,14 @@ class continuity : public security
 
 public:
 
-	virtual bool selectStatut();
+	continuity(database * db)
+	{
+		this->db = db;
+	}
 
-	virtual void updateStatut();
+	virtual void selectStatut();
+
+	virtual void updateStatut(bool status, int room);
 
 private:
 

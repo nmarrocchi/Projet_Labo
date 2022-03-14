@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 
 	database *db = new database();
 	user * User = new user();
+	continuity * cont = new continuity(db);
 
 	User->setUserByIdCard("1");
-
-	//security security(db);
+	cont->selectStatut();
 
     return a.exec();
 }
