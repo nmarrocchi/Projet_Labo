@@ -54,20 +54,25 @@ QString * database::selectdb(QString table, QString condition)
 
 
 // - Insert Query
-void  database::insertdb(QString table, QString value1, QString value2, QString condition)
+void  database::insertdb(QString table, QString values, QString condition)
 {
 	QString query = "INSERT INTO " + table + " " + condition;
 }
 
+// - Update Query
+void  database::updatedb(QString table, QString values, QString condition)
+{
+	QString query = "UPDATE " + table + " SET " + value;
+}
+
 // - Delete Query
-void  database::deletedb(QString table, QString value)
+void  database::deletedb(QString table, QString condition)
 {
 	QString query = "DELETE FROM " + table + " WHERE " + value;
 }
 
-
-// - Update Query
-void  database::updatedb(QString table, QString value)
+// - Select Count(*)
+int countdb(QString table, QString condition)
 {
-	QString query = "UPDATE " + table + " SET " + value;
+	QString query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
 }

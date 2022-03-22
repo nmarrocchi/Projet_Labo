@@ -24,9 +24,10 @@ public:
 	~database();
 
 	QString * selectdb(QString table, QString condition);
-	void insertdb(QString table, QString value1, QString value2, QString condition);
-	void updatedb(QString table, QString value);
-	void deletedb(QString table, QString value);
+	void insertdb(QString table, QString values, QString condition);
+	void updatedb(QString table, QString values, QString condition);
+	void deletedb(QString table, QString condition);
+	int countdb(QString table, QString condition);
 
 protected:
 	QSqlQuery query;
