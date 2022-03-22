@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 	tamper * tamp		= new tamper(db);
 	presence * pres		= new presence(db);
 
-	User->setUserByIdCard("1");
+	User->setUserByIdCard("1775125927");
 
 	cont->selectStatut();
 	qDebug() << "--------------------------";
