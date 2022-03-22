@@ -62,13 +62,13 @@ void  database::insertdb(QString table, QString values, QString condition)
 // - Update Query
 void  database::updatedb(QString table, QString values, QString condition)
 {
-	QString query = "UPDATE " + table + " SET " + value;
+	QString query = "UPDATE " + table + " SET " + values;
 }
 
 // - Delete Query
 void  database::deletedb(QString table, QString condition)
 {
-	QString query = "DELETE FROM " + table + " WHERE " + value;
+	QString query = "DELETE FROM " + table + " WHERE " + condition;
 }
 
 // - Select Count(*)
