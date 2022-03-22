@@ -85,20 +85,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="continuity.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PCI_7248.cpp" />
+    <ClCompile Include="presence.cpp" />
     <ClCompile Include="security.cpp" />
     <ClCompile Include="securitySysteme.cpp" />
+    <ClCompile Include="sensor.cpp" />
+    <ClCompile Include="tamper.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="continuity.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="mail.h" />
     <ClInclude Include="PCI_7248.h" />
+    <ClInclude Include="presence.h" />
     <ClInclude Include="security.h" />
     <QtMoc Include="securitySysteme.h" />
+    <ClInclude Include="sensor.h" />
+    <ClInclude Include="tamper.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -30,91 +30,9 @@ protected:
 
 };
 
-class continuity : public security
-{
 
-	bool actualState[3];
-	bool lastState[3];
 
-public:
 
-	continuity(database * db)
-	{
-		this->db = db;
-	}
 
-	virtual void selectStatut();
 
-	virtual void updateStatut(bool status, int room);
 
-private:
-
-	int room;
-
-};
-
-class sensor : public security
-{
-
-	bool actualState[3];
-	bool lastState[3];
-
-public:
-
-	sensor(database * db)
-	{
-		this->db = db;
-	}
-
-	virtual void selectStatut();
-
-	virtual void updateStatut(bool status, int room);
-
-private:
-
-	int room;
-};
-
-class tamper : public security
-{
-
-	bool actualState[3];
-	bool lastState[3];
-
-public:
-
-	tamper(database * db)
-	{
-		this->db = db;
-	}
-
-	virtual void selectStatut();
-
-	virtual void updateStatut(bool status, int room);
-
-private:
-
-	int room;
-};
-
-class presence : public security
-{
-
-	bool actualState[3];
-	bool lastState[3];
-
-public:
-
-	presence(database * db)
-	{
-		this->db = db;
-	}
-
-	virtual void selectStatut();
-
-	virtual void updateStatut(bool status, int room);
-
-private:
-
-	int room;
-};

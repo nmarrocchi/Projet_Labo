@@ -74,5 +74,12 @@ void  database::deletedb(QString table, QString condition)
 // - Select Count(*)
 int countdb(QString table, QString condition)
 {
-	QString query = "SELECT COUNT(*) FROM " + table + " WHERE " + condition;
+	/*QSqlQuery query;
+	query.prepare("SELECT COUNT(*) FROM " + table + " WHERE " + condition);
+
+	query.exec();
+
+	int count = query.value(0).toInt;*/
+
+	return 0;
 }

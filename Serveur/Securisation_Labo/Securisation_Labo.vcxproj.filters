@@ -40,6 +40,18 @@
     <ClCompile Include="securitySysteme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="continuity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="presence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tamper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -55,6 +67,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="security.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="continuity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sensor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tamper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="presence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
