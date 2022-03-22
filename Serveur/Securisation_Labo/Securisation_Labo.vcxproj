@@ -90,6 +90,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PCI_7248.cpp" />
     <ClCompile Include="security.cpp" />
+    <ClCompile Include="securitySysteme.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +98,7 @@
     <ClInclude Include="mail.h" />
     <ClInclude Include="PCI_7248.h" />
     <ClInclude Include="security.h" />
+    <QtMoc Include="securitySysteme.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
