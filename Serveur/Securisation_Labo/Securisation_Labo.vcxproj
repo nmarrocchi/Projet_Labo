@@ -142,10 +142,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
-    <None Include="ufr-lib\windows\uwp\uwp-serial-x86_64.dll" />
+    <None Include="ufr-lib\windows\x86_64\uFCoder-x86_64.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ufr-lib\windows\uwp\uwp-serial-x86_64.lib" />
+    <Library Include="ufr-lib\windows\x86_64\uFCoder-x86_64.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
