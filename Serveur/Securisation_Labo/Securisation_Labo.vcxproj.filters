@@ -52,6 +52,12 @@
     <ClCompile Include="tamper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="RFID.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -81,10 +87,26 @@
     <ClInclude Include="presence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="uFCoder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="securitySysteme.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="RFID.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Server.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ufr-lib\windows\uwp\uwp-serial-x86_64.dll" />
+    <None Include="config.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ufr-lib\windows\uwp\uwp-serial-x86_64.lib" />
   </ItemGroup>
 </Project>
