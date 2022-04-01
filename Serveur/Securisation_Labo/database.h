@@ -30,7 +30,6 @@ public:
 	int countdb(QString table, QString condition);
 
 protected:
-	QSqlQuery query;
 	QString user_table = "user";
 	QString passage_table = "passage";
 	QString timeSlot_table = "timeSlot";

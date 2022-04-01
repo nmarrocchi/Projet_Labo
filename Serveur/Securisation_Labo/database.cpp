@@ -1,5 +1,4 @@
 #include "database.h"
-
 #include <qsqlquery.h>
 
 
@@ -30,56 +29,62 @@ database::~database()
 // - Select Query
 QString * database::selectdb(QString table, QString condition)
 {
-	query.prepare("SELECT * FROM " + table + condition);
-	qDebug() << query.lastQuery() << endl;
-
-	if (query.exec()) {
+	QSqlQuery selectQuery;
+	selectQuery.prepare("SELECT * FROM " + table + condition);
+	qDebug() << selectQuery.lastQuery() << endl;
+	QString results[4];
+	if (selectQuery.exec()) {
 		qDebug() << "Data Selected" << endl;
 
-		query.next();
-
-		QString results[4];
-
-		results[1] = query.value(0).toString();
-		results[2] = query.value(1).toString();
-		results[3] = query.value(2).toString();
-		results[4] = query.value(3).toString();
-
+		selectQuery.next();
+		for (int i = 0; i < 4; i++)
+		{
+			results[i] = selectQuery.value(i).toString();
+			qDebug() << "Query Result : " + selectQuery.value(i).toString() << endl;
+		}
+		
 		return results;
 	}
 	else {
 		qDebug() << "Data not Selected \n" << endl;
+		return results;
 	}
 }
 
 
 // - Insert Query
-void  database::insertdb(QString table, QString values, QString condition)
+void  database::insertdb(QString table, QString values, QString condition)		
+
 {
-	QString query = "INSERT INTO " + table + " " + condition;
+	QSqlQuery insertQuery;
+	insertQuery.prepare("INSERT INTO " + table + " " + condition);
 }
 
 // - Update Query
 void  database::updatedb(QString table, QString values, QString condition)
 {
-	QString query = "UPDATE " + table + " SET " + values;
+	QSqlQuery updateQuery;
+	updateQuery.prepare("UPDATE " + table + " SET " + values);
 }
 
 // - Delete Query
 void  database::deletedb(QString table, QString condition)
 {
-	QString query = "DELETE FROM " + table + " WHERE " + condition;
+	QSqlQuery deleteQuery;
+	deleteQuery.prepare("DELETE FROM " + table + " WHERE " + condition);
 }
 
 // - Select Count(*)
-int countdb(QString table, QString condition)
+int database::countdb(QString table, QString condition)
 {
-	/*QSqlQuery query;
-	query.prepare("SELECT COUNT(*) FROM " + table + " WHERE " + condition);
+	QSqlQuery selectCount;
+	selectCount.prepare("SELECT COUNT(*) FROM " + table + condition);
 
-	query.exec();
-
-	int count = query.value(0).toInt;*/
+	if (selectCount.exec()) {
+		selectCount.next();
+		return selectCount.value(0).toInt();
+	}
 
 	return 0;
+
 }
