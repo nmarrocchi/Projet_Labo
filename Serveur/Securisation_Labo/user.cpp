@@ -18,21 +18,17 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 // - get user infos by idCard
 void user::setUserByIdCard(QString idCard)
 {
-	QSqlQuery getUsercount;
-	getUsercount.prepare("SELECT COUNT(*) FROM " + database::user_table + " WHERE idCard = '" + idCard + "'");
+	int countUser = database::countdb(database::user_table, " WHERE idCard = " + idCard);
 
-	if (getUsercount.exec())
+	if (countUser > 0)
 	{
-		getUsercount.next();
-
-		if (getUsercount.value(0).toInt())
-		{
-			qDebug() << "User Exist\n" << endl;
-			//qDebug() << database::selectdb(database::user_table, " WHERE idCard = " + idCard) << endl;
-		}
-		else { qDebug() << "User not Exist\n" << endl; }
+		qDebug() << "User Exist\n" << endl;
+		QString * User[4];
+		*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
 	}
-
+	else { 
+		qDebug() << "User not Exist\n" << endl; 
+	}
 }
 
 void user::getIdCard(QString user)
@@ -67,3 +63,15 @@ void user::histoPassage()
 
 void user::histoPassageByUser()
 {}
+
+
+/* Récupération heure
+
+// date / heure actuelle basée sur le système actuel
+			time_t tmm = time(0);
+
+			// convertir en forme de chaîne
+			char* dt = ctime(&tmm);
+			qDebug() << "La date et l'heure locales sont: " << dt << endl;
+
+*/
