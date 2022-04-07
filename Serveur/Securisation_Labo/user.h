@@ -13,7 +13,7 @@ private:
 	QString _password;
 	bool _isAdmin;
 
-public:
+public slots:
 	user();
 	~user();
 

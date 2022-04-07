@@ -18,17 +18,18 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 // - get user infos by idCard
 void user::setUserByIdCard(QString idCard)
 {
+	qDebug() << "SELECT COUNT(*) FROM user WHERE idCard = " + idCard << endl;
 	int countUser = database::countdb(database::user_table, " WHERE idCard = " + idCard);
-
-	if (countUser > 0)
-	{
-		qDebug() << "User Exist\n" << endl;
-		QString * User[4];
-		*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
-	}
-	else { 
-		qDebug() << "User not Exist\n" << endl; 
-	}
+	qDebug() << countUser << endl;
+	//if (countUser > 0)
+	//{
+	//	qDebug() << "User Exist\n" << endl;
+	//	QString * User[4];
+	//	*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
+	//}
+	//else { 
+	//	qDebug() << "User not Exist\n" << endl; 
+	//}
 }
 
 void user::getIdCard(QString user)

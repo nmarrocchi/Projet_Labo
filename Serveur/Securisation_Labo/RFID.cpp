@@ -17,6 +17,7 @@ RFID::RFID(QObject *parent) : QObject(parent) {
 
 void RFID::read() {
 
+	QString lastCardRead = "";
 	QMap< QString, QVariant > Card;
 	
 	Card["isset"] = false;
@@ -45,10 +46,18 @@ void RFID::read() {
 	
 	pData = new unsigned char[usDataLength];
 	LinearRead(pData, usLinearAddress, usDataLength, &usBytesRet, ucAuthMode, ucKeyIndex);
-
+	
 	Card["data"] = (char*)pData;
 	
 	emit hasRead(Card);
+
+	if (lastCardRead != Card["cardSerial"].toString())
+	{
+		qDebug() << Card["cardSerial"].toString() << endl;
+		lastCardRead = Card["cardSerial"].toString();
+		//User->setUserByIdCard("1477334037");
+		//User->setUserByIdCard(cardID);
+	}
 	
 	cardType = NULL;
 	cardSerial = NULL;

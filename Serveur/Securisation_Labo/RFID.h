@@ -7,6 +7,7 @@
 #include <QMap>
 #include "uFCoder.h"
 #include "Server.h"
+#include "user.h"
 
 class Server;
 
@@ -19,6 +20,8 @@ public:
 	~RFID();
 
 private:
+	
+	user * User;
 
 	UFR_STATUS status;
 	uint32_t readerType = 0;
