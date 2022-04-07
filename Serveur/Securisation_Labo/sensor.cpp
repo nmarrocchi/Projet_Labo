@@ -6,7 +6,7 @@ void sensor::selectStatut()
 	for (int i = 0; i <= 2; i++)
 	{
 		PCI_7248_Card * card = new PCI_7248_Card();
-		actualState[i] = card->readCard(i, 1, 0);
+		actualState[i] = card->readCard(i, 1);
 
 		if (actualState[i] == 0)
 		{
