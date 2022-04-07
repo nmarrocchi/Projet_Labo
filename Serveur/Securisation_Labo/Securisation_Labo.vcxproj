@@ -125,37 +125,34 @@
     <ClCompile Include="database.cpp" />
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PCI_7248.cpp" />
+    <ClCompile Include="PCI_7248_Card.cpp" />
     <ClCompile Include="presence.cpp" />
-    <ClCompile Include="RFID.cpp" />
     <ClCompile Include="security.cpp" />
     <ClCompile Include="securitySysteme.cpp" />
     <ClCompile Include="sensor.cpp" />
-    <ClCompile Include="Server.cpp" />
     <ClCompile Include="tamper.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="continuity.h" />
+    <ClInclude Include="DAQHeader.h" />
+    <ClInclude Include="Dask.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="mail.h" />
-    <ClInclude Include="PCI_7248.h" />
+    <ClInclude Include="PCI_7248_Card.h" />
     <ClInclude Include="presence.h" />
-    <QtMoc Include="RFID.h" />
     <ClInclude Include="security.h" />
     <QtMoc Include="securitySysteme.h" />
     <ClInclude Include="sensor.h" />
-    <QtMoc Include="Server.h" />
     <ClInclude Include="tamper.h" />
-    <ClInclude Include="uFCoder.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
-    <None Include="ufr-lib\windows\x86_64\uFCoder-x86_64.dll" />
+    <None Include="PCI-Dask.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ufr-lib\windows\x86_64\uFCoder-x86_64.lib" />
+    <Library Include="PCI-Dask.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

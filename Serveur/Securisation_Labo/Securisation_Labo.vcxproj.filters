@@ -25,9 +25,6 @@
     <ClCompile Include="mail.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PCI_7248.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="security.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -52,18 +49,12 @@
     <ClCompile Include="tamper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RFID.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Server.cpp">
+    <ClCompile Include="PCI_7248_Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PCI_7248.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="user.h">
@@ -87,7 +78,13 @@
     <ClInclude Include="presence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="uFCoder.h">
+    <ClInclude Include="DAQHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dask.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PCI_7248_Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,18 +92,16 @@
     <QtMoc Include="securitySysteme.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="RFID.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Server.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
-    <None Include="ufr-lib\windows\x86_64\uFCoder-x86_64.dll" />
+    <None Include="PCI-Dask.dll">
+      <Filter>Translation Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="ufr-lib\windows\x86_64\uFCoder-x86_64.lib" />
+    <Library Include="PCI-Dask.lib">
+      <Filter>Translation Files</Filter>
+    </Library>
   </ItemGroup>
 </Project>

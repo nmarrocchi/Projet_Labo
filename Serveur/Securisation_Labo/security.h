@@ -1,12 +1,15 @@
 #pragma once
 
 #include "database.h"
-#include "PCI_7248.h"
+#include "PCI_7248_Card.h"
 
 class security
 {
-
 public:
+
+	
+
+	void loop();
 
 	/* Send the statut on the client */
 	virtual void selectStatut() = 0;
@@ -26,7 +29,7 @@ protected:
 
 	database *db;
 
-	PCI_7248 *PCI_7248;
+	PCI_7248_Card *card;
 
 };
 
