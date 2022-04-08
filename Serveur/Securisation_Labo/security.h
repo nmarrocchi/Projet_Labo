@@ -6,7 +6,10 @@
 class security
 {
 public:
-
+	security(PCI_7248_Card * card)
+	{
+		this->card = card;
+	}
 	
 
 	void loop();

@@ -10,7 +10,8 @@ class continuity : public security
 
 public:
 
-	continuity(database * db)
+	continuity(PCI_7248_Card * card, database * db)
+		: security(card)
 	{
 		this->db = db;
 	}

@@ -10,7 +10,8 @@ class tamper : public security
 
 public:
 
-	tamper(database * db)
+	tamper(PCI_7248_Card * card, database * db)
+		: security(card)
 	{
 		this->db = db;
 	}

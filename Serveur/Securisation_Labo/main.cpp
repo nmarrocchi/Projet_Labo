@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
 
 	database *db = new database();
+
 	//user * User = new user();
 	//Server * server = new Server();
 

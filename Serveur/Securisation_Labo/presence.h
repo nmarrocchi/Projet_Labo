@@ -10,7 +10,8 @@ class presence : public security
 
 public:
 
-	presence(database * db)
+	presence(PCI_7248_Card * card, database * db)
+		: security(card)
 	{
 		this->db = db;
 	}

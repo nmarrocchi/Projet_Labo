@@ -10,7 +10,8 @@ class sensor : public security
 
 public:
 
-	sensor(database * db)
+	sensor(PCI_7248_Card * card, database * db)
+		: security(card)
 	{
 		this->db = db;
 	}

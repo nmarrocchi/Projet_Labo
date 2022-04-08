@@ -18,10 +18,11 @@ securitySysteme * securitySysteme::getInstance()
 securitySysteme::securitySysteme()
 {
 	db = new database();
-	secDevices.push_back(new continuity(db));
-	secDevices.push_back(new sensor(db));
-	secDevices.push_back(new tamper(db));
-	secDevices.push_back(new presence(db));
+	PCI_7248_Card * card = new PCI_7248_Card();
+	secDevices.push_back(new continuity(card, db));
+	secDevices.push_back(new sensor(card, db));
+	secDevices.push_back(new tamper(card, db));
+	secDevices.push_back(new presence(card, db));
 	run();
 }
 

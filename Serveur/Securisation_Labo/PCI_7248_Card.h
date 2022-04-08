@@ -7,7 +7,16 @@ class PCI_7248_Card
 public:
 
 	PCI_7248_Card() {
-		DIO_PortConfig(this->card, Channel_P1A, INPUT_PORT);
+		card = Register_Card(PCI_7248, 0);
+		for (int i = 0; i < 3; i++)
+		{
+			//DIO_PortConfig(this->card, i, INPUT_PORT);
+		}
+
+		for (int i = 5; i < 8; i++)
+		{
+			//DIO_PortConfig(this->card, i, OUTPUT_PORT);
+		}
 	}
 
 	bool readCard(U16 channel, U16 sensor);
@@ -16,7 +25,7 @@ public:
 
 private:
 
-	U16 card = Register_Card(PCI_7248, 0);
+	U16 card;
 
 	int channel;
 
