@@ -121,6 +121,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleTableLib\ConsoleTable.cpp" />
+    <ClCompile Include="ConsoleTableLib\ConsoleTableRow.cpp" />
+    <ClCompile Include="ConsoleTableLib\ConsoleTableUtils.cpp" />
     <ClCompile Include="continuity.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="mail.cpp" />
@@ -134,6 +137,9 @@
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConsoleTableLib\ConsoleTable.h" />
+    <ClInclude Include="ConsoleTableLib\ConsoleTableRow.h" />
+    <ClInclude Include="ConsoleTableLib\ConsoleTableUtils.h" />
     <ClInclude Include="continuity.h" />
     <ClInclude Include="DAQHeader.h" />
     <ClInclude Include="Dask.h" />

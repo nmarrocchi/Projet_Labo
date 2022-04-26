@@ -18,7 +18,7 @@ database::database()
 	}
 	else {
 		qDebug() << "\n Database is not connected \n" << endl;
-		exit(0);
+		//exit(0);
 	}
 }
 

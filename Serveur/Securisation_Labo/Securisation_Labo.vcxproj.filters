@@ -52,6 +52,15 @@
     <ClCompile Include="PCI_7248_Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ConsoleTableLib\ConsoleTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleTableLib\ConsoleTableRow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsoleTableLib\ConsoleTableUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -85,6 +94,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PCI_7248_Card.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleTableLib\ConsoleTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleTableLib\ConsoleTableRow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsoleTableLib\ConsoleTableUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
 #include <qthread.h>
 #include <qlist.h>
-
+#include "ConsoleTableLib/ConsoleTable.h"
 #include "security.h"
 
 class securitySysteme : public QThread

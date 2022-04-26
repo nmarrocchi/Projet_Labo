@@ -23,6 +23,27 @@ securitySysteme::securitySysteme()
 	secDevices.push_back(new sensor(card, db));
 	secDevices.push_back(new tamper(card, db));
 	secDevices.push_back(new presence(card, db));
+
+	ConsoleTable ct(BASIC);
+	ct.setPadding(1);
+
+	ct.addColumn("Country");
+	ct.addColumn("Name");
+	ct.addColumn("Profession");
+	ct.addColumn("Age");
+
+	auto entry = new ConsoleTableRow(4);
+	entry->addEntry("Germany", 0);
+	entry->addEntry("Michael", 1);
+	entry->addEntry("Computer Engineer", 2);
+	entry->addEntry("19", 3);
+	ct.addRow(entry);
+
+	ct.addRow(entry);
+
+	// Print all entries
+	ct.printTable();
+
 	run();
 }
 
