@@ -23,5 +23,4 @@ public:
 private:
 
 	int room;
-
 };

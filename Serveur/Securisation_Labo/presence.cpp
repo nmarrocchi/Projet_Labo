@@ -3,32 +3,42 @@
 /* Send the statut presence on the client */
 void presence::selectStatut()
 {
+	coord.Y = presenceCoordY;
+
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 3);
 
+		coord.X = presenceCoordX + largeur * i;
+
 		if (actualState[i] == 0)
 		{
-			qDebug() << "Etat presence false room: " << i;
+			
+			SetConsoleCursorPosition(handle, coord);
+			SetConsoleTextAttribute(handle, text_color::Red);
+			qDebug() << "false";
+
 			if (lastState[i] != actualState[i])
 			{
-				qDebug() << "Etat presence change room: " << i;
 				//continuity::updateStatue(actualState[i], i);
 				//mail::sendMail();
 			}
 		}
 		else
 		{
-			qDebug() << "Etat presence true room: " << i;
+			
+			SetConsoleCursorPosition(handle, coord);
+			SetConsoleTextAttribute(handle, text_color::Green);
+			qDebug() << "true ";
+
 			if (lastState[i] != actualState[i])
 			{
-				qDebug() << "Etat presence change room: " << i;
 				//continuity::updateStatut(actualState[i], i);
 			}
 		}
 
 		lastState[i] = actualState[i];
-
+		SetConsoleTextAttribute(handle, text_color::White);
 	}
 }
 

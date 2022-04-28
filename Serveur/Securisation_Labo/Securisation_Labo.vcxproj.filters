@@ -52,13 +52,13 @@
     <ClCompile Include="PCI_7248_Card.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleTableLib\ConsoleTable.cpp">
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleTableLib\ConsoleTableRow.cpp">
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTableRow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ConsoleTableLib\ConsoleTableUtils.cpp">
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTableUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -96,13 +96,16 @@
     <ClInclude Include="PCI_7248_Card.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleTableLib\ConsoleTable.h">
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleTableLib\ConsoleTableRow.h">
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTableRow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ConsoleTableLib\ConsoleTableUtils.h">
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTableUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\text_color-lib\text_color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

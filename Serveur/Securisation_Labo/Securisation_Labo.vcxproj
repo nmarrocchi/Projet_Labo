@@ -121,11 +121,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ConsoleTableLib\ConsoleTable.cpp" />
-    <ClCompile Include="ConsoleTableLib\ConsoleTableRow.cpp" />
-    <ClCompile Include="ConsoleTableLib\ConsoleTableUtils.cpp" />
     <ClCompile Include="continuity.cpp" />
     <ClCompile Include="database.cpp" />
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTable.cpp" />
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTableRow.cpp" />
+    <ClCompile Include="lib\ConsoleTableLib\ConsoleTableUtils.cpp" />
     <ClCompile Include="mail.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PCI_7248_Card.cpp" />
@@ -137,13 +137,14 @@
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ConsoleTableLib\ConsoleTable.h" />
-    <ClInclude Include="ConsoleTableLib\ConsoleTableRow.h" />
-    <ClInclude Include="ConsoleTableLib\ConsoleTableUtils.h" />
     <ClInclude Include="continuity.h" />
     <ClInclude Include="DAQHeader.h" />
     <ClInclude Include="Dask.h" />
     <ClInclude Include="database.h" />
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTable.h" />
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTableRow.h" />
+    <ClInclude Include="lib\ConsoleTableLib\ConsoleTableUtils.h" />
+    <ClInclude Include="lib\text_color-lib\text_color.h" />
     <ClInclude Include="mail.h" />
     <ClInclude Include="PCI_7248_Card.h" />
     <ClInclude Include="presence.h" />
