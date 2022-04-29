@@ -39,6 +39,6 @@ void securitySysteme::run()
 			secDevices[i]->selectStatut();
 		}
 
-		QThread::sleep(5);
+		QThread::sleep(1);
 	}
 }

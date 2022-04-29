@@ -3,6 +3,7 @@
 #include "database.h"
 #include "PCI_7248_Card.h"
 
+#include "lib/ConsoleTableLib/ConsoleTable.h"
 #include "lib/text_color-lib/text_color.h"
 
 class security
@@ -15,6 +16,9 @@ public:
 	
 
 	void loop();
+
+	/* Create a table to supervise the sytheme on the console */
+	static void superviseTable();
 
 	/* Send the statut on the client */
 	virtual void selectStatut() = 0;
@@ -43,10 +47,10 @@ protected:
 		tamperCoordX		= 15,
 		presenceCoordX		= 15,
 
-		continuityCoordY	= 7,
-		sensorCoordY		= 9,
-		tamperCoordY		= 11,
-		presenceCoordY		= 13,
+		continuityCoordY	= 3,
+		sensorCoordY		= 5,
+		tamperCoordY		= 7,
+		presenceCoordY		= 9,
 
 		largeur				= 8,
 		hauteur				= 0,
