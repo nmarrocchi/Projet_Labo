@@ -11,9 +11,9 @@ class securitySysteme : public QThread
 
 private:
 	static securitySysteme * instance;
-	securitySysteme();
+	securitySysteme(database * db);
 	QList<security*> secDevices;
-	database * db;
+	database * _db;
 
 protected:
 
@@ -21,7 +21,7 @@ protected:
 
 public:
 	
-	static securitySysteme * getInstance();
+	static securitySysteme * getInstance(database * db);
 
 };
 

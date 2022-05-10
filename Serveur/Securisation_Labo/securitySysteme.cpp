@@ -6,20 +6,20 @@
 
 securitySysteme * securitySysteme::instance = NULL;
 
-securitySysteme * securitySysteme::getInstance()
+securitySysteme * securitySysteme::getInstance(database * db)
 {
 	if (instance == NULL)
 	{
-		instance = new securitySysteme();
+		instance = new securitySysteme(db);
 	}
 
 	return instance;
 }
 
 
-securitySysteme::securitySysteme()
+securitySysteme::securitySysteme(database * db)
 {
-	db = new database();
+	_db = db;
 	PCI_7248_Card * card = new PCI_7248_Card();
 	secDevices.push_back(new continuity(card, db));
 	secDevices.push_back(new sensor(card, db));
