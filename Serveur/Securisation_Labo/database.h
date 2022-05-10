@@ -19,6 +19,11 @@ private:
 
 
 public:
+	QString user_table = "user";
+	QString passage_table = "passage";
+	QString timeSlot_table = "timeSlot";
+	QString security_table = "security";
+	QString histo_Security_Table = "histo-Security";
 
 	database();
 	~database();
@@ -28,12 +33,5 @@ public:
 	void updatedb(QString table, QString values, QString condition);
 	void deletedb(QString table, QString condition);
 	int countdb(QString table, QString condition);
-
-protected:
-	QString user_table = "user";
-	QString passage_table = "passage";
-	QString timeSlot_table = "timeSlot";
-	QString security_table = "security";
-	QString histo_Security_Table = "histo-Security";
 
 };

@@ -1,20 +1,20 @@
 
 #include <qobject.h>
 #include <qdebug.h>
-
 #include "database.h"
 
-class user : database
+class user
 {
 
 private:
+	database * _db;
 	int _idCard;
 	QString _mail;
 	QString _password;
 	bool _isAdmin;
 
 public slots:
-	user();
+	user(database * db);
 	~user();
 
 	void setUser(QString idCard, QString mail, QString password, QString isAdmin);

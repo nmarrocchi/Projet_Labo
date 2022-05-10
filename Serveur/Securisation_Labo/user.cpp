@@ -1,7 +1,9 @@
 #include "user.h"
 
-user::user()
-{}
+user::user(database * db)
+{
+	_db = db;
+}
 
 user::~user()
 {}
@@ -18,18 +20,38 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 // - get user infos by idCard
 void user::setUserByIdCard(QString idCard)
 {
-	qDebug() << "SELECT COUNT(*) FROM user WHERE idCard = " + idCard << endl;
-	int countUser = database::countdb(database::user_table, " WHERE idCard = " + idCard);
-	qDebug() << countUser << endl;
-	//if (countUser > 0)
-	//{
-	//	qDebug() << "User Exist\n" << endl;
-	//	QString * User[4];
-	//	*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
-	//}
-	//else { 
-	//	qDebug() << "User not Exist\n" << endl; 
-	//}
+	qDebug() << "//----- Verification Carte -----//\n" << endl;
+	qDebug() << "Passage de le carte " + idCard << endl;
+	int countUser = _db->countdb(_db->user_table, " WHERE idCard = " + idCard);
+	if (countUser > 0)
+	{
+		QString * User[4];
+	
+		//*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
+		//
+		//_idCard = User[1]->toInt();
+		//_mail = User[2]->toStdString;
+		//_password = User[3]->toStdString;
+		//_isAdmin = User[4]->toInt();
+
+		_isAdmin = 1;
+	
+		if (_isAdmin == 1) {
+			qDebug() << "L'utilisateur est administrateur" << endl;
+			qDebug() << "Acces accorde, ouverture de la gache" << endl;
+			//Ouverture de la gâche
+		}
+		else {
+			qDebug() << "Verification de la plage horaire..." << endl;
+			// Vérification de la plage horaire
+			qDebug() << "Acces en plage horaire, acces accorde" << endl;
+			qDebug() << "ouverture de la gache" << endl;
+			// Si plage horaire respectée alors ouverture de la gâche
+		}
+	}
+	else { 
+		qDebug() << "Carte non renseignee en base de donnee\n" << endl; 
+	}
 }
 
 void user::getIdCard(QString user)
