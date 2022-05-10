@@ -116,12 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
-    <None Include="PCI-Dask.dll">
+    <None Include="lib\ufr-lib\windows\uwp\PCI-Dask64.dll">
       <Filter>Translation Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Library Include="PCI-Dask.lib">
+    <Library Include="lib\ufr-lib\windows\uwp\PCI-Dask64.lib">
       <Filter>Translation Files</Filter>
     </Library>
   </ItemGroup>
