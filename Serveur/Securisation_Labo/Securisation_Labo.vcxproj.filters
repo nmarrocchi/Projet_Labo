@@ -61,6 +61,9 @@
     <ClCompile Include="lib\ConsoleTableLib\ConsoleTableUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ReaderCard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -113,15 +116,24 @@
     <QtMoc Include="securitySysteme.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ReaderCard.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
     <None Include="lib\ufr-lib\windows\uwp\PCI-Dask64.dll">
       <Filter>Translation Files</Filter>
     </None>
+    <None Include="uFCoder-x86_64.dll">
+      <Filter>Translation Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\ufr-lib\windows\uwp\PCI-Dask64.lib">
+      <Filter>Translation Files</Filter>
+    </Library>
+    <Library Include="uFCoder-x86_64.lib">
       <Filter>Translation Files</Filter>
     </Library>
   </ItemGroup>

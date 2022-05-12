@@ -1,6 +1,6 @@
-#include "RFID.h"
+#include "ReaderCard.h"
 
-RFID::RFID(QObject *parent) : QObject(parent) {
+ReaderCard::ReaderCard(QObject *parent) : QObject(parent) {
 
 	if (ReaderOpen() != 0) {
 	
@@ -15,7 +15,7 @@ RFID::RFID(QObject *parent) : QObject(parent) {
 
 }
 
-void RFID::read() {
+void ReaderCard::read() {
 
 	QString lastCardRead = "";
 	QMap< QString, QVariant > Card;
@@ -65,7 +65,7 @@ void RFID::read() {
 
 }
 
-void RFID::write(QString newContent) {
+void ReaderCard::write(QString newContent) {
 	unsigned char	ucKeyIndex = 0,
 		ucAuthMode = MIFARE_AUTHENT1A;
 	
@@ -79,10 +79,10 @@ void RFID::write(QString newContent) {
 	
 	
 	LinearWrite(res, usLinearAddress, usDataLength, &usBytesRet, ucAuthMode, ucKeyIndex);
-	RFID::read();
+	ReaderCard::read();
 }
 
-RFID::~RFID() {
+ReaderCard::~ReaderCard() {
 
 
 }

@@ -24,7 +24,7 @@
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|Win32'">10.0.17763.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|Win32'" Label="Configuration">
@@ -84,7 +84,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>msvc2017_64</QtInstall>
+    <QtInstall>5.14.2</QtInstall>
     <QtModules>core;sql;network;websockets</QtModules>
     <QtDeploy>false</QtDeploy>
   </PropertyGroup>
@@ -130,6 +130,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PCI_7248_Card.cpp" />
     <ClCompile Include="presence.cpp" />
+    <ClCompile Include="ReaderCard.cpp" />
     <ClCompile Include="security.cpp" />
     <ClCompile Include="securitySysteme.cpp" />
     <ClCompile Include="sensor.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="mail.h" />
     <ClInclude Include="PCI_7248_Card.h" />
     <ClInclude Include="presence.h" />
+    <QtMoc Include="ReaderCard.h" />
     <ClInclude Include="security.h" />
     <QtMoc Include="securitySysteme.h" />
     <ClInclude Include="sensor.h" />
@@ -157,9 +159,11 @@
   <ItemGroup>
     <None Include="config.ini" />
     <None Include="lib\ufr-lib\windows\uwp\PCI-Dask64.dll" />
+    <None Include="uFCoder-x86_64.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="lib\ufr-lib\windows\uwp\PCI-Dask64.lib" />
+    <Library Include="uFCoder-x86_64.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
