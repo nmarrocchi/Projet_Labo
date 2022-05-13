@@ -84,7 +84,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <QtInstall>5.14.2</QtInstall>
+    <QtInstall>msvc2017_64</QtInstall>
     <QtModules>core;sql;network;websockets</QtModules>
     <QtDeploy>false</QtDeploy>
   </PropertyGroup>

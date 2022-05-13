@@ -19,7 +19,6 @@ securitySysteme * securitySysteme::getInstance(database * db)
 
 securitySysteme::securitySysteme(database * db)
 {
-	_db = db;
 	PCI_7248_Card * card = new PCI_7248_Card();
 	secDevices.push_back(new continuity(card, db));
 	secDevices.push_back(new sensor(card, db));

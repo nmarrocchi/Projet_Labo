@@ -13,7 +13,6 @@ private:
 	static securitySysteme * instance;
 	securitySysteme(database * db);
 	QList<security*> secDevices;
-	database * _db;
 
 protected:
 
