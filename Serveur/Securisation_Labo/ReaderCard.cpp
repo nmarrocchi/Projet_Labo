@@ -1,4 +1,7 @@
 #include "ReaderCard.h"
+#include <qdebug.h>
+
+using namespace std;
 
 ReaderCard * ReaderCard::instance = NULL;
 
@@ -16,11 +19,11 @@ ReaderCard::ReaderCard() {
 
 	if (ReaderOpen() != 0) {
 	
-		printf("Erreur, le lecteur n a pas pu etre ouvert");
+		printf("Erreur, le lecteur n a pas pu etre ouvert \n");
 		exit(-1);
 	
 	}
-	printf("Lecteur ouvert");
+	printf("Lecteur ouvert \n");
 	
 	GetReaderType(&readerType);
 	ReaderUISignal(3, 3);
@@ -31,7 +34,10 @@ ReaderCard::ReaderCard() {
 
 void ReaderCard::run()
 {
-	ReaderCard::read();
+	while (1)
+	{
+		ReaderCard::read();
+	}
 }
 
 void ReaderCard::read() {
@@ -70,7 +76,7 @@ void ReaderCard::read() {
 
 	emit hasRead(Card);
 
-		printf("%s \n",Card["cardSerial"].toString());
+	qDebug() << Card["cardSerial"].toString() << endl;
 
 	cardType = NULL;
 	cardSerial = NULL;

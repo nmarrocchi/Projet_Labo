@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+Serveur/Securisation_Labo/Securisation_Labo.vcxproj
+Serveur/Securisation_Labo/Securisation_Labo.vcxproj.filters
