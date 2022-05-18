@@ -50,6 +50,7 @@ socket.onmessage = function(event)
     {
         case 'AuthOk':
             supervision();
+            console.log('User connect');
             break;
         case 'val':
             getSensorState(event.data);
@@ -74,29 +75,33 @@ socket.onmessage = function(event)
 
 function connexion()
 {
-    var div_form            = document.createElement("div");
-    div_form.id             = "div_form";
-    div_form.classList.add("form");
+    var div_form    = document.createElement("div");
+    div_form.id     = "div_form";
+    div_form.classList.add("div_form");
 
-    var input_mail          = document.createElement("input");
-    input_mail.type         = "mail";
-    input_mail.classList.add("input");
-    input_mail.value        = "ccauet@la-providence.net";
+        var form    = document.createElement("div");
+        form.classList.add("form");
 
-    var input_password      = document.createElement("input");
-    input_password.type     = "password";
-    input_password.classList.add("input");
-    input_password.value    = "vghP71";
+            var input_mail              = document.createElement("input");
+                input_mail.type         = "mail";
+                input_mail.classList.add("input");
+                input_mail.value        = "ccauet@la-providence.net";
+            form.appendChild(input_mail);
 
-    var input_connexion     = document.createElement("input");
-    input_connexion.type    = "submit";
-    input_connexion.id      = "input_connexion"
-    input_connexion.classList.add("input");
-    input_connexion.value   = "Connexion";
+            var input_password          = document.createElement("input");
+                input_password.type     = "password";
+                input_password.classList.add("input");
+                input_password.value    = "vghP71";
+            form.appendChild(input_password);
 
-    div_form.appendChild(input_mail);
-    div_form.appendChild(input_password);
-    div_form.appendChild(input_connexion);
+            var input_connexion         = document.createElement("input");
+                input_connexion.type    = "button";
+                input_connexion.id      = "input_connexion"
+                input_connexion.classList.add("input");
+                input_connexion.value   = "Connexion";
+            form.appendChild(input_connexion);
+
+        div_form.appendChild(form);
 
     content.appendChild(div_form);
 
@@ -125,20 +130,24 @@ function supervision()
         div_supervision.id  = "div_supervision"
         div_supervision.classList.add("div_supervision");
 
-    var input_sensor        = document.createElement("input");
-        input_sensor.type   = "submit";
-        input_sensor.id     = "input_sensor";
-        input_sensor.classList.add("input");
-        input_sensor.value  = "Sensor State";
+        var form    = document.createElement("div");
+        form.classList.add("form");
 
-    var input_histo         = document.createElement("input");
-        input_histo.type    = "submit";
-        input_histo.id      = "input_histo";
-        input_histo.classList.add("input");
-        input_histo.value   = "Histo";
+            var input_sensor        = document.createElement("input");
+                input_sensor.type   = "button";
+                input_sensor.id     = "input_sensor";
+                input_sensor.classList.add("input");
+                input_sensor.value  = "Sensor State";
+            form.appendChild(input_sensor);
 
-    div_supervision.appendChild(input_sensor);
-    div_supervision.appendChild(input_histo);
+            var input_histo         = document.createElement("input");
+                input_histo.type    = "button";
+                input_histo.id      = "input_histo";
+                input_histo.classList.add("input");
+                input_histo.value   = "Historical";
+            form.appendChild(input_histo);
+
+        div_supervision.appendChild(form);
 
     content.appendChild(div_supervision);
 
@@ -158,7 +167,6 @@ function supervision()
 function getSensorState(message)
 {
     const value = message.split(';');
-    console.log(value);
     tab = value;
 }
 
@@ -187,13 +195,13 @@ function cellColor()
 {
     for(var i=0; i<document.getElementsByClassName('false').length; i++)
     {
-        document.getElementsByClassName('false')[i].style.color = "#ff0000";
+        document.getElementsByClassName('false')[i].style.color = "#c00000";
         console.log(i);
     }
 
     for(var i=0; i<document.getElementsByClassName('true').length; i++)
     {
-        document.getElementsByClassName('true')[i].style.color = "#00ff00";
+        document.getElementsByClassName('true')[i].style.color = "#00c000";
         console.log(i);
     }
 }
@@ -203,8 +211,10 @@ function getAllSensorState()
     document.getElementById("div_supervision").remove();
 
     var div_sensor = document.createElement("div");
+    div_sensor.classList.add("div_sensor");
 
     var table_sensor = document.createElement("table");
+    table_sensor.classList.add("table_sensor");
 
         var thead = document.createElement('thead');
             var tr = document.createElement('tr');

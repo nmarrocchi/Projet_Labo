@@ -1,13 +1,44 @@
 *{
     margin: 0%;
     padding: 0%;
-  }
-  
-  body{
-    background-color: #354152;
-  }
-  
-  a:link {color: white; text-decoration: none;}
-  a:visited {color: white; text-decoration: none;}
-  a:hover {color: white; text-decoration: underline;}
-  a:active {color: white; text-decoration: none;}
+}
+
+body{
+    background-color: #fff;
+}
+
+a:link {color: white; text-decoration: none;}
+a:visited {color: white; text-decoration: none;}
+a:hover {color: white; text-decoration: underline;}
+a:active {color: white; text-decoration: none;}
+
+table, th, td {
+    text-align: center;
+    padding: 3%;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+}
+
+.div_form, .div_supervision, .div_sensor {
+    position: relative;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form, .table_sensor {
+    position: relative;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form {
+    text-align: center;
+}
+
+.input {
+    width: 50%;
+    margin: 3%;
+    padding: 3%;
+}
