@@ -1,4 +1,5 @@
-const socket = new WebSocket("ws://192.168.64.50:2569");
+// Creation WebSocket
+const socket = new WebSocket("ws://192.168.1.110:2569");
 
 var content = document.getElementById('content');
 var tab;
@@ -8,56 +9,49 @@ var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
 connexion();
 
-function formRequest(){}
-
-function getAllUsers(){}
-
-function deleteUser(){}
-
-function createUser(){}
-
-function updateUser(){}
-
-
+// Event when the WebSocket is open
 socket.onopen = function() 
-{
-    
-    console.log("Client WebSocket: Nouvelle connexion");
-
+{  
+    console.log("WebSocket: New connexion");
 };
 
+// Event when the WebSocket is close
 socket.onclose = function() 
 {
-    
-    console.log("Client WebSocket: Deconnexion");
-
+    console.log("WebSocket: Disconnexion");
 };
 
+// Event when the WebSocket had a error
 socket.onerror = function(error) 
 {
-    
     console.error(error);
-
 };
 
+// Event when the WebSocket receive a message to the server
 socket.onmessage = function(event) 
 {
     const message = event.data.split(';');
 
     switch (message[0])
     {
+        // Protocol connection
         case 'Auth':
             if(message[1] == 1)
             {
                 supervision();
                 console.log('User connect');
             }
+            else {
+                console.log('Error user accompte');
+            }
             break;
 
+        // Protocol state sensor value    
         case 'State':
             getStateValue(event.data);
             break;
 
+        // Protocol historical event
         case 'Histo':
             getHistoValue(event.data);
             break;
@@ -68,8 +62,10 @@ socket.onmessage = function(event)
     }
 };
 
+// Function user connection 
 function connexion()
 {
+    // Display the connexion form
     var div_form    = document.createElement("div");
     div_form.id     = "div_form";
     div_form.classList.add("div_form");
@@ -80,13 +76,11 @@ function connexion()
             var input_mail              = document.createElement("input");
                 input_mail.type         = "mail";
                 input_mail.classList.add("input");
-                input_mail.value        = "ccauet@la-providence.net";
             form.appendChild(input_mail);
 
             var input_password          = document.createElement("input");
                 input_password.type     = "password";
                 input_password.classList.add("input");
-                input_password.value    = "vghP71";
             form.appendChild(input_password);
 
             var input_connexion         = document.createElement("input");
@@ -100,26 +94,47 @@ function connexion()
 
     content.appendChild(div_form);
 
+    // Send the input connection value in the server
     document.getElementById("input_connexion").
     addEventListener('click', function() 
     {
-
         var login   = input_mail.value;
         var mdp     = input_password.value;
 
         data = "Auth"+login+";"+mdp;
 
         socket.send(data);
-
     });
 
 }
 
-function disconnection(){}
+// Button to disconnect user
+function inputUserDisconnect()
+{
+    var input_disconnect        = document.createElement("input");
+        input_disconnect.type   = "button";
+        input_disconnect.id     = "input_disconnect"
+        input_disconnect.value   = "Disconnect";
+    content.appendChild(input_disconnect);
+
+    document.getElementById("input_disconnect").
+    addEventListener('click', function() 
+    {
+        disconnection();
+    });
+}
+
+// Function user disconnection 
+function disconnection()
+{
+    location.reload();
+}
 
 // Supervision panel
 function supervision()
 {
+    inputUserDisconnect();
+
     // Remove formulaire connexion
     document.getElementById("div_form").remove();
 
@@ -164,6 +179,7 @@ function supervision()
     });
 }
 
+// Get sensor state value 
 function getStateValue(message)
 {
     const value = message.split(';');
@@ -185,6 +201,7 @@ function getStateValue(message)
     cellColor();
 }
 
+// Get historical value
 function getHistoValue(message)
 {
     const value = message.split(';');
@@ -200,6 +217,7 @@ function getHistoValue(message)
     tbody.appendChild(tr);
 }
 
+// Creation cell with value inside
 function cellValue(i)
 {
     td = document.createElement('td');
@@ -209,6 +227,7 @@ function cellValue(i)
     addCellClass(td, i);
 }
 
+// Add a class at cell
 function addCellClass(i)
 {
     switch (tab[i])
@@ -227,6 +246,7 @@ function addCellClass(i)
     }
 }
 
+// Change color value in cell
 function cellColor()
 {
     for(var i=0; i<document.getElementsByClassName('false').length; i++)
@@ -242,6 +262,7 @@ function cellColor()
     }
 }
 
+// Display all sensor state value in table
 function getAllSensorState()
 {
     document.getElementById("div_supervision").remove();
@@ -272,10 +293,12 @@ function getAllSensorState()
 
     content.appendChild(div_sensor);
 
+    // Send value in the server
     socket.send("State");
 
 }
 
+// Display all historical value in table
 function getAllHisto()
 {
     document.getElementById("div_supervision").remove();
@@ -306,6 +329,19 @@ function getAllHisto()
     
     content.appendChild(div_event);
 
+    // Send value in the server
     socket.send("Histo");
 
 }
+
+// Display all user in a table
+function getAllUsers(){}
+
+// Delete user in database
+function deleteUser(){}
+
+// Add user in database
+function createUser(){}
+
+// Modification user in database
+function updateUser(){}
