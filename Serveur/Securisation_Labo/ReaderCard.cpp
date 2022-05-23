@@ -1,22 +1,21 @@
 #include "ReaderCard.h"
 #include <qdebug.h>
 
-using namespace std;
-
 ReaderCard * ReaderCard::instance = NULL;
 
-ReaderCard * ReaderCard::getInstance()
+ReaderCard * ReaderCard::getInstance(database * db)
 {
 	if (instance == NULL)
 	{
-		instance = new ReaderCard();
+		instance = new ReaderCard(db);
 	}
 
 	return instance;
 }
 
-ReaderCard::ReaderCard() {
+ReaderCard::ReaderCard(database * db) {
 
+	_db = db;
 	if (ReaderOpen() != 0) {
 	
 		printf("Erreur, le lecteur n a pas pu etre ouvert \n");
@@ -76,8 +75,12 @@ void ReaderCard::read() {
 
 	emit hasRead(Card);
 
-	qDebug() << Card["cardSerial"].toString() << endl;
+	QString CardIdDetected = Card["cardSerial"].toString();
+	
 
+	qDebug() << CardIdDetected << endl;
+	
+	
 	cardType = NULL;
 	cardSerial = NULL;
 	Card.clear();

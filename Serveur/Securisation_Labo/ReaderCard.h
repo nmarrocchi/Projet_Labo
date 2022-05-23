@@ -8,6 +8,7 @@
 #include <QMap>
 #include <QVariant>
 #include "uFCoder.h"
+#include "database.h"
 
 class ReaderCard : public QThread
 {
@@ -19,14 +20,15 @@ protected:
 
 private:
 	static ReaderCard * instance;
-	ReaderCard();
+	database * _db;
+	ReaderCard(database * db);
 	UFR_STATUS status;
 	uint32_t readerType = 0;
 	uint8_t  cardType = 0;
 	uint32_t cardSerial = 0;
 
 public slots:
-	static ReaderCard * getInstance();
+	static ReaderCard * getInstance(database * db);
 	void read();
 	void write(QString newContent);
 
