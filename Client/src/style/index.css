@@ -19,14 +19,14 @@ table, th, td {
     border-collapse: collapse;
 }
 
-.div_form, .div_supervision, .div_sensor {
+.div_form, .div_supervision, .div_sensor, .div_event {
     position: relative;
     width: 50%;
     margin-left: auto;
     margin-right: auto;
 }
 
-.form, .table_sensor {
+.form, .table_sensor, .table_event {
     position: relative;
     width: 70%;
     margin-left: auto;

@@ -1,16 +1,14 @@
-const socket = new WebSocket("ws://192.168.1.110:2569");
+const socket = new WebSocket("ws://192.168.64.50:2569");
 
 var content = document.getElementById('content');
 var tab;
+var table, thead, tbody, tr, td, cell;
 var room = ['', 'SN1', 'SN2', 'PHY'];
+var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
 connexion();
 
 function formRequest(){}
-
-function getCapteursHisto(){}
-
-function getPassagesHisto(){}
 
 function getAllUsers(){}
 
@@ -48,29 +46,26 @@ socket.onmessage = function(event)
 
     switch (message[0])
     {
-        case 'AuthOk':
-            supervision();
-            console.log('User connect');
+        case 'Auth':
+            if(message[1] == 1)
+            {
+                supervision();
+                console.log('User connect');
+            }
             break;
-        case 'val':
-            getSensorState(event.data);
+
+        case 'State':
+            getStateValue(event.data);
+            break;
+
+        case 'Histo':
+            getHistoValue(event.data);
+            break;
             
         default:
-
+            break;
 
     }
-    /*if(event.data == "Authtrue" || event.data == "Salttrue"){
-        connexion.hidden = true;
-        inscription.hidden = true;
-        message.hidden = false;
-    }else{
-        var messageText = document.getElementById('messageText')
-        var messageDiv = document.createElement("div");
-        var messageContent = event.data;
-        messageDiv.innerHTML = "<p>"+messageContent+"</p>";
-        messageText.appendChild(messageDiv);
-    }*/
-
 };
 
 function connexion()
@@ -122,10 +117,13 @@ function connexion()
 
 function disconnection(){}
 
+// Supervision panel
 function supervision()
 {
+    // Remove formulaire connexion
     document.getElementById("div_form").remove();
 
+    // Create elements supervision panel
     var div_supervision     = document.createElement("div");
         div_supervision.id  = "div_supervision"
         div_supervision.classList.add("div_supervision");
@@ -151,12 +149,14 @@ function supervision()
 
     content.appendChild(div_supervision);
 
+    // Event click to see sensors state
     document.getElementById("input_sensor").
     addEventListener('click', function()
     {
         getAllSensorState();
     });
 
+    // Event click to see historicals
     document.getElementById("input_histo").
     addEventListener('click', function()
     {
@@ -164,31 +164,67 @@ function supervision()
     });
 }
 
-function getSensorState(message)
+function getStateValue(message)
 {
     const value = message.split(';');
     tab = value;
+
+    console.log(tab);
+
+    for(j = 0; j < 4; j++)
+    {
+        tr = document.createElement('tr');
+            for(i = 1; i <= 4; i++)
+            {
+                cellValue(i + j * 4);
+                addCellClass(i + j * 4);
+            }
+        tbody.appendChild(tr);
+    }
+
+    cellColor();
 }
 
-function addCellClass(td, i)
+function getHistoValue(message)
 {
-    if(tab[i] == "true")
-    {
-        td.classList.add("true");
-    }
-    else
-    {
-        td.classList.add("false");
-    }
+    const value = message.split(';');
+    tab = value;
+
+    console.log(tab);
+
+    tr = document.createElement('tr');
+        for(var i = 1; i < tab.length; i++)
+        {
+            cellValue(i);
+        }
+    tbody.appendChild(tr);
 }
 
-function cellValue(tr, i)
+function cellValue(i)
 {
-    var td = document.createElement('td');
-        var cell = document.createTextNode(tab[i])
+    td = document.createElement('td');
+        cell = document.createTextNode(tab[i])
         td.appendChild(cell);
     tr.appendChild(td);
     addCellClass(td, i);
+}
+
+function addCellClass(i)
+{
+    switch (tab[i])
+    {
+        case 'true':
+            td.classList.add("true");
+            break;
+
+        case 'false':
+            td.classList.add("false");
+            break;
+            
+        default:
+            break;
+
+    }
 }
 
 function cellColor()
@@ -213,100 +249,63 @@ function getAllSensorState()
     var div_sensor = document.createElement("div");
     div_sensor.classList.add("div_sensor");
 
-    var table_sensor = document.createElement("table");
-    table_sensor.classList.add("table_sensor");
+        table = document.createElement("table");
+        table.classList.add("table_sensor");
 
-        var thead = document.createElement('thead');
-            var tr = document.createElement('tr');
-            for(var i=0; i<=3; i++)
-            {
-                var td = document.createElement('td');
-                    var cell = document.createTextNode(room[i]);
-                    td.appendChild(cell);
-                tr.appendChild(td);
-            }
-            thead.appendChild(tr);
-        table_sensor.appendChild(thead);
+            thead = document.createElement('thead');
+                tr = document.createElement('tr');
+                for(var i=0; i<=3; i++)
+                {
+                    td = document.createElement('td');
+                        cell = document.createTextNode(room[i]);
+                        td.appendChild(cell);
+                    tr.appendChild(td);
+                }
+                thead.appendChild(tr);
+            table.appendChild(thead);
 
-        var tbody = document.createElement('tbody');
-            var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                    var cell = document.createTextNode('Continuity');
-                    td.appendChild(cell);
-                tr.appendChild(td)
-                for(var i=1; i<=3; i++)
-                {
-                    cellValue(tr, i);
-                }
-            tbody.appendChild(tr);
-            var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                    var cell = document.createTextNode('Sensor');
-                    td.appendChild(cell);
-                tr.appendChild(td)
-                for(var i=4; i<=6; i++)
-                {
-                    cellValue(tr, i);
-                }
-            tbody.appendChild(tr);
-            var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                    var cell = document.createTextNode('Tamper');
-                    td.appendChild(cell);
-                tr.appendChild(td);
-                for(var i=7; i<=9; i++)
-                {
-                    cellValue(tr, i);
-                }
-            tbody.appendChild(tr);
-            var tr = document.createElement('tr');
-                var td = document.createElement('td');
-                    var cell = document.createTextNode('Presence');
-                    td.appendChild(cell);
-                tr.appendChild(td);
-                for(var i=10; i<=12; i++)
-                {
-                    cellValue(tr, i);
-                }
-                tbody.appendChild(tr);
-        table_sensor.appendChild(tbody);
+            tbody = document.createElement('tbody');
+                
+            table.appendChild(tbody);
 
-    div_sensor.appendChild(table_sensor);
+        div_sensor.appendChild(table);
 
     content.appendChild(div_sensor);
 
-    cellColor();
+    socket.send("State");
+
 }
 
 function getAllHisto()
 {
-    var div_event = document.createElement("div");
+    document.getElementById("div_supervision").remove();
 
-    var table_event = document.createElement("table");
-        var thead = document.createElement('thead');
-            var tr = document.createElement('tr');
+    var div_event = document.createElement("div");
+    div_event.classList.add("div_event");
+
+    table = document.createElement("table");
+    table.classList.add("table_event");
+
+        thead = document.createElement('thead');
+            tr = document.createElement('tr');
             for(var i=0; i<=3; i++)
             {
-                var td = document.createElement('td');
-                td.value = i;
-                tr.appendChild(td)
+                td = document.createElement('td');
+                    cell = document.createTextNode(histo[i]);
+                    td.appendChild(cell);
+                tr.appendChild(td);
             }
             thead.appendChild(tr);
-        var tbody = document.createElement('tbody');
-        for(var i=0; i<=2; i++)
-        {
-            var tr = document.createElement('tr');
-            for(var j=0; j<=3; j++)
-            {
-                var td = document.createElement('td');
-                    var cell = document.createTextNode(j + i);
-                    td.appendChild(cell);
-                tr.appendChild(td)
-            }
-            tbody.appendChild(tr);
-        }
-        table_event.appendChild(tbody);
-    div_event.appendChild(table_event);
+        table.appendChild(thead);
+
+        tbody = document.createElement('tbody');
+            
+        table.appendChild(tbody);
+
+    div_event.appendChild(table);
     
     content.appendChild(div_event);
+
+    socket.send("Histo");
+
 }
