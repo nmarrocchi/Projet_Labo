@@ -1,6 +1,7 @@
 #include <QtCore/QCoreApplication>
 
 #include "ReaderCard.h"
+#include "Server.h"
 #include "user.h"
 #include "database.h"
 #include "security.h"
@@ -19,7 +20,7 @@ int main(int argc, char *argv[])
 	database * db = new database();
 	//user * User = new user(db);
 
-	
+	Server * server = new Server();
 	ReaderCard::getInstance();	// Instancie le lecteur RFID
 	securitySysteme::getInstance(db);	// Affiche les états des capteurs
 

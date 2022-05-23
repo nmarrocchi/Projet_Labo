@@ -134,6 +134,7 @@
     <ClCompile Include="security.cpp" />
     <ClCompile Include="securitySysteme.cpp" />
     <ClCompile Include="sensor.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="tamper.cpp" />
     <ClCompile Include="user.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="security.h" />
     <QtMoc Include="securitySysteme.h" />
     <ClInclude Include="sensor.h" />
+    <QtMoc Include="Server.h" />
     <ClInclude Include="tamper.h" />
     <ClInclude Include="user.h" />
   </ItemGroup>
