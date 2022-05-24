@@ -1,8 +1,10 @@
 #include "ReaderCard.h"
 #include <qdebug.h>
 
+// - Set securitySystem Instance to NULL
 ReaderCard * ReaderCard::instance = NULL;
 
+// - Create ReaderCard Instance
 ReaderCard * ReaderCard::getInstance(database * db)
 {
 	if (instance == NULL)
@@ -13,6 +15,7 @@ ReaderCard * ReaderCard::getInstance(database * db)
 	return instance;
 }
 
+// - Open Reader & loop read function
 ReaderCard::ReaderCard(database * db) {
 
 	_db = db;
@@ -31,6 +34,7 @@ ReaderCard::ReaderCard(database * db) {
 
 }
 
+// - run ReaderCard loop
 void ReaderCard::run()
 {
 	while (1)
@@ -39,6 +43,7 @@ void ReaderCard::run()
 	}
 }
 
+// - Read Card
 void ReaderCard::read() {
 
 	QString lastCardRead = "";
@@ -76,7 +81,7 @@ void ReaderCard::read() {
 	emit hasRead(Card);
 
 	QString CardIdDetected = Card["cardSerial"].toString();
-	
+	// - Card Verification
 
 	qDebug() << CardIdDetected << endl;
 	
@@ -85,21 +90,4 @@ void ReaderCard::read() {
 	cardSerial = NULL;
 	Card.clear();
 
-}
-
-void ReaderCard::write(QString newContent) {
-	unsigned char	ucKeyIndex = 0,
-		ucAuthMode = MIFARE_AUTHENT1A;
-	
-	unsigned short	usLinearAddress = 0,
-		usDataLength = 10,
-		usBytesRet = 10;
-	
-	QByteArray test = newContent.toLatin1();
-	
-	unsigned char *res = (unsigned char *)strdup(test.constData());
-	
-	
-	LinearWrite(res, usLinearAddress, usDataLength, &usBytesRet, ucAuthMode, ucKeyIndex);
-	ReaderCard::read();
 }

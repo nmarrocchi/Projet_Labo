@@ -25,13 +25,23 @@ public:
 	QString security_table = "security";
 	QString histo_Security_Table = "histo-Security";
 
+	// - Constructor of database class
 	database();
 	~database();
 
+	// - Select informations in database
 	QString * selectdb(QString table, QString condition);
+
+	// - Insert Informations in database
 	void insertdb(QString table, QString values, QString condition);
+
+	// - Update Informations in database
 	void updatedb(QString table, QString values, QString condition);
+
+	// - Delete Informations in database
 	void deletedb(QString table, QString condition);
+
+	// - Count data with same information
 	int countdb(QString table, QString condition);
 
 };

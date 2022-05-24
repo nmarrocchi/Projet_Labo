@@ -2,7 +2,7 @@
 #include <qsqlquery.h>
 
 
-// - Construct Of database class
+// - Constructor of database class
 database::database()
 {
 
@@ -26,7 +26,7 @@ database::~database()
 {}
 
 
-// - Select Query
+// - Select Informations in database
 QString * database::selectdb(QString table, QString condition)
 {
 	QSqlQuery selectQuery;
@@ -52,7 +52,7 @@ QString * database::selectdb(QString table, QString condition)
 }
 
 
-// - Insert Query
+// - Insert Informations in database
 void  database::insertdb(QString table, QString values, QString condition)		
 
 {
@@ -60,21 +60,21 @@ void  database::insertdb(QString table, QString values, QString condition)
 	insertQuery.prepare("INSERT INTO " + table + " " + condition);
 }
 
-// - Update Query
+// - Update Informations in database
 void  database::updatedb(QString table, QString values, QString condition)
 {
 	QSqlQuery updateQuery;
 	updateQuery.prepare("UPDATE " + table + " SET " + values);
 }
 
-// - Delete Query
+// - Delete Informations in database
 void  database::deletedb(QString table, QString condition)
 {
 	QSqlQuery deleteQuery;
 	deleteQuery.prepare("DELETE FROM " + table + " WHERE " + condition);
 }
 
-// - Select Count(*)
+// - Count data with same information
 int database::countdb(QString table, QString condition)
 {
 	QSqlQuery selectCount;
