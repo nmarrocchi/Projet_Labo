@@ -17,7 +17,7 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 	this->_isAdmin = isAdmin.toInt();
 }
 
-// - get user infos by idCard
+// - get all informations of user by CardID
 void user::setUserByIdCard(QString idCard)
 {
 	qDebug() << "//----- Verification Carte -----//\n" << endl;
@@ -54,36 +54,39 @@ void user::setUserByIdCard(QString idCard)
 	}
 }
 
+// - Get card id from specific user
 void user::getIdCard(QString user)
 {}
 
+// - Get user mail value
 void user::getMail(QString user)
 {}
 
+// - Get user admin value
 void user::getAdmin(QString user)
 {}
 
-void user::connexion()
-{}
-
-void user::deconnexion()
-{}
-
+// - Select user from database
 void user::selectUser(QString user)
 {}
 
+// - Insert user from database
 void user::insertUser(QString user)
 {}
 
+// - Update user from database
 void user::updateUser(QString user)
 {}
 
+// - Delete user from database
 void user::deleteUser(QString user)
 {}
 
+// - Get all passage
 void user::histoPassage()
 {}
 
+// - Get all passage from specific user
 void user::histoPassageByUser()
 {}
 
