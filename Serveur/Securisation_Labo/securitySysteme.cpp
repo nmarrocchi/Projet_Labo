@@ -4,8 +4,10 @@
 #include "tamper.h"
 #include "presence.h"
 
+// - Set securitySystem Instance to NULL
 securitySysteme * securitySysteme::instance = NULL;
 
+// - Create securitySystem Instance
 securitySysteme * securitySysteme::getInstance(database * db)
 {
 	if (instance == NULL)
@@ -16,7 +18,7 @@ securitySysteme * securitySysteme::getInstance(database * db)
 	return instance;
 }
 
-
+// - Instance All Sensors Class
 securitySysteme::securitySysteme(database * db)
 {
 	PCI_7248_Card * card = new PCI_7248_Card();
@@ -28,7 +30,7 @@ securitySysteme::securitySysteme(database * db)
 	run();
 }
 
-
+// - Run securitySystem loop
 void securitySysteme::run()
 {
 	while (1)
