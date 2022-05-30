@@ -5,7 +5,6 @@
 // - Constructor of database class
 database::database()
 {
-
 	// - Connecting to mysql database
 	db = QSqlDatabase::addDatabase("QMYSQL");
 	db.setHostName(_Hostname);
@@ -31,8 +30,10 @@ QString * database::selectdb(QString table, QString condition)
 {
 	QSqlQuery selectQuery;
 	selectQuery.prepare("SELECT * FROM " + table + condition);
+
 	qDebug() << selectQuery.lastQuery() << endl;
 	QString results[4];
+
 	if (selectQuery.exec()) {
 		qDebug() << "Data Selected" << endl;
 
@@ -53,7 +54,7 @@ QString * database::selectdb(QString table, QString condition)
 
 
 // - Insert Informations in database
-void  database::insertdb(QString table, QString values, QString condition)		
+void  database::insertdb(QString table, QString values, QString condition)	
 
 {
 	QSqlQuery insertQuery;

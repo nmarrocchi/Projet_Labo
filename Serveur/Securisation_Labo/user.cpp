@@ -27,14 +27,7 @@ void user::setUserByIdCard(QString idCard)
 	{
 		QString * User[4];
 	
-		//*User = database::selectdb(database::user_table, " WHERE idCard = " + idCard);
-		//
-		//_idCard = User[1]->toInt();
-		//_mail = User[2]->toStdString;
-		//_password = User[3]->toStdString;
-		//_isAdmin = User[4]->toInt();
-
-		_isAdmin = 1;
+		*User = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
 	
 		if (_isAdmin == 1) {
 			qDebug() << "L'utilisateur est administrateur" << endl;

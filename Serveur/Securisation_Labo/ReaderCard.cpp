@@ -18,6 +18,7 @@ ReaderCard * ReaderCard::getInstance(database * db)
 // - Open Reader & loop read function
 ReaderCard::ReaderCard(database * db) {
 
+	_user = new user(db);
 	_db = db;
 	if (ReaderOpen() != 0) {
 	
@@ -83,11 +84,13 @@ void ReaderCard::read() {
 	QString CardIdDetected = Card["cardSerial"].toString();
 	// - Card Verification
 
-	qDebug() << CardIdDetected << endl;
+	_user->setUserByIdCard(CardIdDetected); // Check la validité de la carte
 	
 	
 	cardType = NULL;
 	cardSerial = NULL;
 	Card.clear();
+
+	sleep(2);
 
 }

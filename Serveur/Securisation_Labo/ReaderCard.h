@@ -9,6 +9,7 @@
 #include <QVariant>
 #include "uFCoder.h"
 #include "database.h"
+#include "user.h"
 
 class ReaderCard : public QThread
 {
@@ -21,6 +22,7 @@ protected:
 private:
 	static ReaderCard * instance;
 	database * _db;
+	user * _user;
 	// - Open Reader & loop read function
 	ReaderCard(database * db);
 	UFR_STATUS status;
