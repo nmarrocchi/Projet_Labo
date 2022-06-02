@@ -6,6 +6,7 @@ class PCI_7248_Card
 
 public:
 
+	/* Construct PCI_7248_Card class */
 	PCI_7248_Card() {
 		card = Register_Card(PCI_7248, 0);
 		for (int i = 0; i < 3; i++)
@@ -19,8 +20,10 @@ public:
 		}
 	}
 
+	/* Call function in Dask lib to read values on PCI_7248_Card */
 	bool readCard(U16 channel, U16 sensor);
 
+	/* Call function in Dask lib to send values on PCI_7248_Card */
 	void writeCard(U16 channel, U16 sensor, U16 value);
 
 private:

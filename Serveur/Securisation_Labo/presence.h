@@ -10,14 +10,17 @@ class presence : public security
 
 public:
 
+	/* Construct presence class */
 	presence(PCI_7248_Card * card, database * db)
 		: security(card)
 	{
 		this->db = db;
 	}
 
+	/* Send the statut presence on the client */
 	virtual void selectStatut();
 
+	/* Update the statut presence in database */
 	virtual void updateStatut(bool status, int room);
 
 private:
