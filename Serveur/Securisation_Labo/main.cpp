@@ -1,7 +1,7 @@
 #include <QtCore/QCoreApplication>
 
 #include "ReaderCard.h"
-#include "Server.h"
+#include "webServer.h"
 #include "database.h"
 #include "security.h"
 #include "continuity.h"
@@ -18,7 +18,8 @@ int main(int argc, char *argv[])
 
 	database * db = new database();
 
-	Server * server = new Server(); // Instancie le serveur websocket
+	webServer::getInstance(db, 2569); // Instancie le serveur websocket
+	
 	ReaderCard::getInstance(db);	// Instancie le lecteur RFID
 
 	securitySysteme::getInstance(db);	// Affiche les états des capteurs

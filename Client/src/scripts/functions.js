@@ -1,5 +1,5 @@
 // Creation WebSocket
-const socket = new WebSocket("ws://192.168.1.110:2569");
+const socket = new WebSocket("ws://192.168.65.31:2569");
 
 var content = document.getElementById('content');
 var tab;
@@ -75,11 +75,13 @@ function connexion()
 
             var input_mail              = document.createElement("input");
                 input_mail.type         = "mail";
+                input_mail.value        = "ccauet@la-providence.net";
                 input_mail.classList.add("input");
             form.appendChild(input_mail);
 
             var input_password          = document.createElement("input");
                 input_password.type     = "password";
+                input_password.value    = "vghP71";
                 input_password.classList.add("input");
             form.appendChild(input_password);
 
@@ -102,7 +104,7 @@ function connexion()
         var mdp     = input_password.value;
 
         data = "Auth"+login+";"+mdp;
-
+        
         socket.send(data);
     });
 

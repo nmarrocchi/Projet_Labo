@@ -31,7 +31,7 @@ ReaderCard::ReaderCard(database * db) {
 	GetReaderType(&readerType);
 	ReaderUISignal(3, 3);
 
-	run();
+	start();
 
 }
 

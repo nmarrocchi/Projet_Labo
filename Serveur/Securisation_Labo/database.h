@@ -15,7 +15,7 @@ private:
 	QString _Hostname = "192.168.65.219";
 	QString _Username = "admin";
 	QString _Password = "admin";
-	QString _Database = "labo";
+	QString _Database = "labotest";
 
 
 public:
