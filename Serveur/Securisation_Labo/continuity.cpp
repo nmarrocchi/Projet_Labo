@@ -20,8 +20,11 @@ void continuity::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatue(actualState[i], i);
-				//mail::sendMail();
+				if (timeSlot::validateTime() == false)
+				{
+					//continuity::updateStatue(actualState[i], i);
+					//mail::sendMail();
+				}
 			}
 		}
 		else

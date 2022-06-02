@@ -67,6 +67,9 @@
     <ClCompile Include="webServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="timeSlot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -112,6 +115,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\text_color-lib\text_color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timeSlot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

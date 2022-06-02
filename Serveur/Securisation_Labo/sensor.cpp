@@ -20,8 +20,11 @@ void sensor::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatue(actualState[i], i);
-				//mail::sendMail();
+				if (timeSlot::validateTime() == false)
+				{
+					//continuity::updateStatue(actualState[i], i);
+					//mail::sendMail();
+				}
 			}
 		}
 		else
@@ -42,7 +45,7 @@ void sensor::selectStatut()
 	}
 }
 
-/* Update the statut sensor in database */
+	/* Update the statut sensor in database */
 void sensor::updateStatut(bool status, int room)
 {
 
