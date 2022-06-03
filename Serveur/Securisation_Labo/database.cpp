@@ -26,29 +26,18 @@ database::~database()
 
 
 // - Select Informations in database
-QString * database::selectdb(QString table, QString condition)
+QSqlQuery database::selectdb(QString table, QString condition)
 {
 	QSqlQuery selectQuery;
 	selectQuery.prepare("SELECT * FROM " + table + condition);
 
-	qDebug() << selectQuery.lastQuery() << endl;
-	QString results[4];
-
 	if (selectQuery.exec()) {
-		qDebug() << "Data Selected" << endl;
-
-		selectQuery.next();
-		for (int i = 0; i < 4; i++)
-		{
-			results[i] = selectQuery.value(i).toString();
-			qDebug() << "Query Result : " + selectQuery.value(i).toString() << endl;
-		}
+		qDebug() << "Request executed" << endl;
 		
-		return results;
+		return selectQuery;
 	}
 	else {
-		qDebug() << "Data not Selected \n" << endl;
-		return results;
+		qDebug() << "Request not executed" << endl;
 	}
 }
 
