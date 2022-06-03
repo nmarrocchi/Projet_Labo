@@ -7,7 +7,7 @@ var table, thead, tbody, tr, td, cell;
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
-connexion();
+loginForm();
 
 // Event when the WebSocket is open
 socket.onopen = function() 
@@ -62,52 +62,30 @@ socket.onmessage = function(event)
     }
 };
 
-// Function user connection 
-function connexion()
+// Show user login form 
+function loginForm()
 {
-    // Display the connexion form
-    var div_form    = document.createElement("div");
-    div_form.id     = "div_form";
-    div_form.classList.add("div_form");
+    document.write(""
+    + "<div id='login_form'>"
+        + "<h1>Connexion</h1>"
+        + "<div class='form'>"
+            + "<input type='mail' id='mail_input' placeholder='Mail la providence'>"
+            + "<input type='password' id='password_input' placeholder='Mot de passe'>"
+            + "<input type='button' value='Connexion' onclick='auth()'>"
+        + "</div>"
+    + "</div>"
+    );
+}
 
-        var form    = document.createElement("div");
-        form.classList.add("form");
+// Send form data to auth the user
+function auth()
+{
+    var login   = document.getElementById('mail_input').value;
+    var mdp     = document.getElementById('password_input').value;;
 
-            var input_mail              = document.createElement("input");
-                input_mail.type         = "mail";
-                input_mail.value        = "ccauet@la-providence.net";
-                input_mail.classList.add("input");
-            form.appendChild(input_mail);
-
-            var input_password          = document.createElement("input");
-                input_password.type     = "password";
-                input_password.value    = "vghP71";
-                input_password.classList.add("input");
-            form.appendChild(input_password);
-
-            var input_connexion         = document.createElement("input");
-                input_connexion.type    = "button";
-                input_connexion.id      = "input_connexion"
-                input_connexion.classList.add("input");
-                input_connexion.value   = "Connexion";
-            form.appendChild(input_connexion);
-
-        div_form.appendChild(form);
-
-    content.appendChild(div_form);
-
-    // Send the input connection value in the server
-    document.getElementById("input_connexion").
-    addEventListener('click', function() 
-    {
-        var login   = input_mail.value;
-        var mdp     = input_password.value;
-
-        data = "Auth"+login+";"+mdp;
-        
-        socket.send(data);
-    });
-
+    data = "Auth = "+login+" / "+mdp;
+    console.log(data);
+    socket.send(data);
 }
 
 // Button to disconnect user
