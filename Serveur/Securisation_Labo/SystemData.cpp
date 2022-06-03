@@ -4,10 +4,10 @@ SystemData::SystemData()
 {
 }
 
-void SystemData::setData(QList<bool> tamperStates, QList<bool> continuityStates, QList<bool> presenceStates, QList<bool> sensorStates)
+void SystemData::setData(QList<bool> continuityStates, QList<bool> sensorStates, QList<bool> tamperStates, QList<bool> presenceStates)
 {
-	this->tamperStates = tamperStates;
-	this->continuityStates = continuityStates;
-	this->presenceStates = presenceStates;
-	this->sensorStates = sensorStates;
+	this->continuityStates	= continuityStates;
+	this->sensorStates		= sensorStates;
+	this->tamperStates		= tamperStates;
+	this->presenceStates	= presenceStates;
 }

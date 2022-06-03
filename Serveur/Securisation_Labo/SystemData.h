@@ -14,11 +14,11 @@ private:
 public:
 	SystemData();
 
-	void setData(QList<bool> tamperStates, QList<bool> continuityStates, QList<bool> presenceStates, QList<bool> sensorStates);
+	void setData(QList<bool> continuityStates, QList<bool> sensorStates, QList<bool> tamperStates, QList<bool> presenceStates);
 
-	QList<bool> getTamperStates() { return tamperStates; }
 	QList<bool> getContinuityStates() { return continuityStates; }
-	QList<bool> getPresenceStates() { return presenceStates; }
 	QList<bool> getSensorStates() { return sensorStates; }
+	QList<bool> getTamperStates() { return tamperStates; }
+	QList<bool> getPresenceStates() { return presenceStates; }
 };
 

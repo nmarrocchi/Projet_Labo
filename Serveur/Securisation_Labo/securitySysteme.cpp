@@ -65,7 +65,7 @@ void securitySysteme::run()
 		}
 
 		SystemData data;
-		data.setData(tamperStates, continuityStates, presenceStates, sensorStates);
+		data.setData(continuityStates, sensorStates, tamperStates, presenceStates);
 		webServer::getInstance()->updateSystemData(data);
 
 		QThread::sleep(1);
