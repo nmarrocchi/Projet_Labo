@@ -25,9 +25,17 @@ void user::setUserByIdCard(QString idCard)
 	int countUser = _db->countdb(_db->user_table, " WHERE idCard = " + idCard);
 	if (countUser > 0)
 	{
-		QString * User[4];
-	
-		*User = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
+
+		QSqlQuery userQuery = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
+
+		userQuery.next();
+		// Show user infos
+		//for (int i = 0; i < 4; i++)
+		//{
+		//	qDebug() << "Query Result : " + userQuery.value(i).toString() << endl;
+		//}
+
+		_isAdmin = userQuery.value(3).toInt();
 	
 		if (_isAdmin == 1) {
 			qDebug() << "L'utilisateur est administrateur" << endl;
