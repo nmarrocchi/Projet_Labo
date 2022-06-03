@@ -8,7 +8,7 @@ bool timeSlot::validateTime()
 	QSqlQuery query;
 	query.exec("SELECT `startTime`, `endTime` FROM `timeSlot` WHERE active = 1");
 
-	QString timeNow = QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm:ss");
+	QString timeNow = QDateTime::currentDateTime().toString("hh:mm:ss");
 
 	if (query.next())
 	{

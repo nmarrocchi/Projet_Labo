@@ -9,6 +9,7 @@
 
 class security
 {
+
 public:
 	security(PCI_7248_Card * card)
 	{
@@ -22,7 +23,7 @@ public:
 	static void superviseTable();
 
 	/* Send the statut on the client */
-	virtual void selectStatut() = 0;
+	virtual QList<bool> selectStatut() = 0;
 
 	/* Update the statut in database */
 	virtual void updateStatut(bool status, int room) = 0;

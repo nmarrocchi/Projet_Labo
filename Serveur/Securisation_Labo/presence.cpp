@@ -1,13 +1,16 @@
 #include "presence.h"
 
 /* Send the statut presence on the client */
-void presence::selectStatut()
+QList<bool> presence::selectStatut()
 {
+	QList<bool> result;
+
 	coord.Y = presenceCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 3);
+		result.push_back(actualState[i]);
 
 		coord.X = presenceCoordX + largeur * i;
 
@@ -43,6 +46,7 @@ void presence::selectStatut()
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+	return result;
 }
 
 /* Update the statut presence in database */

@@ -18,7 +18,7 @@ public:
 	}
 
 	/* Send the statut continuity on the client */
-	virtual void selectStatut();
+	virtual QList<bool> selectStatut();
 
 	/* Update the statut continuity in database */
 	virtual void updateStatut(bool status, int room);

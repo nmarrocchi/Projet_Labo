@@ -1,13 +1,15 @@
 #include "continuity.h"
 
 /* Send the statut continuity on the client */
-void continuity::selectStatut()
+QList<bool> continuity::selectStatut()
 {
+	QList<bool> result;
 	coord.Y = continuityCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 0);
+		result.push_back(actualState[i]);
 
 		coord.X = continuityCoordX + largeur * i;
 
@@ -43,6 +45,8 @@ void continuity::selectStatut()
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+
+	return result;
 }
 
 /* Update the statut continuity in database */

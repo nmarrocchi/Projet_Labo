@@ -4,6 +4,7 @@ const socket = new WebSocket("ws://192.168.65.31:2569");
 var content = document.getElementById('content');
 var tab;
 var table, thead, tbody, tr, td, cell;
+var message = "State;Continuity;   ;   ;   ;Sensor;   ;   ;   ;Tamper;   ;   ;   ;Presence;   ;   ;   ";
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
@@ -104,7 +105,7 @@ function connexion()
         var mdp     = input_password.value;
 
         data = "Auth"+login+";"+mdp;
-        
+
         socket.send(data);
     });
 
@@ -186,8 +187,6 @@ function getStateValue(message)
 {
     const value = message.split(';');
     tab = value;
-
-    console.log(tab);
 
     for(j = 0; j < 4; j++)
     {
@@ -286,17 +285,22 @@ function getAllSensorState()
                 }
                 thead.appendChild(tr);
             table.appendChild(thead);
-
             tbody = document.createElement('tbody');
-                
+                getStateValue(message);
             table.appendChild(tbody);
-
         div_sensor.appendChild(table);
 
     content.appendChild(div_sensor);
 
     // Send value in the server
-    socket.send("State");
+    setInterval(
+        function () 
+        {
+            tbody.remove();
+            socket.send("State");
+            tbody = document.createElement('tbody');
+            table.appendChild(tbody);
+        }, 1000);
 
 }
 

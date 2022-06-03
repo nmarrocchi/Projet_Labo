@@ -1,13 +1,15 @@
 #include "tamper.h"
 
 /* Send the statut tamper on the client */
-void tamper::selectStatut()
+QList<bool> tamper::selectStatut()
 {
+	QList<bool> result;
 	coord.Y = tamperCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 2);
+		result.push_back(actualState[i]);
 
 		coord.X = tamperCoordX + largeur * i;
 
@@ -43,6 +45,7 @@ void tamper::selectStatut()
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+	return result;
 }
 
 /* Update the statut tamper in database */

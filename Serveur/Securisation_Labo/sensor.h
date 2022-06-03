@@ -18,7 +18,7 @@ public:
 	}
 
 	/* Send the statut sensor on the client */
-	virtual void selectStatut();
+	virtual QList<bool> selectStatut();
 
 	/* Update the statut sensor in database */
 	virtual void updateStatut(bool status, int room);

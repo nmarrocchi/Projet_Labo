@@ -1,13 +1,15 @@
 #include "sensor.h"
 
 /* Send the statut sensor on the client */
-void sensor::selectStatut()
+QList<bool> sensor::selectStatut()
 {
+	QList<bool> result;
 	coord.Y = sensorCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 1);
+		result.push_back(actualState[i]);
 
 		coord.X = sensorCoordX + largeur * i;
 
@@ -43,6 +45,8 @@ void sensor::selectStatut()
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+
+	return result;
 }
 
 	/* Update the statut sensor in database */
