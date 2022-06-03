@@ -30,7 +30,7 @@ public:
 	~database();
 
 	// - Select informations in database
-	QString * selectdb(QString table, QString condition);
+	QSqlQuery selectdb(QString table, QString condition);
 
 	// - Insert Informations in database
 	void insertdb(QString table, QString values, QString condition);
