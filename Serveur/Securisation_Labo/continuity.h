@@ -10,14 +10,17 @@ class continuity : public security
 
 public:
 
+	/* Construct continuity class */
 	continuity(PCI_7248_Card * card, database * db)
 		: security(card)
 	{
 		this->db = db;
 	}
 
+	/* Send the statut continuity on the client */
 	virtual void selectStatut();
 
+	/* Update the statut continuity in database */
 	virtual void updateStatut(bool status, int room);
 
 private:

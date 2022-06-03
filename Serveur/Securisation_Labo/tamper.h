@@ -10,14 +10,17 @@ class tamper : public security
 
 public:
 
+	/* Construct tamper class */
 	tamper(PCI_7248_Card * card, database * db)
 		: security(card)
 	{
 		this->db = db;
 	}
 
+	/* Send the statut tamper on the client */
 	virtual void selectStatut();
 
+	/* Update the statut tamper in database */
 	virtual void updateStatut(bool status, int room);
 
 private:

@@ -27,7 +27,7 @@ securitySysteme::securitySysteme(database * db)
 	secDevices.push_back(new tamper(card, db));
 	secDevices.push_back(new presence(card, db));
 
-	run();
+	start();
 }
 
 // - Run securitySystem loop

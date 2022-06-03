@@ -10,14 +10,17 @@ class sensor : public security
 
 public:
 
+	/* Construct sensor class */
 	sensor(PCI_7248_Card * card, database * db)
 		: security(card)
 	{
 		this->db = db;
 	}
 
+	/* Send the statut sensor on the client */
 	virtual void selectStatut();
 
+	/* Update the statut sensor in database */
 	virtual void updateStatut(bool status, int room);
 
 private:

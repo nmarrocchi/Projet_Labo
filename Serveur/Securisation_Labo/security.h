@@ -2,6 +2,7 @@
 
 #include "database.h"
 #include "PCI_7248_Card.h"
+#include "timeSlot.h"
 
 #include "lib/ConsoleTableLib/ConsoleTable.h"
 #include "lib/text_color-lib/text_color.h"

@@ -64,7 +64,10 @@
     <ClCompile Include="ReaderCard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Server.cpp">
+    <ClCompile Include="webServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="timeSlot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,6 +117,9 @@
     <ClInclude Include="lib\text_color-lib\text_color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="timeSlot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="securitySysteme.h">
@@ -122,7 +128,7 @@
     <QtMoc Include="ReaderCard.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="Server.h">
+    <QtMoc Include="webServer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
