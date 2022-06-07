@@ -1,5 +1,5 @@
 // Creation WebSocket
-const socket = new WebSocket("ws://192.168.65.31:2569");
+const socket = new WebSocket("ws://127.0.0.1:2569");
 
 var content = document.getElementById('content');
 var tab;
@@ -68,27 +68,23 @@ function connexion()
     // Display the connexion form
     var div_form    = document.createElement("div");
     div_form.id     = "div_form";
-    div_form.classList.add("div_form");
 
         var form    = document.createElement("div");
-        form.classList.add("form");
+        form.id     = "login_form";
 
             var input_mail              = document.createElement("input");
                 input_mail.type         = "mail";
                 input_mail.value        = "ccauet@la-providence.net";
-                input_mail.classList.add("input");
             form.appendChild(input_mail);
 
             var input_password          = document.createElement("input");
                 input_password.type     = "password";
                 input_password.value    = "vghP71";
-                input_password.classList.add("input");
             form.appendChild(input_password);
 
             var input_connexion         = document.createElement("input");
                 input_connexion.type    = "button";
                 input_connexion.id      = "input_connexion"
-                input_connexion.classList.add("input");
                 input_connexion.value   = "Connexion";
             form.appendChild(input_connexion);
 
@@ -142,18 +138,23 @@ function supervision()
 
     // Create elements supervision panel
     var div_supervision     = document.createElement("div");
-        div_supervision.id  = "div_supervision"
+        div_supervision.id  = "div_supervision";
         div_supervision.classList.add("div_supervision");
 
         var form    = document.createElement("div");
         form.classList.add("form");
 
-            var input_sensor        = document.createElement("input");
-                input_sensor.type   = "button";
-                input_sensor.id     = "input_sensor";
-                input_sensor.classList.add("input");
-                input_sensor.value  = "Sensor State";
-            form.appendChild(input_sensor);
+            var ActualSensorState   = document.createElement("div");
+            ActualSensorState.id    = "ActualSensorState";
+            form.appendChild(ActualSensorState);
+
+            var input_sensor         = document.createElement("input");
+            input_sensor.type        = "button";
+            input_sensor.id          = "input_sensor";
+            input_sensor.classList.add("input");
+            input_sensor.value       = "Sensor State";
+        form.appendChild(input_sensor);
+        input_sensor.style.display = "none";
 
             var input_histo         = document.createElement("input");
                 input_histo.type    = "button";
@@ -166,12 +167,7 @@ function supervision()
 
     content.appendChild(div_supervision);
 
-    // Event click to see sensors state
-    document.getElementById("input_sensor").
-    addEventListener('click', function()
-    {
-        getAllSensorState();
-    });
+    getAllSensorState();
 
     // Event click to see historicals
     document.getElementById("input_histo").
@@ -179,6 +175,66 @@ function supervision()
     {
         getAllHisto();
     });
+
+    document.getElementById("input_state").
+    addEventListener('click', function()
+    {
+        getAllSensorState();
+    });
+}
+
+// Display all sensor state value in table
+function getAllSensorState()
+{
+
+    var SensorTab = document.getElementsByClassName("div_sensor").style.display;
+    if (SensorTab == "none"){
+
+        SensorTab = "block";
+        document.getElementsByClassName("div_event").remove;
+
+
+        var div_sensor = document.createElement("div");
+        div_sensor.classList.add("div_sensor");
+    
+            table = document.createElement("table");
+            table.classList.add("table_sensor");
+    
+                thead = document.createElement('thead');
+                    tr = document.createElement('tr');
+                    for(var i=0; i<=3; i++)
+                    {
+                        td = document.createElement('td');
+                            cell = document.createTextNode(room[i]);
+                            td.appendChild(cell);
+                        tr.appendChild(td);
+                    }
+                    thead.appendChild(tr);
+                table.appendChild(thead);
+                tbody = document.createElement('tbody');
+                    //getStateValue(message);
+                    tbody.remove();
+                    socket.send("State");
+                    tbody = document.createElement('tbody');
+                    table.appendChild(tbody);
+
+                table.appendChild(tbody);
+            div_sensor.appendChild(table);
+    
+            ActualSensorState.appendChild(div_sensor);
+    
+        // Send value in the server
+        /*
+        setInterval(
+            function ()
+            {
+                tbody.remove();
+                socket.send("State");
+                tbody = document.createElement('tbody');
+                table.appendChild(tbody);
+            }, 1000);*/
+    }
+
 }
 
 // Get sensor state value 
@@ -186,8 +242,6 @@ function getStateValue(message)
 {
     const value = message.split(';');
     tab = value;
-
-    console.log(tab);
 
     for(j = 0; j < 4; j++)
     {
@@ -264,46 +318,13 @@ function cellColor()
     }
 }
 
-// Display all sensor state value in table
-function getAllSensorState()
-{
-    document.getElementById("div_supervision").remove();
-
-    var div_sensor = document.createElement("div");
-    div_sensor.classList.add("div_sensor");
-
-        table = document.createElement("table");
-        table.classList.add("table_sensor");
-
-            thead = document.createElement('thead');
-                tr = document.createElement('tr');
-                for(var i=0; i<=3; i++)
-                {
-                    td = document.createElement('td');
-                        cell = document.createTextNode(room[i]);
-                        td.appendChild(cell);
-                    tr.appendChild(td);
-                }
-                thead.appendChild(tr);
-            table.appendChild(thead);
-
-            tbody = document.createElement('tbody');
-                
-            table.appendChild(tbody);
-
-        div_sensor.appendChild(table);
-
-    content.appendChild(div_sensor);
-
-    // Send value in the server
-    socket.send("State");
-
-}
-
 // Display all historical value in table
 function getAllHisto()
 {
-    document.getElementById("div_supervision").remove();
+    document.getElementById("ActualSensorState").remove();
+    document.getElementById("input_histo").style.display = "none";
+    document.getElementById('input_sensor').style.display = "block";
+
 
     var div_event = document.createElement("div");
     div_event.classList.add("div_event");
@@ -333,6 +354,22 @@ function getAllHisto()
 
     // Send value in the server
     socket.send("Histo");
+
+    // Event click to see historicals
+    document.getElementById("input_sensor").
+    addEventListener('click', function()
+    {
+        document.getElementById('input_sensor').style.display = "none";
+        div_event.remove();
+        getAllSensorState();
+
+        form.classList.add("form");
+
+        var ActualSensorState   = document.createElement("div");
+        ActualSensorState.id    = "ActualSensorState";
+        form.appendChild(ActualSensorState);
+
+    });
 
 }
 
