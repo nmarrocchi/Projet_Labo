@@ -60,7 +60,7 @@ a:active {color: white; text-decoration: none;}
 
 #login_form input[type='button']{
     margin: 2vh auto 3vh auto;
-    background-color: #504e4ecb;
+    background-color: #2e2727cb;
     color: white;
     border: solid black 1px;
     font-weight: bold;
@@ -126,10 +126,11 @@ a:active {color: white; text-decoration: none;}
     font-weight: bold;
 }
 
-
-
-
-
+.input {
+    width: 50%;
+    margin: 2vh 0vw;
+    padding: 3%;
+}
 
 
 
@@ -143,16 +144,6 @@ a:active {color: white; text-decoration: none;}
         width: 50vw;
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
