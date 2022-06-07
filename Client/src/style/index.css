@@ -1,10 +1,17 @@
 *{
-    margin: 0%;
-    padding: 0%;
+    margin: 0px;
+    padding: 0px;
+}
+
+html{
+    background-image: url(../img/Background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 body{
-    background-color: #fff;
+    color: white;
+    text-align: center;
 }
 
 a:link {color: white; text-decoration: none;}
@@ -12,33 +19,154 @@ a:visited {color: white; text-decoration: none;}
 a:hover {color: white; text-decoration: underline;}
 a:active {color: white; text-decoration: none;}
 
-table, th, td {
+
+/* Login Form */
+#login_form{
+    position: relative;
+    border: solid black;
+    border-width: 0px 1px 1px 0px;
+    box-shadow: #0000008f 7px 9px;
+    border-radius: 25px;
+    width: 20vw;
+    margin: 10vh auto;
+    padding-top: 2vh;
     text-align: center;
-    padding: 3%;
-    border: 1px solid #000000;
+    background-color: #00000013;
+}
+
+#login_form h1{
+    text-align: center;
+    color: #747474;
+    font-family: monospace;
+    font-size: xxx-large;
+    margin: 2vh auto;
+    text-shadow: rgb(0, 0, 0) -2px 2px;
+}
+
+#login_form input{
+    width: 70%;
+    margin: 1vh 0.5vw;
+    padding: 2vh 1vw;
+    border: solid white 1px;
+    border-radius: 25px;
+    background-color: rgba(53, 53, 53, 0.863);
+    color: white;
+    font-size: medium;
+}
+
+#login_form input::placeholder{
+    color: white;
+}
+
+#login_form input[type='button']{
+    margin: 2vh auto 3vh auto;
+    background-color: #504e4ecb;
+    color: white;
+    border: solid black 1px;
+    font-weight: bold;
+}
+
+#login_form input[type='button']:hover{
+    background-color: #3a3535cb;
+}
+
+#input_disconnect, #input_sensor, #input_histo{
+    display: block;
+    margin: 5vh auto;
+    min-width: fit-content;
+    width: 10vw;
+    padding: 1.5vh 1vw;
+    font-size: medium;
+    border: solid black 1px;
+    border-radius: 5px;
+    color: white;
+    background-color: #504e4ecb;
+}
+
+#input_disconnect:hover, #input_sensor:hover, #input_histo:hover{
+    background-color: #3a3535cb;
+}
+
+#input_disconnect{
+    margin-bottom: 10vh;
+}
+
+/* Historicals Buttons */
+.Histo_Button{
+    display: inline-block;
+    margin: 2vh 3vw;
+    min-width: fit-content;
+    width: 10vw;
+    padding: 1.5vh 1vw;
+    font-size: medium;
+    border: solid black 1px;
+    border-radius: 5px;
+    color: white;
+    background-color: #504e4ecb;
+}
+
+.Histo_Button:hover{
+    background-color: #3a3535cb;
+}
+
+/* Sensor State Supervision & Historical Table */
+.div_sensor, .div_event{
+    margin: 2vh auto;
+    width: max-content;
+}
+
+.table_sensor, .table_event{
     border-collapse: collapse;
 }
 
-.div_form, .div_supervision, .div_sensor, .div_event {
-    position: relative;
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+.div_sensor td, .div_event td{
+    border: solid white 1px;
+    padding: 1.5vh 2vw;
+    font-size: large;
+    font-weight: bold;
 }
 
-.form, .table_sensor, .table_event {
-    position: relative;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+
+
+
+
+
+
+
+
+
+
+
+/* ----- Responsive max-width screen : 890px ----- */
+@media screen and (max-width: 890px) and (min-width: 600px) {
+    #login_form{
+        width: 50vw;
+    }
 }
 
-.form {
-    text-align: center;
-}
 
-.input {
-    width: 50%;
-    margin: 3%;
-    padding: 3%;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----- Responsive max-width screen : 600px ----- */
+@media screen and (max-width: 600px) {
+    #login_form{
+        width: 80vw;
+    }
+
+    #login_form input{
+        width: 70%;
+        margin: 1vh 0.5vw;
+        padding: 2vh 3vw;
+    }
 }
