@@ -70,7 +70,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #3a3535cb;
 }
 
-#input_disconnect, #input_sensor, #input_histo{
+#input_disconnect, #input_sensor, #input_histo, #input_mainMenu{
     display: block;
     margin: 5vh auto;
     min-width: fit-content;
@@ -83,7 +83,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #504e4ecb;
 }
 
-#input_disconnect:hover, #input_sensor:hover, #input_histo:hover{
+#input_disconnect:hover, #input_sensor:hover, #input_histo:hover, #input_mainMenu:hover{
     background-color: #3a3535cb;
 }
 
@@ -113,10 +113,23 @@ a:active {color: white; text-decoration: none;}
 .div_sensor, .div_event{
     margin: 2vh auto;
     width: max-content;
+    display: none;
 }
 
-.table_sensor, .table_event{
+thead{
+    font-weight: bold;
+}
+
+.table_sensor, .table_event_sensor, .table_event_users{
     border-collapse: collapse;
+    display: block;
+    overflow-y: scroll;
+    max-height: 50vh;
+}
+
+.table_event_sensor, .table_event_users{
+    display: inline-block;
+    margin: 0vh 2vw;
 }
 
 .div_sensor td, .div_event td{
@@ -160,4 +173,12 @@ a:active {color: white; text-decoration: none;}
         margin: 1vh 0.5vw;
         padding: 2vh 3vw;
     }
+}
+
+.false {
+    color: red;
+}
+
+.true {
+    color: green;
 }
