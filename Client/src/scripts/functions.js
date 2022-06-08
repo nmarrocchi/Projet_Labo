@@ -3,7 +3,7 @@ const socket = new WebSocket("ws://127.0.0.1:2569");
 
 var content = document.getElementById('content');
 var tab;
-var table, thead, tbody, tr, td, cell;
+// var tableState, tableHisto, thead, tbody, tr, td, cell;
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
@@ -51,9 +51,14 @@ socket.onmessage = function(event)
             getStateValue(event.data);
             break;
 
-        // Protocol historical event
-        case 'Histo':
-            getHistoValue(event.data);
+        // Protocol historical Sensor event
+        case 'HistoSensor':
+            getHistoSensorValue(event.data);
+            break;
+
+        // Protocol historical users event
+        case 'HistoUsers':
+            getHistoUsersValue(event.data);
             break;
             
         default:
@@ -112,8 +117,9 @@ function inputUserDisconnect()
     var input_disconnect        = document.createElement("input");
         input_disconnect.type   = "button";
         input_disconnect.id     = "input_disconnect"
-        input_disconnect.value   = "Disconnect";
-    content.appendChild(input_disconnect);
+        input_disconnect.value  = "Disconnect";
+
+    content.insertBefore( input_disconnect, document.getElementById( "div_sensor" ) );
 
     document.getElementById("input_disconnect").
     addEventListener('click', function() 
@@ -131,245 +137,238 @@ function disconnection()
 // Supervision panel
 function supervision()
 {
-    inputUserDisconnect();
 
     // Remove formulaire connexion
     document.getElementById("div_form").remove();
 
+    inputUserDisconnect();
+
+    document.getElementById( "div_sensor" ).style.display = "block";
+
+    
     // Create elements supervision panel
     var div_supervision     = document.createElement("div");
-        div_supervision.id  = "div_supervision";
-        div_supervision.classList.add("div_supervision");
+    div_supervision.id  = "div_supervision"
+    div_supervision.classList.add("div_supervision");
 
-        var form    = document.createElement("div");
-        form.classList.add("form");
+    // Histo Button
+    var input_histo         = document.createElement("input");
+        input_histo.type    = "button";
+        input_histo.id      = "input_histo";
+        input_histo.classList.add("input");
+        input_histo.value   = "Historical";
 
-            var ActualSensorState   = document.createElement("div");
-            ActualSensorState.id    = "ActualSensorState";
-            form.appendChild(ActualSensorState);
+    content.insertBefore( input_histo, document.getElementById( "div_sensor" ) );
 
-            var input_sensor         = document.createElement("input");
-            input_sensor.type        = "button";
-            input_sensor.id          = "input_sensor";
-            input_sensor.classList.add("input");
-            input_sensor.value       = "Sensor State";
-        form.appendChild(input_sensor);
-        input_sensor.style.display = "none";
-
-            var input_histo         = document.createElement("input");
-                input_histo.type    = "button";
-                input_histo.id      = "input_histo";
-                input_histo.classList.add("input");
-                input_histo.value   = "Historical";
-            form.appendChild(input_histo);
-
-        div_supervision.appendChild(form);
-
-    content.appendChild(div_supervision);
-
+    // Show all sensors state
     getAllSensorState();
 
-    // Event click to see historicals
+    // Sensor Button
+    var input_sensor        = document.createElement("input");
+        input_sensor.type   = "button";
+        input_sensor.id     = "input_sensor";
+        input_sensor.classList.add("input");
+        input_sensor.value  = "Sensor State";
+        input_sensor.style.display = "none";
+    
+    content.insertBefore( input_sensor, document.getElementById( "div_sensor" ) );
+
+    content.appendChild(div_supervision);
+ 
+    socket.send( "Histo" ); 
+
+    document.getElementById( "div_sensor" ).style.display = "none";
+    document.getElementById( "input_sensor" ).style.display = "block";
+
+    // Main menu button
+    var input_mainMenu      = document.createElement("input");
+        input_mainMenu.type     = "button";
+        input_mainMenu.id       = "input_mainMenu";
+        input_mainMenu.classList.add("input");
+        input_mainMenu.value    = "Main menu";
+
+    content.insertBefore( input_mainMenu, document.getElementById( "div_sensor" ) );
+    input_mainMenu.style.display = "none";
+
+
+    // Event click to see Historicals
     document.getElementById("input_histo").
     addEventListener('click', function()
     {
-        getAllHisto();
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('input_histo').style.display = "none";
+        document.getElementById('input_sensor').style.display = "block";
+        document.getElementById( "div_event" ).style.display = "block";
+        document.getElementById( "input_mainMenu" ).style.display = "block";
+        
     });
 
-    document.getElementById("input_state").
+    
+    // Event click to see SensorState
+    document.getElementById("input_sensor").
     addEventListener('click', function()
     {
-        getAllSensorState();
+        document.getElementById('input_sensor').style.display = "none";
+        document.getElementById('input_histo').style.display = "block";
+        document.getElementById( "div_sensor" ).style.display = "block";
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById( "input_mainMenu" ).style.display = "block";
+        
     });
+
+    // Hide all elements ( main menu )
+    document.getElementById("input_mainMenu").
+    addEventListener('click', function()
+    {
+        document.getElementById('input_histo').style.display = "block";
+        document.getElementById('input_sensor').style.display = "block";
+        document.getElementById( "div_sensor" ).style.display = "none";
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById( "input_mainMenu" ).style.display = "none";
+        
+    });
+
+          
+
 }
 
 // Display all sensor state value in table
 function getAllSensorState()
 {
 
-    var SensorTab = document.getElementsByClassName("div_sensor").style.display;
-    if (SensorTab == "none"){
+    let div_sensor = document.createElement("div");
+    div_sensor.classList.add("div_sensor");
+    div_sensor.id = "div_sensor";
 
-        SensorTab = "block";
-        document.getElementsByClassName("div_event").remove;
+    let table_sensor = document.createElement("table");
+    table_sensor.classList.add("table_sensor");
+    table_sensor.id = "table_sensor";
 
+    let thead = document.createElement('thead');
+    let tr = document.createElement('tr');
+    
+    for( var i=0; i<=3; i++ ) {
+        
+        let td   = document.createElement('td')
+            , cell = document.createTextNode(room[i]);
 
-        var div_sensor = document.createElement("div");
-        div_sensor.classList.add("div_sensor");
-    
-            table = document.createElement("table");
-            table.classList.add("table_sensor");
-    
-                thead = document.createElement('thead');
-                    tr = document.createElement('tr');
-                    for(var i=0; i<=3; i++)
-                    {
-                        td = document.createElement('td');
-                            cell = document.createTextNode(room[i]);
-                            td.appendChild(cell);
-                        tr.appendChild(td);
-                    }
-                    thead.appendChild(tr);
-                table.appendChild(thead);
-                tbody = document.createElement('tbody');
-                    //getStateValue(message);
-                    tbody.remove();
-                    socket.send("State");
-                    tbody = document.createElement('tbody');
-                    table.appendChild(tbody);
-
-                table.appendChild(tbody);
-            div_sensor.appendChild(table);
-    
-            ActualSensorState.appendChild(div_sensor);
-    
-        // Send value in the server
-        /*
-        setInterval(
-            function ()
-            {
-                tbody.remove();
-                socket.send("State");
-                tbody = document.createElement('tbody');
-                table.appendChild(tbody);
-            }, 1000);*/
+        td.appendChild(cell);
+        tr.appendChild(td);
     }
+    
+    thead.appendChild(tr);
+    table_sensor.appendChild(thead);
+
+    let tbody = document.createElement('tbody');
+            
+    table_sensor.appendChild(tbody);
+    div_sensor.appendChild(table_sensor);
+
+    content.appendChild(div_sensor);
+
+    // Send value in the server
+    socket.send("State");
 
 }
 
 // Get sensor state value 
 function getStateValue(message)
 {
-    const value = message.split(';');
-    tab = value;
 
-    for(j = 0; j < 4; j++)
-    {
-        tr = document.createElement('tr');
-            for(i = 1; i <= 4; i++)
+
+    const tableBody = document.getElementById( "table_sensor" );
+    const value = message.split(';');
+
+    tableBody.innerHTML = "";
+
+    for( j = 0; j < 4; j++ ) {
+        const tr = document.createElement( "tr" );
+            for( i = 1; i <= 4; i++ )
             {
-                cellValue(i + j * 4);
-                addCellClass(i + j * 4);
+
+                const td = document.createElement( "td" )
+                const span = document.createElement( "span" )
+                span.innerText = value[ i + j * 4 ]
+                span.classList.add( `${value[ i + j * 4 ]}` );
+
+                td.appendChild( span )
+                tr.appendChild( td )
+
             }
-        tbody.appendChild(tr);
+            tableBody.appendChild(tr);
     }
 
-    cellColor();
+    // cellColor();
 }
 
 // Get historical value
-function getHistoValue(message)
+function getHistoSensorValue(message)
 {
-    const value = message.split(';');
-    tab = value;
+    let value = message.split( ";" );
+    const table = document.getElementById( "table_event_sensor" );
 
-    console.log(tab);
+    while( true ) {
 
-    tr = document.createElement('tr');
-        for(var i = 1; i < tab.length; i++)
-        {
-            cellValue(i);
+        const histoElement = value.slice( 1, 5 );
+        value = value.splice( 1, 5 )
+
+        const tr = document.createElement( "tr" )
+
+        for( const elem of histoElement ) {
+            const row = document.createElement( "td" );
+            row.innerText = elem
+            tr.appendChild( row  )
         }
-    tbody.appendChild(tr);
+            
+
+        table.appendChild( tr )
+        
+        if ( value.length )
+            break;
+
+    }
+
 }
+
+// Get historical value
+function getHistoUsersValue(message)
+{
+    let value = message.split( ";" );
+    const table = document.getElementById( "table_event_users" );
+
+    while( true ) {
+
+        const histoElement = value.slice( 1, 5 );
+        value = value.splice( 1, 5 )
+
+        const tr = document.createElement( "tr" )
+
+        for( const elem of histoElement ) {
+            const row = document.createElement( "td" );
+            row.innerText = elem
+            tr.appendChild( row  )
+        }
+            
+
+        table.appendChild( tr )
+        
+        if ( value.length )
+            break;
+
+    }
+
+}
+
 
 // Creation cell with value inside
-function cellValue(i)
+function cellValue( i, value )
 {
-    td = document.createElement('td');
-        cell = document.createTextNode(tab[i])
-        td.appendChild(cell);
+    let td = document.createElement('td');
+    let cell = document.createTextNode(value[i]);
+    td.appendChild(cell);
     tr.appendChild(td);
-    addCellClass(td, i);
-}
-
-// Add a class at cell
-function addCellClass(i)
-{
-    switch (tab[i])
-    {
-        case 'true':
-            td.classList.add("true");
-            break;
-
-        case 'false':
-            td.classList.add("false");
-            break;
-            
-        default:
-            break;
-
-    }
-}
-
-// Change color value in cell
-function cellColor()
-{
-    for(var i=0; i<document.getElementsByClassName('false').length; i++)
-    {
-        document.getElementsByClassName('false')[i].style.color = "#c00000";
-        console.log(i);
-    }
-
-    for(var i=0; i<document.getElementsByClassName('true').length; i++)
-    {
-        document.getElementsByClassName('true')[i].style.color = "#00c000";
-        console.log(i);
-    }
-}
-
-// Display all historical value in table
-function getAllHisto()
-{
-    document.getElementById("ActualSensorState").remove();
-    document.getElementById("input_histo").style.display = "none";
-    document.getElementById('input_sensor').style.display = "block";
-
-
-    var div_event = document.createElement("div");
-    div_event.classList.add("div_event");
-
-    table = document.createElement("table");
-    table.classList.add("table_event");
-
-        thead = document.createElement('thead');
-            tr = document.createElement('tr');
-            for(var i=0; i<=3; i++)
-            {
-                td = document.createElement('td');
-                    cell = document.createTextNode(histo[i]);
-                    td.appendChild(cell);
-                tr.appendChild(td);
-            }
-            thead.appendChild(tr);
-        table.appendChild(thead);
-
-        tbody = document.createElement('tbody');
-            
-        table.appendChild(tbody);
-
-    div_event.appendChild(table);
     
-    content.appendChild(div_event);
-
-    // Send value in the server
-    socket.send("Histo");
-
-    // Event click to see historicals
-    document.getElementById("input_sensor").
-    addEventListener('click', function()
-    {
-        document.getElementById('input_sensor').style.display = "none";
-        div_event.remove();
-        getAllSensorState();
-
-        form.classList.add("form");
-
-        var ActualSensorState   = document.createElement("div");
-        ActualSensorState.id    = "ActualSensorState";
-        form.appendChild(ActualSensorState);
-
-    });
+    addCellClass(td, i);
 
 }
 
