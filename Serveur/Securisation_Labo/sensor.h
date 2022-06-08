@@ -21,7 +21,7 @@ public:
 	virtual QList<bool> selectStatut();
 
 	/* Update the statut sensor in database */
-	virtual void updateStatut(bool status, int room);
+	virtual void insertValue(bool status, int room);
 
 private:
 

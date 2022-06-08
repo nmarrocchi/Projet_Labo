@@ -13,7 +13,7 @@ private:
 	static securitySysteme * instance;
 
 	// - Instance All Sensors Class
-	securitySysteme(database * db);
+	securitySysteme();
 
 	QList<security*> secDevices;
 
@@ -23,7 +23,7 @@ protected:
 
 public:
 	// - Create securitySystem Instance
-	static securitySysteme * getInstance(database * db);
+	static securitySysteme * getInstance();
 
 };
 

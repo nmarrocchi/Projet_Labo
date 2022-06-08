@@ -22,9 +22,17 @@ QList<bool> sensor::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				if (timeSlot::validateTime() == false)
+				if (timeSlot::validateTime(db) == false)
 				{
-					//continuity::updateStatue(actualState[i], i);
+					for (int channel = 5; channel < 8; channel++)
+					{
+						for (int port = 0; port < 2; port++)
+						{
+							card->writeCard(channel, port, 0);
+						}
+					}
+
+					insertValue(actualState[i], i);
 					//mail::sendMail();
 				}
 			}
@@ -38,7 +46,7 @@ QList<bool> sensor::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatut(actualState[i], i);
+				insertValue(actualState[i], i);
 			}
 		}
 
@@ -50,10 +58,12 @@ QList<bool> sensor::selectStatut()
 }
 
 	/* Update the statut sensor in database */
-void sensor::updateStatut(bool status, int room)
+void sensor::insertValue(bool status, int room)
 {
 
-	QString value = "status = " + QString::number(status) + " WHERE room = " + QString::number(room);
-	//db->updatedb("security", value);
+	int value = room * 4 + Byte::sensor + 1;
+
+	QSqlQuery query;
+	query.exec("INSERT INTO `historical`(`idSecurity`, `statut`) VALUES (" + QString::number(value) + ", " + QString::number(statut) + ")");
 
 }

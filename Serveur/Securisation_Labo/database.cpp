@@ -1,6 +1,19 @@
 #include "database.h"
 #include <qsqlquery.h>
 
+// - Set securitySystem Instance to NULL
+database * database::instance = NULL;
+
+// - Create securitySystem Instance
+database * database::getInstance()
+{
+	if (instance == NULL)
+	{
+		database * db = new database();
+	}
+
+	return instance;
+}
 
 // - Constructor of database class
 database::database()
@@ -12,7 +25,8 @@ database::database()
 	db.setPassword(_Password);
 	db.setDatabaseName(_Database);
 
-	if (db.open()) {
+	if (db.open()) 
+	{
 		qDebug() << "\n Database connected successfully \n" << endl;
 	}
 	else {

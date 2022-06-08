@@ -8,10 +8,15 @@
 class timeSlot
 {
 public:
-	static bool validateTime();
+
+	static bool validateTime(database * db);
+	static void changeRegularTime(database * db);
 
 private:
+
 	static QString startTime;
 	static QString endTime;
+
+	database * db;
 };
 

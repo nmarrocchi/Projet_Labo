@@ -17,15 +17,13 @@ int main(int argc, char *argv[])
 
 	security::superviseTable(); // Affiche un tableau pour les états des capteurs
 
-	database * db = new database();
+	//database * db = new database();
 
-	timeSlot::validateTime();
-
-	webServer::getInstance(db, 2569); // Instancie le serveur websocket
+	webServer::getInstance(2569); // Instancie le serveur websocket
 	
-	ReaderCard::getInstance(db);	// Instancie le lecteur RFID
+	//ReaderCard::getInstance(db);	// Instancie le lecteur RFID
 
-	securitySysteme::getInstance(db);	// Affiche les états des capteurs
+	securitySysteme::getInstance();	// Affiche les états des capteurs
 
     return a.exec();
 }

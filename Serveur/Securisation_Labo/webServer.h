@@ -28,7 +28,7 @@ private:
 	webServer(database * db, quint16 port);
 
 public:
-	static webServer * getInstance(database * db = NULL, quint16 port = 0);
+	static webServer * getInstance(quint16 port = 0);
 
 	void updateSystemData(SystemData data);
 

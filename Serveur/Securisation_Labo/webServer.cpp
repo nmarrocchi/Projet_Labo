@@ -4,10 +4,12 @@
 webServer * webServer::instance = NULL;
 
 // - Create securitySystem Instance
-webServer * webServer::getInstance(database * db, quint16 port)
+webServer * webServer::getInstance(quint16 port)
 {
 	if (instance == NULL)
 	{
+		database * db = database::getInstance();
+
 		instance = new webServer(db, port);
 	}
 

@@ -17,6 +17,7 @@ private:
 	QString _Password = "admin";
 	QString _Database = "labotest";
 
+	static database * instance;
 
 public:
 	QString user_table = "user";
@@ -28,6 +29,8 @@ public:
 	// - Constructor of database class
 	database();
 	~database();
+
+	static database * getInstance();
 
 	// - Select informations in database
 	QSqlQuery selectdb(QString table, QString condition);

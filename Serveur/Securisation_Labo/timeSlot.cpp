@@ -3,7 +3,7 @@
 QString timeSlot::startTime = NULL;
 QString timeSlot::endTime = NULL;
 
-bool timeSlot::validateTime()
+bool timeSlot::validateTime(database * db)
 {
 	QSqlQuery query;
 	query.exec("SELECT `startTime`, `endTime` FROM `timeSlot` WHERE active = 1");
@@ -17,14 +17,14 @@ bool timeSlot::validateTime()
 
 		if (timeNow < startTime && timeNow > endTime)
 		{
-			qDebug() << "timeSlot=false " + timeNow;
-			//return false;
+			return false;
 		}
 		else {
-			qDebug() << "timeSlot=true " + timeNow;
-			//return true;
+			return true;
 		}
 	}
 
 	return false;
 }
+
+

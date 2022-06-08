@@ -23,9 +23,17 @@ QList<bool> presence::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				if (timeSlot::validateTime() == false)
+				if (timeSlot::validateTime(db) == false)
 				{
-					//continuity::updateStatue(actualState[i], i);
+					for (int channel = 5; channel < 8; channel++)
+					{
+						for (int port = 0; port < 2; port++)
+						{
+							card->writeCard(channel, port, 0);
+						}
+					}
+
+					insertValue(actualState[i], i);
 					//mail::sendMail();
 				}
 			}
@@ -39,7 +47,7 @@ QList<bool> presence::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatut(actualState[i], i);
+				insertValue(actualState[i], i);
 			}
 		}
 
@@ -50,10 +58,12 @@ QList<bool> presence::selectStatut()
 }
 
 /* Update the statut presence in database */
-void presence::updateStatut(bool status, int room)
+void presence::insertValue(bool statut, int room)
 {
+	
+	int value = room * 4 + Byte::presence + 1;
 
-	QString value = "status = " + QString::number(status) + " WHERE room = " + QString::number(room);
-	//db->updatedb("security", value);
+	QSqlQuery query;
+	query.exec("INSERT INTO `historical`(`idSecurity`, `statut`) VALUES (" + QString::number(value) + ", " + QString::number(statut) + ")");
 
 }

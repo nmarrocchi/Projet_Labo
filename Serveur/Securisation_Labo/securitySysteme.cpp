@@ -10,33 +10,37 @@
 securitySysteme * securitySysteme::instance = NULL;
 
 // - Create securitySystem Instance
-securitySysteme * securitySysteme::getInstance(database * db)
+securitySysteme * securitySysteme::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new securitySysteme(db);
+		instance = new securitySysteme();
 	}
 
 	return instance;
 }
 
 // - Instance All Sensors Class
-securitySysteme::securitySysteme(database * db)
+securitySysteme::securitySysteme()
 {
-	PCI_7248_Card * card = new PCI_7248_Card();
-	secDevices.push_back(new continuity(card, db));
-	secDevices.push_back(new sensor(card, db));
-	secDevices.push_back(new tamper(card, db));
-	secDevices.push_back(new presence(card, db));
-
 	start();
 }
 
 // - Run securitySystem loop
 void securitySysteme::run()
 {
+	PCI_7248_Card * card = new PCI_7248_Card();
+	database * db = database::getInstance();
+
+	secDevices.push_back(new continuity(card, db));
+	secDevices.push_back(new sensor(card, db));
+	secDevices.push_back(new tamper(card, db));
+	secDevices.push_back(new presence(card, db));
+
 	while (1)
 	{
+		timeSlot::changeRegularTime(db);
+
 		QList<bool> tamperStates;
 		QList<bool> continuityStates;
 		QList<bool> presenceStates;
