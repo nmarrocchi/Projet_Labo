@@ -4,9 +4,10 @@ QString timeSlot::startTime = NULL;
 QString timeSlot::endTime	= NULL;
 QString timeSlot::access	= NULL;
 
-// - Set securitySystem Instance to NULL
+/* Set securitySystem Instance to NULL */
 timeSlot * timeSlot::instance = NULL;
 
+/* Create timeSlot instance */
 timeSlot * timeSlot::getInstance(database * db)
 {
 	if (instance == NULL)
@@ -17,6 +18,7 @@ timeSlot * timeSlot::getInstance(database * db)
 	return instance;
 }
 
+/* Constructor */
 timeSlot::timeSlot(database * db)
 {
 	this->db = db;
@@ -24,10 +26,12 @@ timeSlot::timeSlot(database * db)
 	initTimeSlot();
 }
 
+/* Destructor */
 timeSlot::~timeSlot()
 {
 }
 
+/* Validate the actual time slot */
 bool timeSlot::validateTime()
 {
 	QString timeNow = QDateTime::currentDateTime().toString("hh:mm:ss");
@@ -59,6 +63,7 @@ bool timeSlot::validateTime()
 	return false;
 }
 
+/* Initialisation time slot */
 void timeSlot::initTimeSlot()
 {
 	QSqlQuery query;
@@ -80,6 +85,7 @@ void timeSlot::initTimeSlot()
 	}
 }
 
+/* Update the datetime automatic in database  */
 void timeSlot::changeRegularTime()
 {
 	QSqlQuery query;
