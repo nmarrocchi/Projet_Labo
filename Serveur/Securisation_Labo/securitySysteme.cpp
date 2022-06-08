@@ -32,6 +32,8 @@ void securitySysteme::run()
 	PCI_7248_Card * card = new PCI_7248_Card();
 	database * db = database::getInstance();
 
+	timeSlot::getInstance(db);
+
 	secDevices.push_back(new continuity(card, db));
 	secDevices.push_back(new sensor(card, db));
 	secDevices.push_back(new tamper(card, db));
@@ -39,7 +41,7 @@ void securitySysteme::run()
 
 	while (1)
 	{
-		timeSlot::changeRegularTime(db);
+		timeSlot::changeRegularTime();
 
 		QList<bool> tamperStates;
 		QList<bool> continuityStates;

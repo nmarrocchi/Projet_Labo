@@ -7,16 +7,31 @@
 
 class timeSlot
 {
+
+/* Define time */
+#define coursStartTime		"06:00:00"
+#define coursEndTime		"23:00:00"
+
 public:
 
-	static bool validateTime(database * db);
-	static void changeRegularTime(database * db);
+	timeSlot(database * db);
+	~timeSlot();
+
+	static timeSlot * getInstance(database * db);
+
+	static bool validateTime();
+	static void initTimeSlot();
+	static void changeRegularTime();
 
 private:
 
 	static QString startTime;
 	static QString endTime;
+	static QString access;
+
+	static timeSlot * instance;
 
 	database * db;
+
 };
 

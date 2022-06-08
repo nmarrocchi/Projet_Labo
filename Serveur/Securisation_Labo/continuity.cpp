@@ -22,7 +22,7 @@ QList<bool> continuity::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				if (timeSlot::validateTime(db) == false)
+				if (timeSlot::validateTime() == false)
 				{
 					for (int channel = 5; channel < 8; channel++)
 					{
