@@ -70,7 +70,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #3a3535cb;
 }
 
-#input_disconnect, #input_sensor, #input_histo, #input_mainMenu{
+#input_sensor, #input_histo, #input_mainMenu{
     display: block;
     margin: 5vh auto;
     min-width: fit-content;
@@ -83,12 +83,8 @@ a:active {color: white; text-decoration: none;}
     background-color: #504e4ecb;
 }
 
-#input_disconnect:hover, #input_sensor:hover, #input_histo:hover, #input_mainMenu:hover{
+#input_sensor:hover, #input_histo:hover, #input_mainMenu:hover{
     background-color: #3a3535cb;
-}
-
-#input_disconnect{
-    margin-bottom: 10vh;
 }
 
 /* Historicals Buttons */

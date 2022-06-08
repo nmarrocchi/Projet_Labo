@@ -1,26 +1,24 @@
-.nav{
-    background-color: #343a40;
+#nav{
+    background-color: #2f3336;
     height: 6vh;
     width: 100%;
     flex-direction: row;
     text-align: right;
   }
-  
-  .nav-slot{
-    display: inline-flex;
-    line-height: 6vh;
-    padding: 0vh 1vw;
-    font-weight: bold;
-    color: white;
-  }
-  
-  .nav-slot:hover{
-    color: #ffc107;
-  }
 
-  @media screen and (max-width: 676px){
-    .nav{
-      height: 12vh;
-      text-align: center;
-    }
-  }
+#input_disconnect, #input_account{
+  margin: 1vh 1vw;
+  padding: 0.5vh 1vw;
+  height: 4vh;
+  width: fit-content;
+  font-size: medium;
+  border: solid black 1px;
+  border-radius: 5px;
+  color: white;
+  background-color: #504e4ecb;
+}
+
+#input_disconnect:hover, #input_account:hover{
+  background-color: #3a3535cb;
+}
+
