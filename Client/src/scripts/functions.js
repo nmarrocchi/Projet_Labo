@@ -43,6 +43,8 @@ socket.onmessage = function(event)
             }
             else {
                 console.log('Error user accompte');
+                document.getElementById('LoginError').innerText = "Les identifiants sont incorrects"
+
             }
             break;
 
@@ -76,6 +78,10 @@ function connexion()
 
         var form    = document.createElement("div");
         form.id     = "login_form";
+
+        var LoginError = document.createElement("p");
+        LoginError.id = "LoginError";
+        form.appendChild(LoginError);
 
             var input_mail              = document.createElement("input");
                 input_mail.type         = "mail";
@@ -121,23 +127,33 @@ function addNavigationMenu(){
     var nav_ul = document.createElement("ul");
     nav.appendChild(nav_ul);
 
-    var nav_li = document.createElement("li");
-    nav_ul.appendChild(nav_li);  
+    // Main menu button
+    var input_mainMenu      = document.createElement("li");
+    input_mainMenu.id       = "input_mainMenu";
+    input_mainMenu.innerText    = "Main menu";
+
+    nav_ul.appendChild(input_mainMenu);
+
+    //input_mainMenu.style.display = "none";
+
+    var nav_li_li   = document.createElement("li");
+    nav_ul.appendChild(nav_li_li);
 
     // Account button
-    var input_account        = document.createElement("button");
-    input_account.id     = "input_account"
+    var input_account        = document.createElement("ul");
+    input_account.id     = "input_account";
     input_account.innerText  = userMail;
 
-    nav_li.appendChild(input_account);
+    nav_li_li.appendChild(input_account);
 
     // Disconnect button
-    var input_disconnect        = document.createElement("button");
-    input_disconnect.id     = "input_disconnect"
+    var input_disconnect        = document.createElement("li");
+    input_disconnect.id     = "input_disconnect";
     input_disconnect.innerText  = "Disconnect ";
+    input_disconnect.style.display = "none";
     input_disconnect.onclick = "location.reload()";
 
-    nav_li.appendChild(input_disconnect);
+    input_account.appendChild(input_disconnect);
 
     // Disconnect button icon
     var disconnect_exit_icon        = document.createElement("label");
@@ -150,6 +166,13 @@ function addNavigationMenu(){
     document.body.appendChild(nav);
     document.body.insertBefore( nav, document.getElementById( "content" ) );
 
+    // Event click to see SensorState
+    document.getElementById("input_account").
+    addEventListener('click', function()
+    {
+        showHideDisconnecInput();
+    });
+
 
     // Event click to see SensorState
     document.getElementById("input_disconnect").
@@ -158,6 +181,19 @@ function addNavigationMenu(){
         location.reload();
     });
 
+}
+
+function showHideDisconnecInput(){
+
+    var input_disconnect = document.getElementById('input_disconnect');
+    console.log(input_disconnect.style.display);
+
+    if( input_disconnect.style.display == "none"){
+        input_disconnect.style.display = "block";
+    }
+    else if ( input_disconnect.style.display == "block"){
+        input_disconnect.style.display = "none";
+    }
 }
 
 // Supervision panel
@@ -207,15 +243,17 @@ function supervision()
     document.getElementById( "div_sensor" ).style.display = "none";
     document.getElementById( "input_sensor" ).style.display = "block";
 
-    // Main menu button
-    var input_mainMenu      = document.createElement("input");
-        input_mainMenu.type     = "button";
-        input_mainMenu.id       = "input_mainMenu";
-        input_mainMenu.classList.add("input");
-        input_mainMenu.value    = "Main menu";
+    // Event click to return to main Menu
+    document.getElementById("input_mainMenu").
+    addEventListener('click', function()
+    {
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('input_histo').style.display = "block";
+        document.getElementById('input_sensor').style.display = "block";
+        document.getElementById( "div_event" ).style.display = "none";
+        
+    });
 
-    content.insertBefore( input_mainMenu, document.getElementById( "div_sensor" ) );
-    input_mainMenu.style.display = "none";
 
     // Event click to see Historicals
     document.getElementById("input_histo").
@@ -225,7 +263,7 @@ function supervision()
         document.getElementById('input_histo').style.display = "none";
         document.getElementById('input_sensor').style.display = "block";
         document.getElementById( "div_event" ).style.display = "block";
-        document.getElementById( "input_mainMenu" ).style.display = "block";
+        document.getElementById( "input_mainMenu" ).style.display = "inline-block";
         
     });
 
@@ -238,23 +276,9 @@ function supervision()
         document.getElementById('input_histo').style.display = "block";
         document.getElementById( "div_sensor" ).style.display = "block";
         document.getElementById( "div_event" ).style.display = "none";
-        document.getElementById( "input_mainMenu" ).style.display = "block";
+        document.getElementById( "input_mainMenu" ).style.display = "inline-block";
         
     });
-
-    // Hide all elements ( main menu )
-    document.getElementById("input_mainMenu").
-    addEventListener('click', function()
-    {
-        document.getElementById('input_histo').style.display = "block";
-        document.getElementById('input_sensor').style.display = "block";
-        document.getElementById( "div_sensor" ).style.display = "none";
-        document.getElementById( "div_event" ).style.display = "none";
-        document.getElementById( "input_mainMenu" ).style.display = "none";
-        
-    });
-
-          
 
 }
 

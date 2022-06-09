@@ -1,13 +1,21 @@
 #nav{
     background-color: #2f3336;
-    height: 6vh;
+    height: 5vh;
     width: 100%;
     flex-direction: row;
     text-align: right;
   }
 
-#input_disconnect, #input_account{
-  margin: 1vh 1vw;
+#nav ul{
+  list-style-type: none;
+}
+
+#nav ul li{
+  display: inline-block;
+}
+
+#input_disconnect, #input_account, #input_mainMenu{
+  margin: 0vh 1vw;
   padding: 0.5vh 1vw;
   height: 4vh;
   width: fit-content;
@@ -16,9 +24,17 @@
   border-radius: 5px;
   color: white;
   background-color: #504e4ecb;
+  line-height: 4vh;
+  text-align: center;
 }
 
-#input_disconnect:hover, #input_account:hover{
+#input_disconnect:hover, #input_account:hover, #input_mainMenu:hover{
   background-color: #3a3535cb;
+  cursor: default;
 }
 
+#input_disconnect{
+  display: block;
+  position: absolute;
+  margin-top: 0.5vh;
+}
