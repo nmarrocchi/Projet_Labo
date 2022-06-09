@@ -10,29 +10,29 @@ database * database::getInstance()
 	if (instance == NULL)
 	{
 		database * db = new database();
+		instance = db;
 	}
 
 	return instance;
 }
 
+Operation * database::getOperation()
+{
+	Operation * result = nullptr;
+	operationMutex.lock();
+	if (operationQueue.size() > 0)
+	{
+		result = operationQueue.front();
+		operationQueue.pop_front();
+	}
+	operationMutex.unlock();
+	return result;
+}
+
 // - Constructor of database class
 database::database()
 {
-	// - Connecting to mysql database
-	db = QSqlDatabase::addDatabase("QMYSQL");
-	db.setHostName(_Hostname);
-	db.setUserName(_Username);
-	db.setPassword(_Password);
-	db.setDatabaseName(_Database);
-
-	if (db.open()) 
-	{
-		qDebug() << "\n Database connected successfully \n" << endl;
-	}
-	else {
-		qDebug() << "\n Database is not connected \n" << endl;
-		//exit(0);
-	}
+	start();
 }
 
 database::~database()
@@ -45,13 +45,9 @@ QSqlQuery database::selectdb(QString table, QString condition)
 	QSqlQuery selectQuery;
 	selectQuery.prepare("SELECT * FROM " + table + condition);
 
-	if (selectQuery.exec()) {
-		qDebug() << "Request executed" << endl;
-		
+	if (selectQuery.exec()) 
+	{
 		return selectQuery;
-	}
-	else {
-		qDebug() << "Request not executed" << endl;
 	}
 }
 
@@ -91,4 +87,46 @@ int database::countdb(QString table, QString condition)
 
 	return 0;
 
+}
+
+void database::addOperation(Operation * operation)
+{
+	if (operation != nullptr)
+	{
+		operationMutex.lock();
+		operationQueue.push_back(operation);
+		operationMutex.unlock();
+	}
+}
+
+void database::run()
+{
+	// - Connecting to mysql database
+	db = QSqlDatabase::addDatabase("QMYSQL");
+	db.setHostName(_Hostname);
+	db.setUserName(_Username);
+	db.setPassword(_Password);
+	db.setDatabaseName(_Database);
+
+	if (db.open())
+	{
+		qDebug() << "\n Database connected successfully \n" << endl;
+	}
+	else {
+		qDebug() << "\n Database is not connected \n" << endl;
+		//exit(0);
+	}
+
+	while (1)
+	{
+		Operation * operation = getOperation();
+		if (operation != nullptr)
+		{
+			operation->runTask();
+		}
+		else
+		{
+			QThread::msleep(1);
+		}
+	}
 }

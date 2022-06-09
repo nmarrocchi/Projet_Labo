@@ -1,4 +1,6 @@
 #include "sensor.h"
+#include "SensorStateChangedOperation.h"
+#include "AddHistoOperation.h"
 
 /* Send the statut sensor on the client */
 QList<bool> sensor::selectStatut()
@@ -22,19 +24,7 @@ QList<bool> sensor::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				if (timeSlot::validateTime() == false)
-				{
-					for (int channel = 5; channel < 8; channel++)
-					{
-						for (int port = 0; port < 2; port++)
-						{
-							card->writeCard(channel, port, 0);
-						}
-					}
-
-					insertValue(actualState[i], i);
-					//mail::sendMail();
-				}
+				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], i));
 			}
 		}
 		else
@@ -60,10 +50,7 @@ QList<bool> sensor::selectStatut()
 	/* Update the statut sensor in database */
 void sensor::insertValue(bool status, int room)
 {
-
 	int value = room * 4 + Byte::sensor + 1;
 
-	QSqlQuery query;
-	query.exec("INSERT INTO `historical`(`idSecurity`, `statut`) VALUES (" + QString::number(value) + ", " + QString::number(statut) + ")");
-
+	database::getInstance()->addOperation(new AddHistoOperation(value, statut));
 }

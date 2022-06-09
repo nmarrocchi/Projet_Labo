@@ -1,5 +1,6 @@
 #pragma once
 #include "Dask.h"
+#include <qmutex.h>
 
 class PCI_7248_Card
 {
@@ -35,6 +36,8 @@ private:
 	int sensor;
 
 	unsigned short value;
+
+	QMutex mutex;
 
 };
 

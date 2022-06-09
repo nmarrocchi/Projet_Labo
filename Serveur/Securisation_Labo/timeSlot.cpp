@@ -34,39 +34,28 @@ timeSlot::~timeSlot()
 /* Validate the actual time slot */
 bool timeSlot::validateTime()
 {
+	QString dayNow = QDateTime::currentDateTime().toString("dddd");
 	QString timeNow = QDateTime::currentDateTime().toString("hh:mm:ss");
 
-	QSqlQuery query;
-	query.exec("SELECT `startTime`, `endTime`, `access` FROM `timeSlot` WHERE active = 1");
-
-	if (query.next())
+	if (dayNow != "samedi" || dayNow != "dimanche")
 	{
-		timeSlot::startTime = query.value(0).toString();
-		timeSlot::endTime	= query.value(1).toString();
-		timeSlot::access	= query.value(2).toString();
-
-		if (timeNow < startTime && timeNow > endTime)
+		if (timeNow >= coursStartTime && timeNow <= coursEndTime)
 		{
-			return false;
+			return true;
 		}
 		else {
-			if (access == "0")
-			{
-				return false;
-			}
-			else {
-				return true;
-			}
+			return false;
 		}
 	}
-
-	return false;
+	else {
+		return false;
+	}
 }
 
 /* Initialisation time slot */
 void timeSlot::initTimeSlot()
 {
-	QSqlQuery query;
+	/*QSqlQuery query;
 	query.exec("SELECT `name` FROM `timeSlot` WHERE active = 1");
 	if (query.next())
 	{
@@ -82,13 +71,13 @@ void timeSlot::initTimeSlot()
 				query.exec("UPDATE `timeSlot` SET `startTime`='" + dateNow + " " + coursStartTime + "',`endTime`='" + dateNow + " " + coursStartTime + "' WHERE `name`= '" + name + "'");
 			}
 		}
-	}
+	}*/
 }
 
 /* Update the datetime automatic in database  */
 void timeSlot::changeRegularTime()
 {
-	QSqlQuery query;
+	/*QSqlQuery query;
 	query.exec("SELECT `name` FROM `timeSlot` WHERE active = 1");
 	if (query.next())
 	{
@@ -101,7 +90,7 @@ void timeSlot::changeRegularTime()
 			
 			if (dayNow != "samedi" || dayNow != "dimanche")
 			{
-				if (timeNow > "00:00:00" || timeNow < "00:00:01")
+				if (timeNow >= "00:00:00" && timeNow <= "00:00:02")
 				{
 					QString dateNow = QDateTime::currentDateTime().toString("yyyy-MM-dd");
 
@@ -109,5 +98,5 @@ void timeSlot::changeRegularTime()
 				}
 			}
 		}
-	}
+	}*/
 }

@@ -121,6 +121,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddHistoOperation.cpp" />
+    <ClCompile Include="CheckRFIDUserOperation.cpp" />
+    <ClCompile Include="CheckUserCredentialsOperation.cpp" />
     <ClCompile Include="continuity.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="lib\ConsoleTableLib\ConsoleTable.cpp" />
@@ -133,7 +136,10 @@
     <ClCompile Include="ReaderCard.cpp" />
     <ClCompile Include="security.cpp" />
     <ClCompile Include="securitySysteme.cpp" />
+    <ClCompile Include="SendAuthResultOperation.cpp" />
     <ClCompile Include="sensor.cpp" />
+    <ClCompile Include="SensorStateChangedOperation.cpp" />
+    <ClCompile Include="SQLOperation.cpp" />
     <ClCompile Include="SystemData.cpp" />
     <ClCompile Include="timeSlot.cpp" />
     <ClCompile Include="webServer.cpp" />
@@ -141,6 +147,9 @@
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddHistoOperation.h" />
+    <ClInclude Include="CheckRFIDUserOperation.h" />
+    <ClInclude Include="CheckUserCredentialsOperation.h" />
     <ClInclude Include="continuity.h" />
     <ClInclude Include="DAQHeader.h" />
     <ClInclude Include="Dask.h" />
@@ -155,8 +164,11 @@
     <QtMoc Include="ReaderCard.h" />
     <ClInclude Include="security.h" />
     <QtMoc Include="securitySysteme.h" />
+    <ClInclude Include="SendAuthResultOperation.h" />
     <ClInclude Include="sensor.h" />
     <QtMoc Include="webServer.h" />
+    <ClInclude Include="SensorStateChangedOperation.h" />
+    <ClInclude Include="Operation.h" />
     <ClInclude Include="SystemData.h" />
     <ClInclude Include="tamper.h" />
     <ClInclude Include="timeSlot.h" />

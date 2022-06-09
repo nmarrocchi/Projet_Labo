@@ -1,4 +1,5 @@
 #include "user.h"
+#include "CheckRFIDUserOperation.h"
 
 user::user(database * db)
 {
@@ -20,39 +21,7 @@ void user::setUser(QString idCard, QString mail, QString password, QString isAdm
 // - get all informations of user by CardID
 void user::setUserByIdCard(QString idCard)
 {
-	qDebug() << "//----- Verification Carte -----//\n" << endl;
-	qDebug() << "Passage de le carte " + idCard << endl;
-	int countUser = _db->countdb(_db->user_table, " WHERE idCard = " + idCard);
-	if (countUser > 0)
-	{
-
-		QSqlQuery userQuery = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
-
-		userQuery.next();
-		// Show user infos
-		//for (int i = 0; i < 4; i++)
-		//{
-		//	qDebug() << "Query Result : " + userQuery.value(i).toString() << endl;
-		//}
-
-		_isAdmin = userQuery.value(3).toInt();
-	
-		if (_isAdmin == 1) {
-			qDebug() << "L'utilisateur est administrateur" << endl;
-			qDebug() << "Acces accorde, ouverture de la gache" << endl;
-			//Ouverture de la gâche
-		}
-		else {
-			qDebug() << "Verification de la plage horaire..." << endl;
-			// Vérification de la plage horaire
-			qDebug() << "Acces en plage horaire, acces accorde" << endl;
-			qDebug() << "ouverture de la gache" << endl;
-			// Si plage horaire respectée alors ouverture de la gâche
-		}
-	}
-	else { 
-		qDebug() << "Carte non renseignee en base de donnee\n" << endl; 
-	}
+	database::getInstance()->addOperation(new CheckRFIDUserOperation(idCard));
 }
 
 // - Get card id from specific user

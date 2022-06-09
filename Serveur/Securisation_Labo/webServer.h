@@ -10,6 +10,8 @@
 
 #include "database.h"
 #include "SystemData.h"
+#include <qtimer.h>
+#include <deque>
 
 class webServer : public QObject {
 
@@ -21,16 +23,26 @@ class webServer : public QObject {
 		SystemData systemState;
 		QMutex systemDataMutex;
 
+
+		std::deque<Operation*> operationQueue;
+		QMutex operationMutex;
+
+		QTimer operationTimer;
+
 private:
 	static webServer * instance;
 	database * _db;
 
 	webServer(database * db, quint16 port);
 
+	Operation * getOperation();
+
 public:
 	static webServer * getInstance(quint16 port = 0);
 
 	void updateSystemData(SystemData data);
+
+	void addOperation(Operation * operation);
 
 private slots:
 
@@ -38,5 +50,5 @@ private slots:
 	void processTextMessage(const QString& message);
 	void socketDisconnected();
 
-	//void receiveSensorState(bool actualState);
+	void operationTimerTick();
 };

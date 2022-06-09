@@ -4,7 +4,6 @@
 #include "tamper.h"
 #include "presence.h"
 
-
 void security::loop(){}
 
 void security::superviseTable()

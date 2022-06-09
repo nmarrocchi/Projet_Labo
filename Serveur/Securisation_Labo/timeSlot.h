@@ -10,7 +10,7 @@ class timeSlot
 
 /* Define time */
 #define coursStartTime		"06:00:00"
-#define coursEndTime		"23:00:00"
+#define coursEndTime		"22:30:00"
 
 public:
 
