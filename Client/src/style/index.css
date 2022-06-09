@@ -199,10 +199,10 @@ font-weight: bold;
     }
 }
 
-.false {
+.false, .OFF {
     color: red;
 }
 
-.true {
+.true, .ON {
     color: green;
 }

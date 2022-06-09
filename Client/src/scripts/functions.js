@@ -362,178 +362,215 @@ function systemSettingsPanel(){
 
 function createAlarmPanel(tableBody){
 
-    let all          = document.createElement('tr');
-    let sn1_siren    = document.createElement('tr');
-    let sn1_alarm    = document.createElement('tr');
-    let sn2_siren    = document.createElement('tr');
-    let sn2_alarm    = document.createElement('tr');
-    let sn2_lock     = document.createElement('tr');
-    let phy_siren    = document.createElement('tr');
-    let phy_alarm    = document.createElement('tr');
+    let Panel_tr = [ "all", "sn1_siren", "sn1_alarm", "sn2_siren", "sn2_alarm", "sn2_lock", "phy_siren", "phy_alarm"];
+    let all_td = ["All Rooms", "Active All", "Desactive All"];
+    let sn1_td_1 = ["SN1", "Siren", "ON", "OFF"];
+    let sn1_td_2 = ["Alarm", "ON", "OFF"];
+    let sn2_td_1 = ["SN2", "Siren", "ON", "OFF"];
+    let sn2_td_2 = ["Alarm", "ON", "OFF"];
+    let sn2_td_3 = ["Lock", "ON", "OFF"]; 
+    let phy_td_1 = ["PHY", "Siren", "ON", "OFF"];
+    let phy_td_2 = ["Alarm", "ON", "OFF"];
     
-    let td_room_all = document.createElement('td');
-    td_room_all.colSpan = "2";
-    td_room_all.innerHTML = "All Rooms";
-    td_room_all.className = "Alarm_Table_Room";
+    for (let i = 0; i < Panel_tr.length; i++) {
+        var Active_Tr = document.createElement('tr');
+        Active_Tr.id = Panel_tr[i];
 
-    let td_active_all = document.createElement('td');
-    td_active_all.innerHTML = "Active All";
-    td_active_all.className = "AlarmPanelValues";
+        switch (i) {
+            case 0:
+                for (let x = 0; x < all_td.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = all_td[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = all_td[x];
+                    }
 
-    let td_desactive_all = document.createElement('td');
-    td_desactive_all.innerHTML = "Desactive All";
-    td_desactive_all.className = "AlarmPanelValues";
+                    
 
-    // SN1 Name
-    let td_sn1_name = document.createElement('td');
-    td_sn1_name.rowSpan = "2";
-    td_sn1_name.innerHTML = "SN1";
-    td_sn1_name.className = "Alarm_Table_Room";
+                    if (x == 0) {
+                        Active_td.colSpan = 2;
+                    }
 
-    // SN1 Siren
-    let td_sn1_siren = document.createElement('td');
-    td_sn1_siren.innerHTML = "Siren";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+        
+            case 1:
+                for (let x = 0; x < sn1_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn1_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn1_td_1[x];
+                    }
 
-    let td_sn1_active_siren = document.createElement('td');
-    td_sn1_active_siren.innerHTML = "ON";
-    td_sn1_active_siren.className = "AlarmPanelValues";
+                    
 
-    let td_sn1_desactive_siren = document.createElement('td');
-    td_sn1_desactive_siren.innerHTML = "OFF";
-    td_sn1_desactive_siren.className = "AlarmPanelValues";
+                    if (x == 0) {
+                        Active_td.rowSpan = 2;
+                    }
 
-    // SN1 Alarm
-    let td_sn1_alarm = document.createElement('td');
-    td_sn1_alarm.innerHTML = "Alarm";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
 
-    let td_sn1_active_alarm = document.createElement('td');
-    td_sn1_active_alarm.innerHTML = "ON";
-    td_sn1_active_alarm.className = "AlarmPanelValues";
+            case 2:
+                for (let x = 0; x < sn1_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn1_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn1_td_2[x];
+                    }
 
-    let td_sn1_desactive_alarm = document.createElement('td');
-    td_sn1_desactive_alarm.innerHTML = "OFF";
-    td_sn1_desactive_alarm.className = "AlarmPanelValues";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
 
+            case 3:
+                for (let x = 0; x < sn2_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_1[x];
+                    }
 
-    // SN1 Name
-    let td_sn2_name = document.createElement('td');
-    td_sn2_name.rowSpan = "3";
-    td_sn2_name.innerHTML = "SN2";
-    td_sn2_name.className = "Alarm_Table_Room";
+                    
 
-    // SN2 Siren
-    let td_sn2_siren = document.createElement('td');
-    td_sn2_siren.innerHTML = "Siren";
+                    if (x == 0) {
+                        Active_td.rowSpan = 3;
+                    }
 
-    let td_sn2_active_siren = document.createElement('td');
-    td_sn2_active_siren.innerHTML = "ON";
-    td_sn2_active_siren.className = "AlarmPanelValues";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+                break;
+        
+            case 4:
+                for (let x = 0; x < sn2_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_2[x];
+                    }
 
-    let td_sn2_desactive_siren = document.createElement('td');
-    td_sn2_desactive_siren.innerHTML = "OFF";
-    td_sn2_desactive_siren.className = "AlarmPanelValues";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 5:
+                for (let x = 0; x < sn2_td_3.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_3[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_3[x];
+                    }
 
-    // SN2 Alarm
-    let td_sn2_alarm = document.createElement('td');
-    td_sn2_alarm.innerHTML = "Alarm";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 6:
+                for (let x = 0; x < phy_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = phy_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = phy_td_1[x];
+                    }
 
-    let td_sn2_active_alarm = document.createElement('td');
-    td_sn2_active_alarm.innerHTML = "ON";
-    td_sn2_active_alarm.className = "AlarmPanelValues";
+                    
 
-    let td_sn2_desactive_alarm = document.createElement('td');
-    td_sn2_desactive_alarm.innerHTML = "OFF";
-    td_sn2_desactive_alarm.className = "AlarmPanelValues";
+                    if (x == 0) {
+                        Active_td.rowSpan = 2;
+                    }
 
-    // SN2 Lock
-    let td_sn2_lock = document.createElement('td');
-    td_sn2_lock.innerHTML = "Lock";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 7:
+                for (let x = 0; x < phy_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = phy_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = phy_td_2[x];
+                    }
 
-    let td_sn2_active_lock = document.createElement('td');
-    td_sn2_active_lock.innerHTML = "ON";
-    td_sn2_active_lock.className = "AlarmPanelValues";
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
 
-    let td_sn2_desactive_lock = document.createElement('td');
-    td_sn2_desactive_lock.innerHTML = "OFF";
-    td_sn2_desactive_lock.className = "AlarmPanelValues";
+            default:
+                break;        
+        }
 
-
-    // PHY Name
-    let td_phy_name = document.createElement('td');
-    td_phy_name.rowSpan = "2";
-    td_phy_name.innerHTML = "PHY";
-    td_phy_name.className = "Alarm_Table_Room";
-
-    // PHY Siren
-    let td_phy_siren = document.createElement('td');
-    td_phy_siren.innerHTML = "Siren";
-
-    let td_phy_active_siren = document.createElement('td');
-    td_phy_active_siren.innerHTML = "ON";
-    td_phy_active_siren.className = "AlarmPanelValues";
-
-    let td_phy_desactive_siren = document.createElement('td');
-    td_phy_desactive_siren.innerHTML = "OFF";
-    td_phy_desactive_siren.className = "AlarmPanelValues";
-
-    // PHY Alarm
-    let td_phy_alarm = document.createElement('td');
-    td_phy_alarm.innerHTML = "Alarm";
-
-    let td_phy_active_alarm = document.createElement('td');
-    td_phy_active_alarm.innerHTML = "ON";
-    td_phy_active_alarm.className = "AlarmPanelValues";
-
-    let td_phy_desactive_alarm = document.createElement('td');
-    td_phy_desactive_alarm.innerHTML = "OFF";
-    td_phy_desactive_alarm.className = "AlarmPanelValues";
-
-    // All Rooms rows
-    all.appendChild(td_room_all);
-    all.appendChild(td_active_all);
-    all.appendChild(td_desactive_all);
-
-    // SN1 rows
-    sn1_siren.appendChild(td_sn1_name);
-    sn1_siren.appendChild(td_sn1_siren);
-    sn1_siren.appendChild(td_sn1_active_siren);
-    sn1_siren.appendChild(td_sn1_desactive_siren);
-    sn1_alarm.appendChild(td_sn1_alarm);
-    sn1_alarm.appendChild(td_sn1_active_alarm);
-    sn1_alarm.appendChild(td_sn1_desactive_alarm);
-
-    // SN2 rows
-    sn2_siren.appendChild(td_sn2_name);
-    sn2_siren.appendChild(td_sn2_siren);
-    sn2_siren.appendChild(td_sn2_active_siren);
-    sn2_siren.appendChild(td_sn2_desactive_siren);
-    sn2_alarm.appendChild(td_sn2_alarm);
-    sn2_alarm.appendChild(td_sn2_active_alarm);
-    sn2_alarm.appendChild(td_sn2_desactive_alarm);
-    sn2_lock.appendChild(td_sn2_lock);
-    sn2_lock.appendChild(td_sn2_active_lock);
-    sn2_lock.appendChild(td_sn2_desactive_lock);
-
-    // PHY rows
-    phy_siren.appendChild(td_phy_name);
-    phy_siren.appendChild(td_phy_siren);
-    phy_siren.appendChild(td_phy_active_siren);
-    phy_siren.appendChild(td_phy_desactive_siren);
-    phy_alarm.appendChild(td_phy_alarm);
-    phy_alarm.appendChild(td_phy_active_alarm);
-    phy_alarm.appendChild(td_phy_desactive_alarm);
-
-    tableBody.appendChild(all);
-    tableBody.appendChild(sn1_siren);
-    tableBody.appendChild(sn1_alarm);
-    tableBody.appendChild(sn2_siren);
-    tableBody.appendChild(sn2_alarm);
-    tableBody.appendChild(sn2_lock);
-    tableBody.appendChild(phy_siren);
-    tableBody.appendChild(phy_alarm);
+        tableBody.appendChild(Active_Tr);
+        
+    }
         
 }
-
 
 // Display all sensor state value in table
 function getAllSensorState()
