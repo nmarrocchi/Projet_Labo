@@ -233,25 +233,40 @@ function supervision()
         input_sensor.id     = "input_sensor";
         input_sensor.classList.add("input");
         input_sensor.value  = "Sensor State";
-        input_sensor.style.display = "none";
     
     content.insertBefore( input_sensor, document.getElementById( "div_sensor" ) );
+
+
+    // Show Settings Panel
+    systemSettingsPanel();
+
+    // Settings Button
+    var input_settings        = document.createElement("input");
+    input_settings.type   = "button";
+    input_settings.id     = "input_settings";
+    input_settings.classList.add("input");
+    input_settings.value  = "System Settings";
+
+    content.insertBefore( input_settings, document.getElementById( "div_sensor" ) );
 
     content.appendChild(div_supervision);
  
     socket.send( "Histo" ); 
 
     document.getElementById( "div_sensor" ).style.display = "none";
-    document.getElementById( "input_sensor" ).style.display = "block";
 
     // Event click to return to main Menu
     document.getElementById("input_mainMenu").
     addEventListener('click', function()
     {
-        document.getElementById('div_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "block";
-        document.getElementById('input_sensor').style.display = "block";
+        document.getElementById( "input_mainMenu" ).style.display = "none";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "inline-block";
+
         document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "none";
         
     });
 
@@ -259,13 +274,15 @@ function supervision()
     // Event click to see Historicals
     document.getElementById("input_histo").
     addEventListener('click', function()
-    {
-        document.getElementById('div_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "none";
-        document.getElementById('input_sensor').style.display = "block";
-        document.getElementById( "div_event" ).style.display = "block";
+    {   
         document.getElementById( "input_mainMenu" ).style.display = "inline-block";
-        
+        document.getElementById('input_histo').style.display = "none";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "inline-block";
+
+        document.getElementById( "div_event" ).style.display = "block";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "none";
     });
 
     
@@ -273,16 +290,287 @@ function supervision()
     document.getElementById("input_sensor").
     addEventListener('click', function()
     {
-        document.getElementById('input_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "block";
-        document.getElementById( "div_sensor" ).style.display = "block";
-        document.getElementById( "div_event" ).style.display = "none";
         document.getElementById( "input_mainMenu" ).style.display = "inline-block";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "none";
+        document.getElementById('input_settings').style.display = "inline-block";
+
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "block";
+        document.getElementById('div_settings').style.display = "none";
+    });
+
+    // Event click to system Settings
+    document.getElementById("input_settings").
+    addEventListener('click', function()
+    {
+        document.getElementById( "input_mainMenu" ).style.display = "inline-block";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "none";
+
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "block";
+
         
+        AlarmPaneltextColor();
     });
 
 }
 
+// Set Alarm Panel Buttons Color
+function AlarmPaneltextColor(){
+    let AlarmPanelButtons = document.getElementsByClassName('AlarmPanelValues');
+
+    for (let i = 0; i < AlarmPanelButtons.length; i++){
+
+        var buttontext = AlarmPanelButtons[i].textContent;
+        if ((buttontext == "Active All") || (buttontext == "ON")) {
+            AlarmPanelButtons[i].style.color = "green";
+        }
+        else if ((buttontext == "Desactive All") || (buttontext == "OFF")) {
+            AlarmPanelButtons[i].style.color = "red";
+        }
+    }
+}
+
+// System Setting Panel
+function systemSettingsPanel(){
+    let div_settings = document.createElement("div");
+    div_settings.classList.add("div_settings");
+    div_settings.id = "div_settings";
+
+    let table_alarm = document.createElement("table");
+    table_alarm.classList.add("table_alarm");
+    table_alarm.id = "table_alarm";
+
+    let thead = document.createElement('thead');
+
+    table_alarm.appendChild(thead);
+
+    let tbody = document.createElement('tbody');
+    
+    createAlarmPanel(tbody);
+            
+    table_alarm.appendChild(tbody);
+
+    div_settings.appendChild(table_alarm);
+
+    content.appendChild(div_settings);
+}
+
+function createAlarmPanel(tableBody){
+
+    let Panel_tr = [ "all", "sn1_siren", "sn1_alarm", "sn2_siren", "sn2_alarm", "sn2_lock", "phy_siren", "phy_alarm"];
+    let all_td = ["All Rooms", "Active All", "Desactive All"];
+    let sn1_td_1 = ["SN1", "Siren", "ON", "OFF"];
+    let sn1_td_2 = ["Alarm", "ON", "OFF"];
+    let sn2_td_1 = ["SN2", "Siren", "ON", "OFF"];
+    let sn2_td_2 = ["Alarm", "ON", "OFF"];
+    let sn2_td_3 = ["Lock", "ON", "OFF"]; 
+    let phy_td_1 = ["PHY", "Siren", "ON", "OFF"];
+    let phy_td_2 = ["Alarm", "ON", "OFF"];
+    
+    for (let i = 0; i < Panel_tr.length; i++) {
+        var Active_Tr = document.createElement('tr');
+        Active_Tr.id = Panel_tr[i];
+
+        switch (i) {
+            case 0:
+                for (let x = 0; x < all_td.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = all_td[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = all_td[x];
+                    }
+
+                    
+
+                    if (x == 0) {
+                        Active_td.colSpan = 2;
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+        
+            case 1:
+                for (let x = 0; x < sn1_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn1_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn1_td_1[x];
+                    }
+
+                    
+
+                    if (x == 0) {
+                        Active_td.rowSpan = 2;
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+
+            case 2:
+                for (let x = 0; x < sn1_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn1_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn1_td_2[x];
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+
+            case 3:
+                for (let x = 0; x < sn2_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_1[x];
+                    }
+
+                    
+
+                    if (x == 0) {
+                        Active_td.rowSpan = 3;
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+                break;
+        
+            case 4:
+                for (let x = 0; x < sn2_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_2[x];
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 5:
+                for (let x = 0; x < sn2_td_3.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = sn2_td_3[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = sn2_td_3[x];
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 6:
+                for (let x = 0; x < phy_td_1.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = phy_td_1[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = phy_td_1[x];
+                    }
+
+                    
+
+                    if (x == 0) {
+                        Active_td.rowSpan = 2;
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+            
+            case 7:
+                for (let x = 0; x < phy_td_2.length; x++) {
+                    var Active_td = document.createElement('td');
+                    Active_td.className = phy_td_2[x];
+                    if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
+                        var activeButton = document.createElement('button');
+                        activeButton.className = Active_Tr.className;
+                        activeButton.value = Active_td.className;
+                        activeButton.textContent = activeButton.value;
+    
+                        Active_td.appendChild(activeButton);
+                    }
+                    else{
+                        Active_td.textContent = phy_td_2[x];
+                    }
+
+                    Active_Tr.appendChild(Active_td);
+                }
+                break;
+
+            default:
+                break;        
+        }
+
+        tableBody.appendChild(Active_Tr);
+        
+    }
+        
+}
 
 // Display all sensor state value in table
 function getAllSensorState()
@@ -419,7 +707,6 @@ function getHistoUsersValue(message)
     }
 
 }
-
 
 // Creation cell with value inside
 function cellValue( i, value )
