@@ -4,14 +4,23 @@
 webServer * webServer::instance = NULL;
 
 // - Create securitySystem Instance
-webServer * webServer::getInstance(database * db, quint16 port)
+webServer * webServer::getInstance(quint16 port)
 {
 	if (instance == NULL)
 	{
+		database * db = database::getInstance();
+
 		instance = new webServer(db, port);
 	}
 
 	return instance;
+}
+
+void webServer::updateSystemData(SystemData data)
+{
+	systemDataMutex.lock();
+	this->systemState = data;
+	systemDataMutex.unlock();
 }
 
 webServer::webServer(database * db, quint16 port)
@@ -71,52 +80,119 @@ void webServer::processTextMessage(const QString& message) {
 		ws->sendTextMessage("Auth;" + QString::number(result));
 	}
 
-	/*if (message.startsWith("State") == true)
+	if (message.startsWith("State") == true)
 	{
 		QString val;
-		QString tab[12];
 		QString data = "State";
+
+		SystemData dataCpy;
+		systemDataMutex.lock();
+		dataCpy = systemState;
+		systemDataMutex.unlock();
+
 		for (int j = 0; j < 4; j++)
 		{
 			switch (j)
 			{
 			case 0:
+
 				val = "Continuity";
+				data += ";" + val;
+
+				for (int i = 0; i < 3; i++)
+				{
+					bool dataValue = dataCpy.getContinuityStates()[i];
+
+					if (dataValue == false)
+					{
+						val = "false";
+					}
+					else {
+						val = "true";
+					}
+
+					data += ";" + val;
+				}
+
 				break;
+
 			case 1:
+
 				val = "Sensor";
+				data += ";" + val;
+
+				for (int i = 0; i < 3; i++)
+				{
+					bool dataValue = dataCpy.getSensorStates()[i];
+
+					if (dataValue == false)
+					{
+						val = "false";
+					}
+					else {
+						val = "true";
+					}
+
+					data += ";" + val;
+				}
+
 				break;
+
 			case 2:
+
 				val = "Tamper";
+				data += ";" + val;
+
+				for (int i = 0; i < 3; i++)
+				{
+					bool dataValue = dataCpy.getTamperStates()[i];
+
+					if (dataValue == false)
+					{
+						val = "false";
+					}
+					else {
+						val = "true";
+					}
+
+					data += ";" + val;
+				}
+
 				break;
+
 			case 3:
+
 				val = "Presence";
+				data += ";" + val;
+
+				for (int i = 0; i < 3; i++)
+				{
+					bool dataValue = dataCpy.getPresenceStates()[i];
+
+					if (dataValue == false)
+					{
+						val = "false";
+					}
+					else {
+						val = "true";
+					}
+
+					data += ";" + val;
+				}
+
 				break;
+
 			default:
 				break;
 			}
-
-			data += ";" + val;
-
-			for (int i = 0; i < 3; i++)
-			{
-				bool rand = QRandomGenerator::global()->bounded(2);
-
-				if (rand == 0) {
-					val = "false";
-				}
-				else {
-					val = "true";
-				}
-
-				data += ";" + val;
-			}
+			
 		}
 		ws->sendTextMessage(data);
 	}
 
 	if (message.startsWith("Histo") == true)
 	{
+		/*
 		QSqlQuery query;
 		query.exec("SELECT security.room, security.byte, historical.statut, historical.date FROM historical, security WHERE security.idSecurity = historical.idSecurity");
 
@@ -146,7 +222,8 @@ void webServer::processTextMessage(const QString& message) {
 
 			ws->sendTextMessage(data);
 		}
-	}*/
+		*/
+	}
 }
 
 void webServer::socketDisconnected()

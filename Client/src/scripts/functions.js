@@ -4,6 +4,7 @@ const socket = new WebSocket("ws://127.0.0.1:2569");
 var content = document.getElementById('content');
 var tab, userMail;
 // var tableState, tableHisto, thead, tbody, tr, td, cell;
+
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
@@ -113,7 +114,7 @@ function connexion()
         userMail = login;
 
         data = "Auth"+login+";"+mdp;
-        
+
         socket.send(data);
     });
 
@@ -283,10 +284,6 @@ function supervision()
 }
 
 
-
-
-
-
 // Display all sensor state value in table
 function getAllSensorState()
 {
@@ -330,7 +327,6 @@ function getAllSensorState()
 function getStateValue(message)
 {
 
-
     const tableBody = document.getElementById( "table_sensor" );
     const value = message.split(';');
 
@@ -353,7 +349,17 @@ function getStateValue(message)
             tableBody.appendChild(tr);
     }
 
-    // cellColor();
+    /*
+    // Send value in the server
+    setInterval(
+        function () 
+        {
+            tbody.remove();
+            socket.send("State");
+            tbody = document.createElement('tbody');
+            table.appendChild(tbody);
+        }, 1000);
+    */
 }
 
 // Get historical value
@@ -374,7 +380,7 @@ function getHistoSensorValue(message)
             row.innerText = elem
             tr.appendChild( row  )
         }
-            
+        
 
         table.appendChild( tr )
         

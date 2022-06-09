@@ -1,13 +1,15 @@
 #include "tamper.h"
 
 /* Send the statut tamper on the client */
-void tamper::selectStatut()
+QList<bool> tamper::selectStatut()
 {
+	QList<bool> result;
 	coord.Y = tamperCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 2);
+		result.push_back(actualState[i]);
 
 		coord.X = tamperCoordX + largeur * i;
 
@@ -22,7 +24,15 @@ void tamper::selectStatut()
 			{
 				if (timeSlot::validateTime() == false)
 				{
-					//continuity::updateStatue(actualState[i], i);
+					for (int channel = 5; channel < 8; channel++)
+					{
+						for (int port = 0; port < 2; port++)
+						{
+							card->writeCard(channel, port, 0);
+						}
+					}
+
+					insertValue(actualState[i], i);
 					//mail::sendMail();
 				}
 			}
@@ -36,20 +46,23 @@ void tamper::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatut(actualState[i], i);
+				insertValue(actualState[i], i);
 			}
 		}
 
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+	return result;
 }
 
 /* Update the statut tamper in database */
-void tamper::updateStatut(bool status, int room)
+void tamper::insertValue(bool status, int room)
 {
 
-	QString value = "status = " + QString::number(status) + " WHERE room = " + QString::number(room);
-	//db->updatedb("security", value);
+	int value = room * 4 + Byte::tamper + 1;
+
+	QSqlQuery query;
+	query.exec("INSERT INTO `historical`(`idSecurity`, `statut`) VALUES (" + QString::number(value) + ", " + QString::number(statut) + ")");
 
 }

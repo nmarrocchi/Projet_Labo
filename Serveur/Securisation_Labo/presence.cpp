@@ -1,13 +1,16 @@
 #include "presence.h"
 
 /* Send the statut presence on the client */
-void presence::selectStatut()
+QList<bool> presence::selectStatut()
 {
+	QList<bool> result;
+
 	coord.Y = presenceCoordY;
 
 	for (int i = 0; i <= 2; i++)
 	{
 		actualState[i] = card->readCard(i, 3);
+		result.push_back(actualState[i]);
 
 		coord.X = presenceCoordX + largeur * i;
 
@@ -22,7 +25,15 @@ void presence::selectStatut()
 			{
 				if (timeSlot::validateTime() == false)
 				{
-					//continuity::updateStatue(actualState[i], i);
+					for (int channel = 5; channel < 8; channel++)
+					{
+						for (int port = 0; port < 2; port++)
+						{
+							card->writeCard(channel, port, 0);
+						}
+					}
+
+					insertValue(actualState[i], i);
 					//mail::sendMail();
 				}
 			}
@@ -36,20 +47,23 @@ void presence::selectStatut()
 
 			if (lastState[i] != actualState[i])
 			{
-				//continuity::updateStatut(actualState[i], i);
+				insertValue(actualState[i], i);
 			}
 		}
 
 		lastState[i] = actualState[i];
 		SetConsoleTextAttribute(handle, text_color::White);
 	}
+	return result;
 }
 
 /* Update the statut presence in database */
-void presence::updateStatut(bool status, int room)
+void presence::insertValue(bool statut, int room)
 {
+	
+	int value = room * 4 + Byte::presence + 1;
 
-	QString value = "status = " + QString::number(status) + " WHERE room = " + QString::number(room);
-	//db->updatedb("security", value);
+	QSqlQuery query;
+	query.exec("INSERT INTO `historical`(`idSecurity`, `statut`) VALUES (" + QString::number(value) + ", " + QString::number(statut) + ")");
 
 }

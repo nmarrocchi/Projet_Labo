@@ -1,5 +1,7 @@
 #pragma once
 
+#include <qmutex.h>
+
 #include "database.h"
 #include "PCI_7248_Card.h"
 #include "timeSlot.h"
@@ -9,6 +11,7 @@
 
 class security
 {
+
 public:
 	security(PCI_7248_Card * card)
 	{
@@ -22,10 +25,10 @@ public:
 	static void superviseTable();
 
 	/* Send the statut on the client */
-	virtual void selectStatut() = 0;
+	virtual QList<bool> selectStatut() = 0;
 
 	/* Update the statut in database */
-	virtual void updateStatut(bool status, int room) = 0;
+	virtual void insertValue(bool status, int room) = 0;
 
 protected:
 
@@ -34,9 +37,11 @@ protected:
 	int bit;
 	bool statut;
 
-	database *db;
+	database * db;
 
 	PCI_7248_Card *card;
+
+	QMutex systemMutex;
 
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coord;
@@ -56,6 +61,14 @@ protected:
 		largeur				= 8,
 		hauteur				= 0,
 
+	};
+
+	enum Byte
+	{
+		continuity	= 0,
+		sensor		= 1,
+		tamper		= 2,
+		presence	= 3,
 	};
 
 };
