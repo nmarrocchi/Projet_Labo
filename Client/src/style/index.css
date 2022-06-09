@@ -27,7 +27,7 @@ a:active {color: white; text-decoration: none;}
     border-width: 0px 1px 1px 0px;
     box-shadow: #0000008f 7px 9px;
     border-radius: 25px;
-    width: 20vw;
+    width: 25vw;
     margin: 10vh auto;
     padding-top: 2vh;
     text-align: center;
@@ -53,13 +53,14 @@ a:active {color: white; text-decoration: none;}
 
 #login_form input{
     width: 70%;
-    margin: 1vh 0.5vw;
+    margin: 2vh 0.5vw;
     padding: 2vh 1vw;
     border: solid white 1px;
     border-radius: 25px;
     background-color: rgba(53, 53, 53, 0.863);
     color: white;
     font-size: medium;
+    text-align: center;
 }
 
 #login_form input::placeholder{
@@ -78,9 +79,9 @@ a:active {color: white; text-decoration: none;}
     background-color: #3a3535cb;
 }
 
-#input_sensor, #input_histo{
-    display: block;
-    margin: 5vh auto;
+#input_sensor, #input_histo, #input_settings{
+    display: inline-block;
+    margin: 5vh 2vw;
     min-width: fit-content;
     width: 10vw;
     padding: 1.5vh 1vw;
@@ -91,7 +92,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #504e4ecb;
 }
 
-#input_sensor:hover, #input_histo:hover{
+#input_sensor:hover, #input_histo:hover, #input_settings:hover{
     background-color: #3a3535cb;
 }
 
@@ -114,7 +115,7 @@ a:active {color: white; text-decoration: none;}
 }
 
 /* Sensor State Supervision & Historical Table */
-.div_sensor, .div_event{
+.div_sensor, .div_event, #div_settings{
     margin: 2vh auto;
     width: max-content;
     display: none;
@@ -149,7 +150,26 @@ thead{
     padding: 3%;
 }
 
+/* Alarm table */
 
+#table_alarm{
+    border-collapse: collapse;
+}
+
+#table_alarm td{
+    border: dotted white 1px;
+    padding: 1vh 1vw;
+}
+
+.Alarm_Table_Room{
+    font-weight: bolder;
+    color: rgb(180, 180, 180);
+    text-shadow: black 1px 1px;
+}
+
+#AlarmPanelValues{
+font-weight: bold;
+}
 
 
 

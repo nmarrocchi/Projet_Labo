@@ -233,25 +233,40 @@ function supervision()
         input_sensor.id     = "input_sensor";
         input_sensor.classList.add("input");
         input_sensor.value  = "Sensor State";
-        input_sensor.style.display = "none";
     
     content.insertBefore( input_sensor, document.getElementById( "div_sensor" ) );
+
+
+    // Show Settings Panel
+    systemSettingsPanel();
+
+    // Settings Button
+    var input_settings        = document.createElement("input");
+    input_settings.type   = "button";
+    input_settings.id     = "input_settings";
+    input_settings.classList.add("input");
+    input_settings.value  = "System Settings";
+
+    content.insertBefore( input_settings, document.getElementById( "div_sensor" ) );
 
     content.appendChild(div_supervision);
  
     socket.send( "Histo" ); 
 
     document.getElementById( "div_sensor" ).style.display = "none";
-    document.getElementById( "input_sensor" ).style.display = "block";
 
     // Event click to return to main Menu
     document.getElementById("input_mainMenu").
     addEventListener('click', function()
     {
-        document.getElementById('div_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "block";
-        document.getElementById('input_sensor').style.display = "block";
+        document.getElementById( "input_mainMenu" ).style.display = "none";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "inline-block";
+
         document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "none";
         
     });
 
@@ -259,13 +274,15 @@ function supervision()
     // Event click to see Historicals
     document.getElementById("input_histo").
     addEventListener('click', function()
-    {
-        document.getElementById('div_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "none";
-        document.getElementById('input_sensor').style.display = "block";
-        document.getElementById( "div_event" ).style.display = "block";
+    {   
         document.getElementById( "input_mainMenu" ).style.display = "inline-block";
-        
+        document.getElementById('input_histo').style.display = "none";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "inline-block";
+
+        document.getElementById( "div_event" ).style.display = "block";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "none";
     });
 
     
@@ -273,14 +290,248 @@ function supervision()
     document.getElementById("input_sensor").
     addEventListener('click', function()
     {
-        document.getElementById('input_sensor').style.display = "none";
-        document.getElementById('input_histo').style.display = "block";
-        document.getElementById( "div_sensor" ).style.display = "block";
-        document.getElementById( "div_event" ).style.display = "none";
         document.getElementById( "input_mainMenu" ).style.display = "inline-block";
-        
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "none";
+        document.getElementById('input_settings').style.display = "inline-block";
+
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "block";
+        document.getElementById('div_settings').style.display = "none";
     });
 
+    // Event click to system Settings
+    document.getElementById("input_settings").
+    addEventListener('click', function()
+    {
+        document.getElementById( "input_mainMenu" ).style.display = "inline-block";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "none";
+
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "block";
+
+        
+        AlarmPaneltextColor();
+    });
+
+}
+
+// Set Alarm Panel Buttons Color
+function AlarmPaneltextColor(){
+    let AlarmPanelButtons = document.getElementsByClassName('AlarmPanelValues');
+
+    for (let i = 0; i < AlarmPanelButtons.length; i++){
+
+        var buttontext = AlarmPanelButtons[i].textContent;
+        if ((buttontext == "Active All") || (buttontext == "ON")) {
+            AlarmPanelButtons[i].style.color = "green";
+        }
+        else if ((buttontext == "Desactive All") || (buttontext == "OFF")) {
+            AlarmPanelButtons[i].style.color = "red";
+        }
+    }
+}
+
+// System Setting Panel
+function systemSettingsPanel(){
+    let div_settings = document.createElement("div");
+    div_settings.classList.add("div_settings");
+    div_settings.id = "div_settings";
+
+    let table_alarm = document.createElement("table");
+    table_alarm.classList.add("table_alarm");
+    table_alarm.id = "table_alarm";
+
+    let thead = document.createElement('thead');
+
+    table_alarm.appendChild(thead);
+
+    let tbody = document.createElement('tbody');
+    
+    createAlarmPanel(tbody);
+            
+    table_alarm.appendChild(tbody);
+
+    div_settings.appendChild(table_alarm);
+
+    content.appendChild(div_settings);
+}
+
+function createAlarmPanel(tableBody){
+
+    let all          = document.createElement('tr');
+    let sn1_siren    = document.createElement('tr');
+    let sn1_alarm    = document.createElement('tr');
+    let sn2_siren    = document.createElement('tr');
+    let sn2_alarm    = document.createElement('tr');
+    let sn2_lock     = document.createElement('tr');
+    let phy_siren    = document.createElement('tr');
+    let phy_alarm    = document.createElement('tr');
+    
+    let td_room_all = document.createElement('td');
+    td_room_all.colSpan = "2";
+    td_room_all.innerHTML = "All Rooms";
+    td_room_all.className = "Alarm_Table_Room";
+
+    let td_active_all = document.createElement('td');
+    td_active_all.innerHTML = "Active All";
+    td_active_all.className = "AlarmPanelValues";
+
+    let td_desactive_all = document.createElement('td');
+    td_desactive_all.innerHTML = "Desactive All";
+    td_desactive_all.className = "AlarmPanelValues";
+
+    // SN1 Name
+    let td_sn1_name = document.createElement('td');
+    td_sn1_name.rowSpan = "2";
+    td_sn1_name.innerHTML = "SN1";
+    td_sn1_name.className = "Alarm_Table_Room";
+
+    // SN1 Siren
+    let td_sn1_siren = document.createElement('td');
+    td_sn1_siren.innerHTML = "Siren";
+
+    let td_sn1_active_siren = document.createElement('td');
+    td_sn1_active_siren.innerHTML = "ON";
+    td_sn1_active_siren.className = "AlarmPanelValues";
+
+    let td_sn1_desactive_siren = document.createElement('td');
+    td_sn1_desactive_siren.innerHTML = "OFF";
+    td_sn1_desactive_siren.className = "AlarmPanelValues";
+
+    // SN1 Alarm
+    let td_sn1_alarm = document.createElement('td');
+    td_sn1_alarm.innerHTML = "Alarm";
+
+    let td_sn1_active_alarm = document.createElement('td');
+    td_sn1_active_alarm.innerHTML = "ON";
+    td_sn1_active_alarm.className = "AlarmPanelValues";
+
+    let td_sn1_desactive_alarm = document.createElement('td');
+    td_sn1_desactive_alarm.innerHTML = "OFF";
+    td_sn1_desactive_alarm.className = "AlarmPanelValues";
+
+
+    // SN1 Name
+    let td_sn2_name = document.createElement('td');
+    td_sn2_name.rowSpan = "3";
+    td_sn2_name.innerHTML = "SN2";
+    td_sn2_name.className = "Alarm_Table_Room";
+
+    // SN2 Siren
+    let td_sn2_siren = document.createElement('td');
+    td_sn2_siren.innerHTML = "Siren";
+
+    let td_sn2_active_siren = document.createElement('td');
+    td_sn2_active_siren.innerHTML = "ON";
+    td_sn2_active_siren.className = "AlarmPanelValues";
+
+    let td_sn2_desactive_siren = document.createElement('td');
+    td_sn2_desactive_siren.innerHTML = "OFF";
+    td_sn2_desactive_siren.className = "AlarmPanelValues";
+
+    // SN2 Alarm
+    let td_sn2_alarm = document.createElement('td');
+    td_sn2_alarm.innerHTML = "Alarm";
+
+    let td_sn2_active_alarm = document.createElement('td');
+    td_sn2_active_alarm.innerHTML = "ON";
+    td_sn2_active_alarm.className = "AlarmPanelValues";
+
+    let td_sn2_desactive_alarm = document.createElement('td');
+    td_sn2_desactive_alarm.innerHTML = "OFF";
+    td_sn2_desactive_alarm.className = "AlarmPanelValues";
+
+    // SN2 Lock
+    let td_sn2_lock = document.createElement('td');
+    td_sn2_lock.innerHTML = "Lock";
+
+    let td_sn2_active_lock = document.createElement('td');
+    td_sn2_active_lock.innerHTML = "ON";
+    td_sn2_active_lock.className = "AlarmPanelValues";
+
+    let td_sn2_desactive_lock = document.createElement('td');
+    td_sn2_desactive_lock.innerHTML = "OFF";
+    td_sn2_desactive_lock.className = "AlarmPanelValues";
+
+
+    // PHY Name
+    let td_phy_name = document.createElement('td');
+    td_phy_name.rowSpan = "2";
+    td_phy_name.innerHTML = "PHY";
+    td_phy_name.className = "Alarm_Table_Room";
+
+    // PHY Siren
+    let td_phy_siren = document.createElement('td');
+    td_phy_siren.innerHTML = "Siren";
+
+    let td_phy_active_siren = document.createElement('td');
+    td_phy_active_siren.innerHTML = "ON";
+    td_phy_active_siren.className = "AlarmPanelValues";
+
+    let td_phy_desactive_siren = document.createElement('td');
+    td_phy_desactive_siren.innerHTML = "OFF";
+    td_phy_desactive_siren.className = "AlarmPanelValues";
+
+    // PHY Alarm
+    let td_phy_alarm = document.createElement('td');
+    td_phy_alarm.innerHTML = "Alarm";
+
+    let td_phy_active_alarm = document.createElement('td');
+    td_phy_active_alarm.innerHTML = "ON";
+    td_phy_active_alarm.className = "AlarmPanelValues";
+
+    let td_phy_desactive_alarm = document.createElement('td');
+    td_phy_desactive_alarm.innerHTML = "OFF";
+    td_phy_desactive_alarm.className = "AlarmPanelValues";
+
+    // All Rooms rows
+    all.appendChild(td_room_all);
+    all.appendChild(td_active_all);
+    all.appendChild(td_desactive_all);
+
+    // SN1 rows
+    sn1_siren.appendChild(td_sn1_name);
+    sn1_siren.appendChild(td_sn1_siren);
+    sn1_siren.appendChild(td_sn1_active_siren);
+    sn1_siren.appendChild(td_sn1_desactive_siren);
+    sn1_alarm.appendChild(td_sn1_alarm);
+    sn1_alarm.appendChild(td_sn1_active_alarm);
+    sn1_alarm.appendChild(td_sn1_desactive_alarm);
+
+    // SN2 rows
+    sn2_siren.appendChild(td_sn2_name);
+    sn2_siren.appendChild(td_sn2_siren);
+    sn2_siren.appendChild(td_sn2_active_siren);
+    sn2_siren.appendChild(td_sn2_desactive_siren);
+    sn2_alarm.appendChild(td_sn2_alarm);
+    sn2_alarm.appendChild(td_sn2_active_alarm);
+    sn2_alarm.appendChild(td_sn2_desactive_alarm);
+    sn2_lock.appendChild(td_sn2_lock);
+    sn2_lock.appendChild(td_sn2_active_lock);
+    sn2_lock.appendChild(td_sn2_desactive_lock);
+
+    // PHY rows
+    phy_siren.appendChild(td_phy_name);
+    phy_siren.appendChild(td_phy_siren);
+    phy_siren.appendChild(td_phy_active_siren);
+    phy_siren.appendChild(td_phy_desactive_siren);
+    phy_alarm.appendChild(td_phy_alarm);
+    phy_alarm.appendChild(td_phy_active_alarm);
+    phy_alarm.appendChild(td_phy_desactive_alarm);
+
+    tableBody.appendChild(all);
+    tableBody.appendChild(sn1_siren);
+    tableBody.appendChild(sn1_alarm);
+    tableBody.appendChild(sn2_siren);
+    tableBody.appendChild(sn2_alarm);
+    tableBody.appendChild(sn2_lock);
+    tableBody.appendChild(phy_siren);
+    tableBody.appendChild(phy_alarm);
+        
 }
 
 
@@ -419,7 +670,6 @@ function getHistoUsersValue(message)
     }
 
 }
-
 
 // Creation cell with value inside
 function cellValue( i, value )
