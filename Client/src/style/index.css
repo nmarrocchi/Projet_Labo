@@ -171,7 +171,12 @@ thead{
 font-weight: bold;
 }
 
-
+#table_alarm button{
+    width: 100%;
+    padding: 1vh 0.5vw;
+    font-size: large;
+    font-weight: bold;
+}
 
 
 

@@ -358,6 +358,18 @@ function systemSettingsPanel(){
     div_settings.appendChild(table_alarm);
 
     content.appendChild(div_settings);
+
+    
+    let buttonON = document.getElementsByClassName('SystemButton');
+    for (let i = 0; i < buttonON.length; i++) {
+        if(buttonON[i].textContent in {"ON" : 1, "Active All" : 1}){
+            buttonON[i].style.color = "green";
+        }
+        else if(buttonON[i].textContent in {"OFF" : 1, "Desactive All" : 1}){
+            buttonON[i].style.color = "red";
+        }
+    }
+
 }
 
 function createAlarmPanel(tableBody){
@@ -383,7 +395,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = all_td[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -409,7 +421,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = sn1_td_1[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -435,7 +447,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = sn1_td_2[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -455,7 +467,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = sn2_td_1[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -482,7 +494,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = sn2_td_2[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -502,7 +514,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = sn2_td_3[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -522,7 +534,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = phy_td_1[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
@@ -548,7 +560,7 @@ function createAlarmPanel(tableBody){
                     Active_td.className = phy_td_2[x];
                     if((Active_td.className == "Active All") || (Active_td.className == "Desactive All") || (Active_td.className == "ON") || (Active_td.className == "OFF")){
                         var activeButton = document.createElement('button');
-                        activeButton.className = Active_Tr.className;
+                        activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
     
