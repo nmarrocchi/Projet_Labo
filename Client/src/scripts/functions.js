@@ -2,7 +2,7 @@
 const socket = new WebSocket("ws://127.0.0.1:2569");
 
 var content = document.getElementById('content');
-var tab;
+var tab, userMail;
 // var tableState, tableHisto, thead, tbody, tr, td, cell;
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
@@ -104,6 +104,8 @@ function connexion()
         var login   = input_mail.value;
         var mdp     = input_password.value;
 
+        userMail = login;
+
         data = "Auth"+login+";"+mdp;
         
         socket.send(data);
@@ -111,37 +113,62 @@ function connexion()
 
 }
 
-// Button to disconnect user
-function inputUserDisconnect()
-{
-    var input_disconnect        = document.createElement("input");
-        input_disconnect.type   = "button";
-        input_disconnect.id     = "input_disconnect"
-        input_disconnect.value  = "Disconnect";
+function addNavigationMenu(){
 
-    content.insertBefore( input_disconnect, document.getElementById( "div_sensor" ) );
+    var nav = document.createElement("div");
+    nav.id = "nav";
 
+    var nav_ul = document.createElement("ul");
+    nav.appendChild(nav_ul);
+
+    var nav_li = document.createElement("li");
+    nav_ul.appendChild(nav_li);  
+
+    // Account button
+    var input_account        = document.createElement("button");
+    input_account.id     = "input_account"
+    input_account.innerText  = userMail;
+
+    nav_li.appendChild(input_account);
+
+    // Disconnect button
+    var input_disconnect        = document.createElement("button");
+    input_disconnect.id     = "input_disconnect"
+    input_disconnect.innerText  = "Disconnect ";
+    input_disconnect.onclick = "location.reload()";
+
+    nav_li.appendChild(input_disconnect);
+
+    // Disconnect button icon
+    var disconnect_exit_icon        = document.createElement("label");
+    disconnect_exit_icon.id     = "disconnect_exit_icon";
+    disconnect_exit_icon.style.fontFamily = "Material Icons";
+    disconnect_exit_icon.innerText = "exit_to_app";
+
+    input_disconnect.appendChild(disconnect_exit_icon);
+
+    document.body.appendChild(nav);
+    document.body.insertBefore( nav, document.getElementById( "content" ) );
+
+
+    // Event click to see SensorState
     document.getElementById("input_disconnect").
-    addEventListener('click', function() 
+    addEventListener('click', function()
     {
-        disconnection();
+        location.reload();
     });
-}
 
-// Function user disconnection 
-function disconnection()
-{
-    location.reload();
 }
 
 // Supervision panel
 function supervision()
 {
+    var nav = document.getElementById('nav');
 
     // Remove formulaire connexion
     document.getElementById("div_form").remove();
 
-    inputUserDisconnect();
+    addNavigationMenu();
 
     document.getElementById( "div_sensor" ).style.display = "block";
 
@@ -190,7 +217,6 @@ function supervision()
     content.insertBefore( input_mainMenu, document.getElementById( "div_sensor" ) );
     input_mainMenu.style.display = "none";
 
-
     // Event click to see Historicals
     document.getElementById("input_histo").
     addEventListener('click', function()
@@ -231,6 +257,11 @@ function supervision()
           
 
 }
+
+
+
+
+
 
 // Display all sensor state value in table
 function getAllSensorState()
