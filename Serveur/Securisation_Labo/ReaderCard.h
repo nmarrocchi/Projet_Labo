@@ -24,7 +24,7 @@ private:
 	database * _db;
 	user * _user;
 	// - Open Reader & loop read function
-	ReaderCard(database * db);
+	ReaderCard();
 	UFR_STATUS status;
 	uint32_t readerType = 0;
 	uint8_t  cardType = 0;
@@ -32,7 +32,7 @@ private:
 
 public slots:
 	// - Create ReaderCard Instance
-	static ReaderCard * getInstance(database * db);
+	static ReaderCard * getInstance();
 	// - Read Card
 	void read();
 

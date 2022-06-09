@@ -17,6 +17,8 @@ private:
 
 	QList<security*> secDevices;
 
+	PCI_7248_Card * card;
+
 protected:
 	// - Run securitySystem loop
 	virtual void run() override;
@@ -24,6 +26,8 @@ protected:
 public:
 	// - Create securitySystem Instance
 	static securitySysteme * getInstance();
+
+	PCI_7248_Card * getCard();
 
 };
 

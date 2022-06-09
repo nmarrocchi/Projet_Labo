@@ -6,8 +6,12 @@
 #include <QtSql/qsqldriver.h>
 #include <QtSql/qsqldatabase.h>
 #include <QtSql/qsqlquery.h>
+#include <deque>
+#include "Operation.h"
+#include <qmutex.h>
+#include <qthread.h>
 
-class database
+class database : public QThread
 {
 
 private:
@@ -18,6 +22,11 @@ private:
 	QString _Database = "labotest";
 
 	static database * instance;
+
+	std::deque<Operation*> operationQueue;
+	QMutex operationMutex;
+
+	Operation * getOperation();
 
 public:
 	QString user_table = "user";
@@ -47,4 +56,7 @@ public:
 	// - Count data with same information
 	int countdb(QString table, QString condition);
 
+	void addOperation(Operation * operation);
+
+	virtual void run() override;
 };

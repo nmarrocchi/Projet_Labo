@@ -5,22 +5,24 @@
 ReaderCard * ReaderCard::instance = NULL;
 
 // - Create ReaderCard Instance
-ReaderCard * ReaderCard::getInstance(database * db)
+ReaderCard * ReaderCard::getInstance()
 {
 	if (instance == NULL)
 	{
-		instance = new ReaderCard(db);
+		instance = new ReaderCard();
 	}
 
 	return instance;
 }
 
 // - Open Reader & loop read function
-ReaderCard::ReaderCard(database * db) {
-
+ReaderCard::ReaderCard() 
+{
+	database * db = database::getInstance();
 	_user = new user(db);
-	_db = db;
-	if (ReaderOpen() != 0) {
+
+	if (ReaderOpen() != 0) 
+	{
 	
 		printf("Erreur, le lecteur n a pas pu etre ouvert \n");
 		exit(-1);

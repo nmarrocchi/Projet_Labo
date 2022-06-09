@@ -20,6 +20,11 @@ securitySysteme * securitySysteme::getInstance()
 	return instance;
 }
 
+PCI_7248_Card * securitySysteme::getCard()
+{
+	return card;
+}
+
 // - Instance All Sensors Class
 securitySysteme::securitySysteme()
 {
@@ -29,7 +34,7 @@ securitySysteme::securitySysteme()
 // - Run securitySystem loop
 void securitySysteme::run()
 {
-	PCI_7248_Card * card = new PCI_7248_Card();
+	card = new PCI_7248_Card();
 	database * db = database::getInstance();
 
 	timeSlot::getInstance(db);

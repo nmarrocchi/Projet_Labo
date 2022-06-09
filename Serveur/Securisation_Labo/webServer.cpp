@@ -1,4 +1,5 @@
 #include "webServer.h"
+#include "CheckUserCredentialsOperation.h"
 
 // - Set securitySystem Instance to NULL
 webServer * webServer::instance = NULL;
@@ -23,6 +24,16 @@ void webServer::updateSystemData(SystemData data)
 	systemDataMutex.unlock();
 }
 
+void webServer::addOperation(Operation * operation)
+{
+	if (operation != nullptr)
+	{
+		operationMutex.lock();
+		operationQueue.push_back(operation);
+		operationMutex.unlock();
+	}
+}
+
 webServer::webServer(database * db, quint16 port)
 {
 	this->webSocketServer = new QWebSocketServer(QStringLiteral("Server WebSocket"), QWebSocketServer::NonSecureMode);
@@ -39,6 +50,22 @@ webServer::webServer(database * db, quint16 port)
 	{
 		qDebug() << "WebSocket Server: Error connexion on the port " << port << "\n";
 	}
+
+	QObject::connect(&operationTimer, SIGNAL(timeout()), this, SLOT(operationTimerTick()));
+	operationTimer.start(10);
+}
+
+Operation * webServer::getOperation()
+{
+	Operation * result = nullptr;
+	operationMutex.lock();
+	if (operationQueue.size() > 0)
+	{
+		result = operationQueue.front();
+		operationQueue.pop_front();
+	}
+	operationMutex.unlock();
+	return result;
 }
 
 void webServer::onNewConnection()
@@ -65,19 +92,7 @@ void webServer::processTextMessage(const QString& message) {
 		QString mail = data.section(";", 0, 0);
 		QString password = data.section(";", 1, 1);
 
-		QSqlQuery query;
-		query.exec("SELECT COUNT(*) FROM user WHERE `mail`='" + mail + "' AND `password`='" + password + "'");
-
-
-		int result;
-
-		if (query.next())
-		{
-			result = query.value(0).toInt();
-		}
-
-		// Send result on client
-		ws->sendTextMessage("Auth;" + QString::number(result));
+		database::getInstance()->addOperation(new CheckUserCredentialsOperation(ws, mail, password));
 	}
 
 	if (message.startsWith("State") == true)
@@ -231,3 +246,14 @@ void webServer::socketDisconnected()
 
 	qDebug() << "Server WebSocket: Deconnexion\n";
 }
+
+void webServer::operationTimerTick()
+{
+	Operation * operation = getOperation();
+	if (operation != nullptr)
+	{
+		operation->runTask();
+	}
+}
+
+
