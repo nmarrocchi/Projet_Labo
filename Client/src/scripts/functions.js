@@ -3,8 +3,8 @@
 const socket = new WebSocket("ws://192.168.65.31:2569");
 
 var content = document.getElementById('content');
-var tab, userMail;
-// var tableState, tableHisto, thead, tbody, tr, td, cell;
+var tab, userMail, index = 0;
+let usersIDCard = [], usersMail = [], usersPassword = [], usersIsAdmin = [];
 
 var room = ['', 'SN1', 'SN2', 'PHY'];
 var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
@@ -41,10 +41,8 @@ socket.onmessage = function(event)
             if(message[1] == 1)
             {
                 supervision();
-                console.log('User connect');
             }
             else {
-                console.log('Error user accompte');
                 document.getElementById('LoginError').innerText = "Les identifiants sont incorrects"
 
             }
@@ -58,14 +56,16 @@ socket.onmessage = function(event)
         // Protocol historical Sensor event
         case 'HistoSystem':
             if(message[1] == "Sensor"){
-                console.log('SensorHisto');
                 getHistoSensorValue(event.data);
             }
             else{
-                console.log('SensorPassage');
                 getHistoPassageValue(event.data);
             }
-            
+            break;
+
+        // Select list ID Card  
+        case 'getUser':
+            SetAllIdCard(event.data);
             break;
             
         default:
@@ -191,7 +191,6 @@ function addNavigationMenu(){
 function showHideDisconnecInput(){
 
     var input_disconnect = document.getElementById('input_disconnect');
-    console.log(input_disconnect.style.display);
 
     if( input_disconnect.style.display == "none"){
         input_disconnect.style.display = "block";
@@ -364,11 +363,11 @@ function ManageUserPanel(){
     div_users.id = "div_users";
     div_users.style.display = "none";
 
+
+    content.appendChild(div_users);
     form_AddUser(div_users);
-
-    //form_DeleteUser(div_users);
-
-    //form_ManageUsers(div_users);
+    form_ModifyUser(div_users);
+    
 }
 
 // Set Alarm Panel Buttons Color
@@ -454,8 +453,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[0] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[0] + "_" + this.value;   
                         socket.send(message);
                         });
     
@@ -487,8 +485,7 @@ function createAlarmPanel(tableBody){
 
                         activeButton.addEventListener('click', function()
                         {
-                            var message = "Alarm_" + Panel_tr[1] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[1] + "_" + this.value;    
                         socket.send(message);
                         });
     
@@ -521,8 +518,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[2] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[2] + "_" + this.value;   
                         socket.send(message);
                         });
     
@@ -549,8 +545,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[3] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[3] + "_" + this.value;    
                         socket.send(message);
                         });
     
@@ -612,8 +607,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[5] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[5] + "_" + this.value;    
                         socket.send(message);
                         });
     
@@ -640,8 +634,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[6] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[6] + "_" + this.value; 
                         socket.send(message);
                         });
     
@@ -675,7 +668,6 @@ function createAlarmPanel(tableBody){
                         {
                             
                             var message = "Alarm_" + Panel_tr[7] + "_" + this.value;
-                        console.log(message);    
                         socket.send(message);
                         });
     
@@ -779,6 +771,25 @@ function getStateValue(message)
     */
 }
 
+function SetAllIdCard(message){
+
+    let value = message.split( ";" );
+
+    usersIDCard.push(value[1]);
+    usersMail.push(value[2]);
+    usersPassword.push(value[3]);
+    usersIsAdmin.push(value[4]);
+
+    var Modify_idCard = document.createElement("option");
+    Modify_idCard.value = value[0]+1;
+    Modify_idCard.innerText = value[1]+1;
+    Modify_idCard.id = index;
+    document.getElementById('Modify_User_idCard').appendChild(Modify_idCard);
+
+    index++;
+
+}
+
 // Get historical value
 function getHistoSensorValue(message)
 {
@@ -869,7 +880,7 @@ function form_AddUser(div_users){
     add_User_mail.placeholder = "Mail la providence";
 
     var add_User_password = document.createElement("input");
-    add_User_password.type = "password";
+    add_User_password.type = "text";
     add_User_password.id = "add_User_password";
     add_User_password.placeholder = "Mot de passe";
 
@@ -878,7 +889,7 @@ function form_AddUser(div_users){
 
     var add_User_isAdmin_0 = document.createElement("option");
     add_User_isAdmin_0.value = "0";
-    add_User_isAdmin_0.innerText = "non admin";
+    add_User_isAdmin_0.innerText = "No Admin";
 
     var add_User_isAdmin_1 = document.createElement("option");
     add_User_isAdmin_1.value = "1";
@@ -899,20 +910,15 @@ function form_AddUser(div_users){
     div_users.appendChild(add_User_isAdmin);
     div_users.appendChild(add_User_Submit);
 
-    content.appendChild(div_users);
-
-    document.getElementById("add_User_Submit").
-    addEventListener('click', function()
+   document.getElementById("add_User_Submit").addEventListener('click', function()
     {
         if ((add_User_idCard.value != "") && (add_User_mail.value != "") && (add_User_password.value != "")) {
-            console.log("Add User");
+            var message = "User;addUser;" + add_User_idCard.value + ";" + add_User_mail.value + ";" + add_User_password.value + ";" + add_User_isAdmin.value;
+            socket.send(message)
         } 
-        else{
-            var message = 
-            socket.send()
-        }
     });
 }
+
 
 // Create form to add user
 function form_ModifyUser(div_users){
@@ -923,23 +929,45 @@ function form_ModifyUser(div_users){
     var title_Modify_User = document.createElement("h2");
     title_Modify_User.textContent = "Modify User";
 
-    var Modify_User_idCard = document.createElement("input");
-    Modify_User_idCard.type = "text";
+    div_users.appendChild(title_Modify_User);
+
+    var Modify_User_idCard = document.createElement("select");
     Modify_User_idCard.id = "Modify_User_idCard";
     Modify_User_idCard.placeholder = "ID Card";
 
+    var Modify_idCard_Default = document.createElement("option");
+    Modify_idCard_Default.value = "0";
+    Modify_idCard_Default.innerText = "ID Card"
+    Modify_idCard_Default.id = "0";
+    Modify_User_idCard.appendChild(Modify_idCard_Default);
+
+    socket.send("User;getUser");
+
+    console.log(usersIDCard);
+    
     var Modify_User_mail = document.createElement("input");
     Modify_User_mail.type = "mail";
     Modify_User_mail.id = "Modify_User_mail";
     Modify_User_mail.placeholder = "Mail la providence";
 
     var Modify_User_password = document.createElement("input");
-    Modify_User_password.type = "password";
+    Modify_User_password.type = "text";
     Modify_User_password.id = "Modify_User_password";
     Modify_User_password.placeholder = "Mot de passe";
 
     var Modify_User_isAdmin = document.createElement("select");
     Modify_User_isAdmin.id = "Modify_User_isAdmin";
+
+    var Modify_User_isAdmin_0 = document.createElement("option");
+    Modify_User_isAdmin_0.value = "0";
+    Modify_User_isAdmin_0.innerText = "No Admin";
+
+    var Modify_User_isAdmin_1 = document.createElement("option");
+    Modify_User_isAdmin_1.value = "1";
+    Modify_User_isAdmin_1.innerText = "Admin";
+
+    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_0);
+    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_1);
 
     var Modify_User_Submit = document.createElement("input");
     Modify_User_Submit.id = "Modify_User_Submit";
@@ -951,7 +979,6 @@ function form_ModifyUser(div_users){
     Delete_User_Submit.type = "button";
     Delete_User_Submit.value = "Delete User";
     
-    div_users.appendChild(title_Modify_User);
     div_users.appendChild(Modify_User_idCard);
     div_users.appendChild(Modify_User_mail);
     div_users.appendChild(Modify_User_password);
@@ -959,31 +986,47 @@ function form_ModifyUser(div_users){
     div_users.appendChild(Modify_User_Submit);
     div_users.appendChild(Delete_User_Submit);
 
+
+    // Modify User
     document.getElementById("Modify_User_Submit").
     addEventListener('click', function()
     {
-        console.log('Modify user');
+        var test = document.getElementById('Modify_User_idCard').selectedIndex - 1;
+        if (test != -1) {
+            if((Modify_User_mail.value != "") && (Modify_User_password.value != "")){
+                var idCardSelected = document.getElementById('Modify_User_idCard').selectedIndex - 1
+                var message = "User;updateUser;" + usersIDCard[idCardSelected] + ";"  + Modify_User_mail.value + ";" + Modify_User_password.value + ";" + Modify_User_isAdmin.selectedIndex;
+                socket.send(message);
+                console.log(message);
+            }
+            
+        }
     });
 
+    // Delete User
     document.getElementById("Delete_User_Submit").
     addEventListener('click', function()
     {
-        console.log('Delete user');
+        var e = document.getElementById("Modify_User_idCard");
+        var result = e.options[e.selectedIndex].id;
+        var message = "User;deleteUser;" + usersIDCard[result];
+        socket.send(message);
+    });
+
+    // Choose different id Card to generate other fields
+    document.getElementById("Modify_User_idCard").
+    addEventListener('change', function()
+    {
+        var selectIndex = document.getElementById('Modify_User_idCard').selectedIndex - 1;
+        if(selectIndex != -1){
+            Modify_User_mail.value = usersMail[selectIndex];
+            Modify_User_password.value = usersPassword[selectIndex];
+            Modify_User_isAdmin.selectedIndex = selectIndex;
+        }
+        else{
+            Modify_User_mail.value = "";
+            Modify_User_password.value = "";
+        }
+
     });
 }
-
-
-
-
-
-// Display all user in a table
-function getAllUsers(){}
-
-// Delete user in database
-function deleteUser(){}
-
-// Add user in database
-function createUser(){}
-
-// Modification user in database
-function updateUser(){}
