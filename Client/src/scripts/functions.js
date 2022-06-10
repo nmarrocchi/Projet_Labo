@@ -1,5 +1,6 @@
 // Creation WebSocket
-const socket = new WebSocket("ws://127.0.0.1:2569");
+//const socket = new WebSocket("ws://127.0.0.1:2569");
+const socket = new WebSocket("ws://192.168.65.31:2569");
 
 var content = document.getElementById('content');
 var tab, userMail;
@@ -249,6 +250,17 @@ function supervision()
 
     content.insertBefore( input_settings, document.getElementById( "div_sensor" ) );
 
+    ManageUserPanel();
+
+    // users Button
+    var input_users        = document.createElement("input");
+    input_users.type   = "button";
+    input_users.id     = "input_users";
+    input_users.classList.add("input");
+    input_users.value  = "Manage Users";
+
+    content.insertBefore( input_users, document.getElementById( "div_sensor" ) );
+
     content.appendChild(div_supervision);
  
     socket.send( "Histo" ); 
@@ -263,10 +275,12 @@ function supervision()
         document.getElementById('input_histo').style.display = "inline-block";
         document.getElementById('input_sensor').style.display = "inline-block";
         document.getElementById('input_settings').style.display = "inline-block";
+        document.getElementById('input_users').style.display = "inline-block";
 
         document.getElementById( "div_event" ).style.display = "none";
         document.getElementById('div_sensor').style.display = "none";
         document.getElementById('div_settings').style.display = "none";
+        document.getElementById('div_users').style.display = "none";
         
     });
 
@@ -279,10 +293,12 @@ function supervision()
         document.getElementById('input_histo').style.display = "none";
         document.getElementById('input_sensor').style.display = "inline-block";
         document.getElementById('input_settings').style.display = "inline-block";
+        document.getElementById('input_users').style.display = "inline-block";
 
         document.getElementById( "div_event" ).style.display = "block";
         document.getElementById('div_sensor').style.display = "none";
         document.getElementById('div_settings').style.display = "none";
+        document.getElementById('div_users').style.display = "none";
     });
 
     
@@ -294,10 +310,12 @@ function supervision()
         document.getElementById('input_histo').style.display = "inline-block";
         document.getElementById('input_sensor').style.display = "none";
         document.getElementById('input_settings').style.display = "inline-block";
+        document.getElementById('input_users').style.display = "inline-block";
 
         document.getElementById( "div_event" ).style.display = "none";
         document.getElementById('div_sensor').style.display = "block";
         document.getElementById('div_settings').style.display = "none";
+        document.getElementById('div_users').style.display = "none";
     });
 
     // Event click to system Settings
@@ -308,14 +326,37 @@ function supervision()
         document.getElementById('input_histo').style.display = "inline-block";
         document.getElementById('input_sensor').style.display = "inline-block";
         document.getElementById('input_settings').style.display = "none";
+        document.getElementById('input_users').style.display = "inline-block";
 
         document.getElementById( "div_event" ).style.display = "none";
         document.getElementById('div_sensor').style.display = "none";
         document.getElementById('div_settings').style.display = "block";
+        document.getElementById('div_users').style.display = "none";
 
         
         AlarmPaneltextColor();
     });
+
+    // Event click to see Manage Users Panel
+    document.getElementById("input_users").
+    addEventListener('click', function()
+    {
+        document.getElementById( "input_mainMenu" ).style.display = "inline-block";
+        document.getElementById('input_histo').style.display = "inline-block";
+        document.getElementById('input_sensor').style.display = "inline-block";
+        document.getElementById('input_settings').style.display = "inline-block";
+        document.getElementById('input_users').style.display = "none";
+
+        document.getElementById( "div_event" ).style.display = "none";
+        document.getElementById('div_sensor').style.display = "none";
+        document.getElementById('div_settings').style.display = "none";
+        document.getElementById('div_users').style.display = "block";
+    });
+
+}
+
+// CreateManage Users Panel
+function ManageUserPanel(){
 
 }
 
@@ -375,7 +416,7 @@ function systemSettingsPanel(){
 function createAlarmPanel(tableBody){
 
     let Panel_tr = [ "all", "sn1_siren", "sn1_alarm", "sn2_siren", "sn2_alarm", "sn2_lock", "phy_siren", "phy_alarm"];
-    let all_td = ["All Rooms", "Active All", "Desactive All"];
+    let all_td = ["All Rooms", "ON", "OFF"];
     let sn1_td_1 = ["SN1", "Siren", "ON", "OFF"];
     let sn1_td_2 = ["Alarm", "ON", "OFF"];
     let sn2_td_1 = ["SN2", "Siren", "ON", "OFF"];
@@ -398,6 +439,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[0] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -424,6 +473,13 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            var message = "Alarm_" + Panel_tr[1] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -450,6 +506,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[2] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -470,6 +534,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[3] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -497,6 +569,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[4] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -517,6 +597,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[5] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -537,6 +625,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[6] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -563,6 +659,14 @@ function createAlarmPanel(tableBody){
                         activeButton.className = 'SystemButton';
                         activeButton.value = Active_td.className;
                         activeButton.textContent = activeButton.value;
+
+                        activeButton.addEventListener('click', function()
+                        {
+                            
+                            var message = "Alarm_" + Panel_tr[7] + "_" + this.value;
+                        console.log(message);    
+                        socket.send(message);
+                        });
     
                         Active_td.appendChild(activeButton);
                     }
@@ -577,6 +681,8 @@ function createAlarmPanel(tableBody){
             default:
                 break;        
         }
+
+        
 
         tableBody.appendChild(Active_Tr);
         

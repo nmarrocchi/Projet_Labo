@@ -79,7 +79,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #3a3535cb;
 }
 
-#input_sensor, #input_histo, #input_settings{
+#input_sensor, #input_histo, #input_settings, #input_users{
     display: inline-block;
     margin: 5vh 2vw;
     min-width: fit-content;
@@ -92,7 +92,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #504e4ecb;
 }
 
-#input_sensor:hover, #input_histo:hover, #input_settings:hover{
+#input_sensor:hover, #input_histo:hover, #input_settings:hover, #input_users:hover{
     background-color: #3a3535cb;
 }
 
@@ -173,7 +173,7 @@ font-weight: bold;
 
 #table_alarm button{
     width: 100%;
-    padding: 1vh 0.5vw;
+    padding: 1vh 2vw;
     font-size: large;
     font-weight: bold;
 }
