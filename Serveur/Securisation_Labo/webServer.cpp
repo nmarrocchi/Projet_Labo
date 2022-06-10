@@ -1,5 +1,6 @@
 #include "webServer.h"
 #include "CheckUserCredentialsOperation.h"
+#include "ActiveActuatorOperation.h"
 
 // - Set securitySystem Instance to NULL
 webServer * webServer::instance = NULL;
@@ -239,6 +240,89 @@ void webServer::processTextMessage(const QString& message) {
 		}
 		*/
 	}
+
+	if (message.startsWith("Alarm") == true)
+	{
+		QString data = QStringRef(&message, 5, message.length() - 5).toString();
+		QString channel_name = data.section("_", 1, 1);
+
+		if (channel_name != "all") 
+		{
+			QString actuator_name = data.section("_", 2, 2);
+			QString value_name = data.section("_", 3, 3);
+
+			int channel;
+			int actuator;
+			int value;
+
+			if (channel_name == "sn1")
+			{
+				channel = Channel_P2A;
+			}
+			else if (channel_name == "sn2")
+			{
+				channel = Channel_P2B;
+			}
+			else if (channel_name == "phy")
+			{
+				channel = Channel_P2C;
+			}
+
+			if (actuator_name == "siren")
+			{
+				actuator = 0;
+			}
+			else if (actuator_name == "alarm")
+			{
+				if (channel_name == "phy") {
+					actuator = 2;
+				}
+				else {
+					actuator = 1;
+				}
+
+			}
+			else if (actuator_name == "lock")
+			{
+				actuator = 2;
+			}
+
+			if (value_name == "ON")
+			{
+				value = 0;
+			}
+			else if (value_name == "OFF")
+			{
+				value = 1;
+			}
+
+			database::getInstance()->addOperation(new ActiveActuatorOperation(channel, actuator, value));
+		}
+		else {
+			QString value_name = data.section("_", 2, 2);
+
+			if (value_name == "ON")
+			{
+				for (int i = 5; i < 8; i++)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						database::getInstance()->addOperation(new ActiveActuatorOperation(i, j, 0));
+					}
+				}
+			}
+			else {
+				for (int i = 5; i < 8; i++)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						database::getInstance()->addOperation(new ActiveActuatorOperation(i, j, 1));
+					}
+				}
+			}
+		}
+	}
+		
 }
 
 void webServer::socketDisconnected()
