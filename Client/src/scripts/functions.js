@@ -56,13 +56,16 @@ socket.onmessage = function(event)
             break;
 
         // Protocol historical Sensor event
-        case 'HistoSensor':
-            getHistoSensorValue(event.data);
-            break;
-
-        // Protocol historical users event
-        case 'HistoUsers':
-            getHistoUsersValue(event.data);
+        case 'HistoSystem':
+            if(message[1] == "Sensor"){
+                console.log('SensorHisto');
+                getHistoSensorValue(event.data);
+            }
+            else{
+                console.log('SensorPassage');
+                getHistoPassageValue(event.data);
+            }
+            
             break;
             
         default:
@@ -263,7 +266,7 @@ function supervision()
 
     content.appendChild(div_supervision);
  
-    socket.send( "Histo" ); 
+    socket.send("HistoSystem");
 
     document.getElementById( "div_sensor" ).style.display = "none";
 
@@ -357,7 +360,15 @@ function supervision()
 
 // CreateManage Users Panel
 function ManageUserPanel(){
+    var div_users = document.createElement("div");
+    div_users.id = "div_users";
+    div_users.style.display = "none";
 
+    form_AddUser(div_users);
+
+    //form_DeleteUser(div_users);
+
+    //form_ManageUsers(div_users);
 }
 
 // Set Alarm Panel Buttons Color
@@ -776,8 +787,8 @@ function getHistoSensorValue(message)
 
     while( true ) {
 
-        const histoElement = value.slice( 1, 5 );
-        value = value.splice( 1, 5 )
+        const histoElement = value.slice( 2, 6 );
+        value = value.splice( 2, 6 )
 
         const tr = document.createElement( "tr" )
 
@@ -798,14 +809,14 @@ function getHistoSensorValue(message)
 }
 
 // Get historical value
-function getHistoUsersValue(message)
+function getHistoPassageValue(message)
 {
     let value = message.split( ";" );
     const table = document.getElementById( "table_event_users" );
 
     while( true ) {
 
-        const histoElement = value.slice( 1, 5 );
+        const histoElement = value.slice( 2, 5 );
         value = value.splice( 1, 5 )
 
         const tr = document.createElement( "tr" )
@@ -837,6 +848,133 @@ function cellValue( i, value )
     addCellClass(td, i);
 
 }
+
+// Create form to add user
+function form_AddUser(div_users){
+    // Add Form to create new user
+    var form_Add_User = document.createElement('form');
+    form_Add_User.id = "form_Add_User";
+
+    var title_Add_User = document.createElement("h2");
+    title_Add_User.textContent = "Add User";
+
+    var add_User_idCard = document.createElement("input");
+    add_User_idCard.type = "text";
+    add_User_idCard.id = "add_User_idCard";
+    add_User_idCard.placeholder = "ID Card";
+
+    var add_User_mail = document.createElement("input");
+    add_User_mail.type = "mail";
+    add_User_mail.id = "add_User_mail";
+    add_User_mail.placeholder = "Mail la providence";
+
+    var add_User_password = document.createElement("input");
+    add_User_password.type = "password";
+    add_User_password.id = "add_User_password";
+    add_User_password.placeholder = "Mot de passe";
+
+    var add_User_isAdmin = document.createElement("select");
+    add_User_isAdmin.id = "add_User_isAdmin";
+
+    var add_User_isAdmin_0 = document.createElement("option");
+    add_User_isAdmin_0.value = "0";
+    add_User_isAdmin_0.innerText = "non admin";
+
+    var add_User_isAdmin_1 = document.createElement("option");
+    add_User_isAdmin_1.value = "1";
+    add_User_isAdmin_1.innerText = "Admin";
+
+    add_User_isAdmin.appendChild(add_User_isAdmin_0);
+    add_User_isAdmin.appendChild(add_User_isAdmin_1);
+
+    var add_User_Submit = document.createElement("input");
+    add_User_Submit.id = "add_User_Submit";
+    add_User_Submit.type = "button";
+    add_User_Submit.value = "Add User";
+    
+    div_users.appendChild(title_Add_User);
+    div_users.appendChild(add_User_idCard);
+    div_users.appendChild(add_User_mail);
+    div_users.appendChild(add_User_password);
+    div_users.appendChild(add_User_isAdmin);
+    div_users.appendChild(add_User_Submit);
+
+    content.appendChild(div_users);
+
+    document.getElementById("add_User_Submit").
+    addEventListener('click', function()
+    {
+        if ((add_User_idCard.value != "") && (add_User_mail.value != "") && (add_User_password.value != "")) {
+            console.log("Add User");
+        } 
+        else{
+            var message = 
+            socket.send()
+        }
+    });
+}
+
+// Create form to add user
+function form_ModifyUser(div_users){
+    // Add Form to create new user
+    var form_ModifyUser = document.createElement('form');
+    form_ModifyUser.id = "form_ModifyUser";
+
+    var title_Modify_User = document.createElement("h2");
+    title_Modify_User.textContent = "Modify User";
+
+    var Modify_User_idCard = document.createElement("input");
+    Modify_User_idCard.type = "text";
+    Modify_User_idCard.id = "Modify_User_idCard";
+    Modify_User_idCard.placeholder = "ID Card";
+
+    var Modify_User_mail = document.createElement("input");
+    Modify_User_mail.type = "mail";
+    Modify_User_mail.id = "Modify_User_mail";
+    Modify_User_mail.placeholder = "Mail la providence";
+
+    var Modify_User_password = document.createElement("input");
+    Modify_User_password.type = "password";
+    Modify_User_password.id = "Modify_User_password";
+    Modify_User_password.placeholder = "Mot de passe";
+
+    var Modify_User_isAdmin = document.createElement("select");
+    Modify_User_isAdmin.id = "Modify_User_isAdmin";
+
+    var Modify_User_Submit = document.createElement("input");
+    Modify_User_Submit.id = "Modify_User_Submit";
+    Modify_User_Submit.type = "button";
+    Modify_User_Submit.value = "Modify User";
+
+    var Delete_User_Submit = document.createElement("input");
+    Delete_User_Submit.id = "Delete_User_Submit";
+    Delete_User_Submit.type = "button";
+    Delete_User_Submit.value = "Delete User";
+    
+    div_users.appendChild(title_Modify_User);
+    div_users.appendChild(Modify_User_idCard);
+    div_users.appendChild(Modify_User_mail);
+    div_users.appendChild(Modify_User_password);
+    div_users.appendChild(Modify_User_isAdmin);
+    div_users.appendChild(Modify_User_Submit);
+    div_users.appendChild(Delete_User_Submit);
+
+    document.getElementById("Modify_User_Submit").
+    addEventListener('click', function()
+    {
+        console.log('Modify user');
+    });
+
+    document.getElementById("Delete_User_Submit").
+    addEventListener('click', function()
+    {
+        console.log('Delete user');
+    });
+}
+
+
+
+
 
 // Display all user in a table
 function getAllUsers(){}

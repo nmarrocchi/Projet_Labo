@@ -129,6 +129,7 @@ thead{
     border-collapse: collapse;
     display: block;
     overflow-y: scroll;
+    height: 50vh;
     max-height: 50vh;
 }
 
@@ -176,6 +177,11 @@ font-weight: bold;
     padding: 1vh 2vw;
     font-size: large;
     font-weight: bold;
+}
+
+#add_User_idCard, #add_User_mail, #add_User_password, #add_User_isAdmin{
+    padding: 1vh 0.5vw;
+    margin: 1vh 1vw;
 }
 
 
