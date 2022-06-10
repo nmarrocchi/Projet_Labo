@@ -121,6 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActiveActuatorOperation.cpp" />
     <ClCompile Include="AddHistoOperation.cpp" />
     <ClCompile Include="CheckRFIDUserOperation.cpp" />
     <ClCompile Include="CheckUserCredentialsOperation.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="user.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActiveActuatorOperation.h" />
     <ClInclude Include="AddHistoOperation.h" />
     <ClInclude Include="CheckRFIDUserOperation.h" />
     <ClInclude Include="CheckUserCredentialsOperation.h" />

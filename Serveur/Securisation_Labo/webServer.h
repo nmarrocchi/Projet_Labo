@@ -10,6 +10,8 @@
 
 #include "database.h"
 #include "SystemData.h"
+#include "Dask.h"
+#include "PCI_7248_Card.h"
 #include <qtimer.h>
 #include <deque>
 
