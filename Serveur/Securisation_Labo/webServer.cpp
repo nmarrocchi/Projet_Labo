@@ -1,5 +1,6 @@
 #include "webServer.h"
 #include "CheckUserCredentialsOperation.h"
+#include "SelectHistoOperation.h"
 #include "ActiveActuatorOperation.h"
 
 // - Set securitySystem Instance to NULL
@@ -206,39 +207,9 @@ void webServer::processTextMessage(const QString& message) {
 		ws->sendTextMessage(data);
 	}
 
-	if (message.startsWith("Histo") == true)
+	if (message.startsWith("HistoSystem") == true)
 	{
-		/*
-		QSqlQuery query;
-		query.exec("SELECT security.room, security.byte, historical.statut, historical.date FROM historical, security WHERE security.idSecurity = historical.idSecurity");
-
-		QString tab[6] = { "Continuity", "Sensor", "Tamper", "Presence", "Alarm", "Siren" };
-
-		while (query.next())
-		{
-			QString roomValue = query.value(0).toString();
-			QString byteValue = query.value(1).toString();
-			QString statutValue = query.value(2).toString();
-			QString dateValue = query.value(3).toString();
-
-			if (statutValue == "1")
-			{
-				statutValue = "true";
-			}
-			else
-			{
-				statutValue = "false";
-			}
-
-			int rand = QRandomGenerator::global()->bounded(6);
-
-			byteValue = tab[rand];
-
-			QString data = "Histo;" + roomValue + ";" + byteValue + ";" + statutValue + ";" + dateValue;
-
-			ws->sendTextMessage(data);
-		}
-		*/
+		database::getInstance()->addOperation(new SelectHistoOperation(ws));
 	}
 
 	if (message.startsWith("Alarm") == true)
