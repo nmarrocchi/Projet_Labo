@@ -94,6 +94,12 @@
     <ClCompile Include="ActiveActuatorOperation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SelectHistoOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SendHistoResultOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -166,6 +172,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ActiveActuatorOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectHistoOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SendHistoResultOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

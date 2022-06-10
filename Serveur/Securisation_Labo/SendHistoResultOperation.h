@@ -2,13 +2,13 @@
 #include "Operation.h"
 #include <qwebsocket.h>
 
-class SendAuthResultOperation : public Operation
+class SendHistoResultOperation : public Operation
 {
 	QWebSocket * ws;
-	int result;
+	QString result;
 
 public:
-	SendAuthResultOperation(QWebSocket * ws, int result);
+	SendHistoResultOperation(QWebSocket * ws, QString result);
 
 	virtual void run();
 	virtual void onOperationDone();
