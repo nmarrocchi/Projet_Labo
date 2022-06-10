@@ -14,22 +14,23 @@ void CheckRFIDUserOperation::run()
 	int countUser = _db->countdb(_db->user_table, " WHERE idCard = " + idCard);
 	if (countUser > 0)
 	{
+		QSqlQuery query; 
+		query = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
 
-		QSqlQuery userQuery = _db->selectdb(_db->user_table, " WHERE idCard = " + idCard);
+		query.next();
 
-		userQuery.next();
-
-		bool isAdmin = userQuery.value(3).toInt();
+		bool isAdmin = query.value(3).toInt();
 
 		if (isAdmin == 1) 
 		{
-			//Ouverture de la gâche
 			accessAuthorized = true;
+			query.exec("INSERT INTO `passage`(`idCard`) VALUES (" + idCard + ")");
 		}
 		else {
 			if (timeSlot::validateTime() == true)
 			{
 				accessAuthorized = true;
+				query.exec("INSERT INTO `passage`(`idCard`) VALUES (" + idCard + ")");
 			}
 		}
 	}

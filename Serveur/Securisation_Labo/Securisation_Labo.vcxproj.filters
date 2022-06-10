@@ -100,6 +100,15 @@
     <ClCompile Include="SendHistoResultOperation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SelectUserOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SendUserResultOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageUserOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -178,6 +187,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SendHistoResultOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectUserOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SendUserResultOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ManageUserOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
