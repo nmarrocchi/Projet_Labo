@@ -1,6 +1,8 @@
 #include "webServer.h"
 #include "CheckUserCredentialsOperation.h"
 #include "SelectHistoOperation.h"
+#include "SelectUserOperation.h"
+#include "ManageUserOperation.h"
 #include "ActiveActuatorOperation.h"
 
 // - Set securitySystem Instance to NULL
@@ -292,6 +294,45 @@ void webServer::processTextMessage(const QString& message) {
 				}
 			}
 		}
+	}
+
+	if (message.startsWith("User") == true)
+	{
+		QString data = QStringRef(&message, 4, message.length() - 4).toString();
+		QString manage = data.section(";", 1, 1);
+
+		if (manage == "getUser")
+		{
+			database::getInstance()->addOperation(new SelectUserOperation(ws));
+		} 
+		else if (manage == "addUser")
+		{
+			QString idCard = data.section(";", 2, 2);
+			QString mail = data.section(";", 3, 3);
+			QString password = data.section(";", 4, 4);
+			QString admin = data.section(";", 5, 5);
+
+			database::getInstance()->addOperation(new ManageUserOperation(manage, idCard, mail, password, admin));
+		}
+		else if (manage == "updateUser")
+		{
+			QString idCard = data.section(";", 2, 2);
+			QString mail = data.section(";", 3, 3);
+			QString password = data.section(";", 4, 4);
+			QString admin = data.section(";", 5, 5);
+
+			database::getInstance()->addOperation(new ManageUserOperation(manage, idCard, mail, password, admin));
+		}
+		else if (manage == "deleteUser")
+		{
+			QString idCard = data.section(";", 2, 2);
+			QString mail = NULL;
+			QString password = NULL;
+			QString admin = NULL;
+
+			database::getInstance()->addOperation(new ManageUserOperation(manage, idCard, mail, password, admin));
+		}
+
 	}
 		
 }
