@@ -125,6 +125,7 @@
     <ClCompile Include="AddHistoOperation.cpp" />
     <ClCompile Include="CheckRFIDUserOperation.cpp" />
     <ClCompile Include="CheckUserCredentialsOperation.cpp" />
+    <ClCompile Include="ConfigData.cpp" />
     <ClCompile Include="continuity.cpp" />
     <ClCompile Include="database.cpp" />
     <ClCompile Include="lib\ConsoleTableLib\ConsoleTable.cpp" />
@@ -145,7 +146,7 @@
     <ClCompile Include="SendUserResultOperation.cpp" />
     <ClCompile Include="sensor.cpp" />
     <ClCompile Include="SensorStateChangedOperation.cpp" />
-    <ClCompile Include="SQLOperation.cpp" />
+    <ClCompile Include="Operation.cpp" />
     <ClCompile Include="SystemData.cpp" />
     <ClCompile Include="timeSlot.cpp" />
     <ClCompile Include="webServer.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="AddHistoOperation.h" />
     <ClInclude Include="CheckRFIDUserOperation.h" />
     <ClInclude Include="CheckUserCredentialsOperation.h" />
+    <ClInclude Include="ConfigData.h" />
     <ClInclude Include="continuity.h" />
     <ClInclude Include="DAQHeader.h" />
     <ClInclude Include="Dask.h" />

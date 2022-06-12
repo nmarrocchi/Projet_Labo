@@ -2,11 +2,13 @@
 
 #include <qthread.h>
 #include <qlist.h>
+#include <qdebug.h>
 #include <QObject>
 #include <cstdint>
 #include <cstring>
 #include <QMap>
 #include <QVariant>
+
 #include "uFCoder.h"
 #include "database.h"
 #include "user.h"

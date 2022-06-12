@@ -1,6 +1,8 @@
 #pragma once
 
 #include "security.h"
+#include "SensorStateChangedOperation.h"
+#include "AddHistoOperation.h"
 
 class tamper : public security
 {
@@ -11,11 +13,7 @@ class tamper : public security
 public:
 
 	/* Construct tamper class */
-	tamper(PCI_7248_Card * card, database * db)
-		: security(card)
-	{
-		this->db = db;
-	}
+	tamper(PCI_7248_Card * card, database * db);
 
 	/* Send the statut tamper on the client */
 	virtual QList<bool> selectStatut();

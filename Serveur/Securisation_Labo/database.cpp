@@ -1,10 +1,10 @@
 #include "database.h"
 #include <qsqlquery.h>
 
-// - Set securitySystem Instance to NULL
+// - Set database Instance to NULL
 database * database::instance = NULL;
 
-// - Create securitySystem Instance
+// - Create database Instance
 database * database::getInstance()
 {
 	if (instance == NULL)
@@ -16,6 +16,7 @@ database * database::getInstance()
 	return instance;
 }
 
+/* Return request result */
 Operation * database::getOperation()
 {
 	Operation * result = nullptr;
@@ -32,6 +33,12 @@ Operation * database::getOperation()
 // - Constructor of database class
 database::database()
 {
+	ConfigData * config = ConfigData::getInstance();
+	this->_Hostname = config->getHostname();
+	this->_Username = config->getUsername();
+	this->_Password = config->getPassword();
+	this->_Database = config->getDatabase();
+
 	start();
 }
 
@@ -89,6 +96,7 @@ int database::countdb(QString table, QString condition)
 
 }
 
+/* Add operation in the queue */
 void database::addOperation(Operation * operation)
 {
 	if (operation != nullptr)
@@ -99,6 +107,7 @@ void database::addOperation(Operation * operation)
 	}
 }
 
+/* Run database thread */
 void database::run()
 {
 	// - Connecting to mysql database
@@ -108,20 +117,25 @@ void database::run()
 	db.setPassword(_Password);
 	db.setDatabaseName(_Database);
 
+	// Verification connection with database
 	if (db.open())
 	{
-		qDebug() << "\n Database connected successfully \n" << endl;
+		qDebug() << endl << "Database connection: Success" << endl;
 	}
 	else {
-		qDebug() << "\n Database is not connected \n" << endl;
-		//exit(0);
+		qDebug() << endl << "Database connection: Failed";
+		qDebug() << db.lastError() << endl;
+		system("PAUSE");
+		exit(0);
 	}
 
 	while (1)
 	{
+		// Check if task on operation exist
 		Operation * operation = getOperation();
 		if (operation != nullptr)
 		{
+			// Process task on operation
 			operation->runTask();
 		}
 		else

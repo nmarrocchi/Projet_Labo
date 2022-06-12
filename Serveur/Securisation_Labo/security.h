@@ -13,12 +13,8 @@ class security
 {
 
 public:
-	security(PCI_7248_Card * card)
-	{
-		this->card = card;
-	}
+	security(PCI_7248_Card * card);
 	
-
 	void loop();
 
 	/* Create a table to supervise the sytheme on the console */

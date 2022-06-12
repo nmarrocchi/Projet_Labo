@@ -46,13 +46,13 @@ webServer::webServer(database * db, quint16 port)
 	{
 		this->_db = db;
 
-		qDebug() << "WebSocket Server: New connexion on the port " << port << "\n";
+		qDebug() << endl << "WebSocket Server: New connexion on the port" << port << endl;
 
 		QObject::connect(webSocketServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 	}
 	else
 	{
-		qDebug() << "WebSocket Server: Error connexion on the port " << port << "\n";
+		qDebug() << endl << "WebSocket Server: Error connexion on the port" << port << endl;
 	}
 
 	QObject::connect(&operationTimer, SIGNAL(timeout()), this, SLOT(operationTimerTick()));
@@ -339,8 +339,6 @@ void webServer::processTextMessage(const QString& message) {
 
 void webServer::socketDisconnected()
 {
-
-	qDebug() << "Server WebSocket: Deconnexion\n";
 }
 
 void webServer::operationTimerTick()

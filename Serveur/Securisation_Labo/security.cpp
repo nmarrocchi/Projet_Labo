@@ -4,6 +4,11 @@
 #include "tamper.h"
 #include "presence.h"
 
+security::security(PCI_7248_Card * card)
+{
+	this->card = card;
+}
+
 void security::loop(){}
 
 void security::superviseTable()

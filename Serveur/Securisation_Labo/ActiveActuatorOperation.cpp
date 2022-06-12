@@ -1,6 +1,6 @@
 #include "ActiveActuatorOperation.h"
-#include "securitySysteme.h"
 
+/* Constructor ActiveActuatorOperation class */
 ActiveActuatorOperation::ActiveActuatorOperation(int channel, int actuator, bool value) 
 	: Operation()
 {
@@ -9,11 +9,14 @@ ActiveActuatorOperation::ActiveActuatorOperation(int channel, int actuator, bool
 	this->value = value;
 }
 
+/* Run ActiveActuatorOperation thread */
 void ActiveActuatorOperation::run()
 {
+	// Active actuator with PCI_7248_Card class
 	securitySysteme::getInstance()->getCard()->writeCard(this->channel, this->actuator, this->value);
 }
 
+/* Process when the thread is done */
 void ActiveActuatorOperation::onOperationDone()
 {
 }

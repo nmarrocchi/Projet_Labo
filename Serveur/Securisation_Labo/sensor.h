@@ -1,6 +1,8 @@
 #pragma once
 
 #include "security.h"
+#include "SensorStateChangedOperation.h"
+#include "AddHistoOperation.h"
 
 class sensor : public security
 {
@@ -11,11 +13,7 @@ class sensor : public security
 public:
 
 	/* Construct sensor class */
-	sensor(PCI_7248_Card * card, database * db)
-		: security(card)
-	{
-		this->db = db;
-	}
+	sensor(PCI_7248_Card * card, database * db);
 
 	/* Send the statut sensor on the client */
 	virtual QList<bool> selectStatut();
