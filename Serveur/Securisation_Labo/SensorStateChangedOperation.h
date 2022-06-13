@@ -1,17 +1,22 @@
 #pragma once
-#include "security.h"
 #include "Operation.h"
+#include "security.h"
+#include "securitySysteme.h"
 
 class SensorStateChangedOperation : public Operation
 {
 	security * sensor;
 	bool sensorState;
-	int sensorStateI;
+	int sensorByte;
 
 public:
-	SensorStateChangedOperation(security * sensor, bool sensorState, int sensorStateI);
+	/* Constructor SensorStateChangedOperation class */
+	SensorStateChangedOperation(security * sensor, bool sensorState, int sensorByte);
 
+	/* Run SensorStateChangedOperation thread */
 	virtual void run();
+
+	/* Process when the thread is done */
 	virtual void onOperationDone();
 };
 

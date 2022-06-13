@@ -1,16 +1,17 @@
 #include "SelectUserOperation.h"
-#include <qsqlquery.h>
-#include "webServer.h"
-#include "SendUserResultOperation.h"
 
+/* Constructor SelectUserOperation class */
 SelectUserOperation::SelectUserOperation(QWebSocket * ws)
 {
 	this->ws = ws;
 }
 
+/* Run SelectUserOperation thread */
 void SelectUserOperation::run()
 {
 	QSqlQuery query;
+
+	// Select all values on historical table in database
 	query.exec("SELECT * FROM `user`");
 
 	while (query.next())
@@ -22,10 +23,12 @@ void SelectUserOperation::run()
 
 		result = idCard + ";" + mail + ";" + password + ";" + admin;
 
+		// Send result values on SendHistoResultOperation class
 		webServer::getInstance()->addOperation(new SendUserResultOperation(ws, result));
 	}
 }
 
+/* Process when the thread is done */
 void SelectUserOperation::onOperationDone()
 {
 }

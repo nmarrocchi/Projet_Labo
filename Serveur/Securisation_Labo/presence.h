@@ -1,6 +1,8 @@
 #pragma once
 
 #include "security.h"
+#include "SensorStateChangedOperation.h"
+#include "AddHistoOperation.h"
 
 class presence : public security
 {
@@ -11,11 +13,7 @@ class presence : public security
 public:
 
 	/* Construct presence class */
-	presence(PCI_7248_Card * card, database * db)
-		: security(card)
-	{
-		this->db = db;
-	}
+	presence(PCI_7248_Card * card, database * db);
 
 	/* Send the statut presence on the client */
 	virtual QList<bool> selectStatut();

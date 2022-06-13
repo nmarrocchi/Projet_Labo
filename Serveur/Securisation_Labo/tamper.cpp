@@ -1,6 +1,11 @@
 #include "tamper.h"
-#include "SensorStateChangedOperation.h"
-#include "AddHistoOperation.h"
+
+/* Construct tamper class */
+tamper::tamper(PCI_7248_Card * card, database * db)
+	: security(card)
+{
+	this->db = db;
+}
 
 /* Send the statut tamper on the client */
 QList<bool> tamper::selectStatut()
@@ -15,6 +20,7 @@ QList<bool> tamper::selectStatut()
 
 		coord.X = tamperCoordX + largeur * i;
 
+		// Verification of sensor state
 		if (actualState[i] == 0)
 		{
 			
@@ -22,6 +28,7 @@ QList<bool> tamper::selectStatut()
 			SetConsoleTextAttribute(handle, text_color::Red);
 			qDebug() << "false";
 
+			// Verification with preceding state
 			if (lastState[i] != actualState[i])
 			{
 				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], i));
@@ -34,10 +41,6 @@ QList<bool> tamper::selectStatut()
 			SetConsoleTextAttribute(handle, text_color::Green);
 			qDebug() << "true ";
 
-			if (lastState[i] != actualState[i])
-			{
-				insertValue(actualState[i], i);
-			}
 		}
 
 		lastState[i] = actualState[i];

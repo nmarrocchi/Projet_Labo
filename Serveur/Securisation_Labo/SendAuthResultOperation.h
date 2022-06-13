@@ -6,11 +6,16 @@ class SendAuthResultOperation : public Operation
 {
 	QWebSocket * ws;
 	int result;
+	int isAdmin;
 
 public:
-	SendAuthResultOperation(QWebSocket * ws, int result);
+	/* Constructor SendAuthResultOperation class */
+	SendAuthResultOperation(QWebSocket * ws, int result, int isAdmin);
 
+	/* Run SendAuthResultOperation thread */
 	virtual void run();
+
+	/* Process when the thread is done */
 	virtual void onOperationDone();
 };
 

@@ -12,7 +12,8 @@ timeSlot * timeSlot::getInstance(database * db)
 {
 	if (instance == NULL)
 	{
-		new timeSlot(db);
+		timeSlot * timeslot = new timeSlot(db);
+		instance = timeslot;
 	}
 
 	return instance;

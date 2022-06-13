@@ -1,5 +1,4 @@
 #include "ReaderCard.h"
-#include <qdebug.h>
 
 // - Set securitySystem Instance to NULL
 ReaderCard * ReaderCard::instance = NULL;
@@ -23,12 +22,12 @@ ReaderCard::ReaderCard()
 
 	if (ReaderOpen() != 0) 
 	{
-	
-		printf("Erreur, le lecteur n a pas pu etre ouvert \n");
+		qDebug() << endl << "Reader Card connection: Failed" << endl;
 		exit(-1);
-	
 	}
-	printf("Lecteur ouvert \n");
+	else {
+		qDebug() << endl << "Reader Card connection: Success" << endl;
+	}
 	
 	GetReaderType(&readerType);
 	ReaderUISignal(3, 3);

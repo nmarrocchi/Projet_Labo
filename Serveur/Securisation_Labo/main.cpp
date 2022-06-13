@@ -1,23 +1,28 @@
 #include <QtCore/QCoreApplication>
 
+#include "ConfigData.h"
 #include "ReaderCard.h"
 #include "webServer.h"
-#include "database.h"
 #include "securitySysteme.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-	security::superviseTable(); // Affiche un tableau pour les états des capteurs
+	// - Create ConfigData Instance
+	ConfigData * config = ConfigData::getInstance();
 
-	//database * db = new database();
+	// - Create the supervise table
+	security::superviseTable();
 
-	webServer::getInstance(2569); // Instancie le serveur websocket
+	// - Create webServer Instance
+	webServer::getInstance(config->getPort());
 	
-	ReaderCard::getInstance();	// Instancie le lecteur RFID
+	// - Create ReaderCard Instance
+	ReaderCard::getInstance();
 
-	securitySysteme::getInstance();	// Affiche les états des capteurs
+	// - Create securitySysteme Instance
+	securitySysteme::getInstance();
 
     return a.exec();
 }
