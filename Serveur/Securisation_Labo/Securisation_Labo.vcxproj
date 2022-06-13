@@ -141,8 +141,10 @@
     <ClCompile Include="securitySysteme.cpp" />
     <ClCompile Include="SelectHistoOperation.cpp" />
     <ClCompile Include="SelectUserOperation.cpp" />
+    <ClCompile Include="SendAddHistoOperation.cpp" />
     <ClCompile Include="SendAuthResultOperation.cpp" />
     <ClCompile Include="SendHistoResultOperation.cpp" />
+    <ClCompile Include="SendRFIDUserOperation.cpp" />
     <ClCompile Include="SendUserResultOperation.cpp" />
     <ClCompile Include="sensor.cpp" />
     <ClCompile Include="SensorStateChangedOperation.cpp" />
@@ -176,8 +178,10 @@
     <QtMoc Include="securitySysteme.h" />
     <ClInclude Include="SelectHistoOperation.h" />
     <ClInclude Include="SelectUserOperation.h" />
+    <ClInclude Include="SendAddHistoOperation.h" />
     <ClInclude Include="SendAuthResultOperation.h" />
     <ClInclude Include="SendHistoResultOperation.h" />
+    <ClInclude Include="SendRFIDUserOperation.h" />
     <ClInclude Include="SendUserResultOperation.h" />
     <ClInclude Include="sensor.h" />
     <QtMoc Include="webServer.h" />
