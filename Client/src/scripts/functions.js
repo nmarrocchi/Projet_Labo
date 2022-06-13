@@ -11,6 +11,8 @@ var histo = ['ROOM', 'BYTE', 'STATUT', 'DATE'];
 
 connexion();
 
+/* -- Socket Functions -- */
+
 // Event when the WebSocket is open
 socket.onopen = function() 
 {  
@@ -95,27 +97,8 @@ socket.onmessage = function(event)
     }
 };
 
-// Insert data in Sensor Histo
-function addHistoSensorValue(message){
-    const value = message.split(';');
-    var SensorHisto = document.getElementById('table_event_sensor');
-    var newRow = SensorHisto.insertRow(0);
 
-    for (let i = 0; i < value.length - 2; i++) {
-        newRow.insertCell(i).innerText = value[i+2]; 
-    }
-}
-
-// Insert data in Passage Histo
-function addHistoPassageValue(message){
-    const value = message.split(';');
-    var PassageHisto = document.getElementById('table_event_users');
-    var newRow = PassageHisto.insertRow(0);
-
-    for (let i = 0; i < value.length - 2; i++) {
-        newRow.insertCell(i).innerText = value[i+2]; 
-    }
-}
+/* -- WEB Functions -- */
 
 // Function user connection 
 function connexion()
@@ -167,6 +150,7 @@ function connexion()
 
 }
 
+// Add nav menu into html
 function addNavigationMenu(){
 
     var nav = document.createElement("div");
@@ -231,6 +215,7 @@ function addNavigationMenu(){
 
 }
 
+// Show / Hide Disconnect Button
 function showHideDisconnecInput(){
 
     var input_disconnect = document.getElementById('input_disconnect');
@@ -400,6 +385,219 @@ function supervision()
 
 }
 
+
+/* -- Actual Sensors Values -- */
+
+// Display all sensor state value in table
+function getAllSensorState()
+{
+
+    let div_sensor = document.createElement("div");
+    div_sensor.classList.add("div_sensor");
+    div_sensor.id = "div_sensor";
+
+    let table_sensor = document.createElement("table");
+    table_sensor.classList.add("table_sensor");
+    table_sensor.id = "table_sensor";
+
+    let thead = document.createElement('thead');
+    let tr = document.createElement('tr');
+    
+    for( var i=0; i<=3; i++ ) {
+        
+        let td   = document.createElement('td')
+            , cell = document.createTextNode(room[i]);
+
+        td.appendChild(cell);
+        tr.appendChild(td);
+    }
+    
+    thead.appendChild(tr);
+    table_sensor.appendChild(thead);
+
+    let tbody = document.createElement('tbody');
+            
+    table_sensor.appendChild(tbody);
+    div_sensor.appendChild(table_sensor);
+
+    content.appendChild(div_sensor);
+
+    // Send value in the server
+    socket.send("State");
+
+}
+
+// Get sensor state value 
+function CreateStateTab(message)
+{
+
+    const tableBody = document.getElementById( "table_sensor" );
+    const value = message.split(';');
+
+    let SensorActualState = [];
+
+    tableBody.innerHTML = "";
+
+    for( j = 0; j < 4; j++ ) {
+        const tr = document.createElement( "tr" );
+            for( i = 1; i <= 4; i++ )
+            {
+                const td = document.createElement( "td" );
+                const span = document.createElement( "span" );
+                
+                if ((value[i + j * 4] == "true") || (value[i + j * 4] == "false")) {
+                    span.className = "SensorStateActualValue";
+
+                    if(SensorActualState[i+j*4] != value[i+j*4]){
+                        SensorActualState[i+j*4] = value[i+j*4];
+                    }
+
+                    span.id = SensorActualState[i+j*4];
+                    span.innerText = SensorActualState[i+j*4];
+                }
+                else{
+                    span.innerText = value[ i + j * 4 ];
+                }
+
+                td.appendChild( span );
+                tr.appendChild( td );
+
+            }
+            tableBody.appendChild(tr);
+    }
+
+    sensorTabCreated = 1;
+    
+    // Send value in the server
+    setInterval(
+        function () 
+        {
+            socket.send('State');
+        }, 1000);
+    
+}
+
+// Update sensor Tab values
+function updateStateTab(message){
+    const newMessage = message.split(';');
+    let newSensorvalues = [];
+    let spans = document.getElementsByClassName("SensorStateActualValue");
+
+    // Create new tab with receive message but only with true / false state
+    for (let i = 0; i < newMessage.length; i++) {
+        if ((newMessage[i] == 'true') || (newMessage[i] == 'false')) {
+            newSensorvalues.push(newMessage[i]);
+        }
+    }
+
+    for (let i = 0; i < spans.length; i++) {
+        if (spans[i].textContent != newSensorvalues[i]) {
+            spans[i].id = newSensorvalues[i];
+            spans[i].textContent = newSensorvalues[i];
+        }
+        
+    }
+
+}
+
+
+/* -- Sensor & Passage Histo -- */
+
+// Insert data in Sensor Histo
+function addHistoSensorValue(message){
+    const value = message.split(';');
+    var SensorHisto = document.getElementById('table_event_sensor');
+    var newRow = SensorHisto.insertRow(0);
+
+    for (let i = 0; i < value.length - 2; i++) {
+        newRow.insertCell(i).innerText = value[i+2]; 
+    }
+}
+
+// Insert data in Passage Histo
+function addHistoPassageValue(message){
+    const value = message.split(';');
+    var PassageHisto = document.getElementById('table_event_users');
+    var newRow = PassageHisto.insertRow(0);
+
+    for (let i = 0; i < value.length - 2; i++) {
+        newRow.insertCell(i).innerText = value[i+2]; 
+    }
+}
+
+// Get historical value
+function getHistoSensorValue(message)
+{
+    let value = message.split( ";" );
+    const table = document.getElementById( "table_event_sensor" );
+
+    while( true ) {
+
+        const histoElement = value.slice( 2, 6 );
+        value = value.splice( 2, 6 )
+
+        const tr = document.createElement( "tr" )
+
+        for( const elem of histoElement ) {
+            const row = document.createElement( "td" );
+            row.innerText = elem
+            tr.appendChild( row  )
+        }
+        
+
+        table.appendChild( tr )
+        
+        if ( value.length )
+            break;
+
+    }
+
+}
+
+// Get historical value
+function getHistoPassageValue(message)
+{
+    let value = message.split( ";" );
+    const table = document.getElementById( "table_event_users" );
+
+    while( true ) {
+
+        const histoElement = value.slice( 2, 5 );
+        value = value.splice( 1, 5 )
+
+        const tr = document.createElement( "tr" )
+
+        for( const elem of histoElement ) {
+            const row = document.createElement( "td" );
+            row.innerText = elem
+            tr.appendChild( row  )
+        }
+            
+
+        table.appendChild( tr )
+        
+        if ( value.length )
+            break;
+
+    }
+
+}
+
+// Creation cell with value inside
+function cellValue( i, value )
+{
+    let td = document.createElement('td');
+    let cell = document.createTextNode(value[i]);
+    td.appendChild(cell);
+    tr.appendChild(td);
+    
+    addCellClass(td, i);
+
+}
+
+
+/* -- Manage Users -- */
+
 // CreateManage Users Panel
 function ManageUserPanel(){
     var div_users = document.createElement("div");
@@ -412,6 +610,195 @@ function ManageUserPanel(){
     form_ModifyUser(div_users);
     
 }
+
+function SetAllIdCard(message){
+
+    let value = message.split( ";" );
+
+    usersIDCard.push(value[1]);
+    usersMail.push(value[2]);
+    usersPassword.push(value[3]);
+    usersIsAdmin.push(value[4]);
+
+    var Modify_idCard = document.createElement("option");
+    Modify_idCard.value = value[0]+1;
+    Modify_idCard.innerText = value[1]+1;
+    Modify_idCard.id = index;
+    document.getElementById('Modify_User_idCard').appendChild(Modify_idCard);
+
+    index++;
+
+}
+
+// Create form to add user
+function form_AddUser(div_users){
+    // Add Form to create new user
+    var form_Add_User = document.createElement('form');
+    form_Add_User.id = "form_Add_User";
+
+    var title_Add_User = document.createElement("h2");
+    title_Add_User.textContent = "Add User";
+
+    var add_User_idCard = document.createElement("input");
+    add_User_idCard.type = "text";
+    add_User_idCard.id = "add_User_idCard";
+    add_User_idCard.placeholder = "ID Card";
+
+    var add_User_mail = document.createElement("input");
+    add_User_mail.type = "mail";
+    add_User_mail.id = "add_User_mail";
+    add_User_mail.placeholder = "Mail la providence";
+
+    var add_User_password = document.createElement("input");
+    add_User_password.type = "text";
+    add_User_password.id = "add_User_password";
+    add_User_password.placeholder = "Mot de passe";
+
+    var add_User_isAdmin = document.createElement("select");
+    add_User_isAdmin.id = "add_User_isAdmin";
+
+    var add_User_isAdmin_0 = document.createElement("option");
+    add_User_isAdmin_0.value = "0";
+    add_User_isAdmin_0.innerText = "No Admin";
+
+    var add_User_isAdmin_1 = document.createElement("option");
+    add_User_isAdmin_1.value = "1";
+    add_User_isAdmin_1.innerText = "Admin";
+
+    add_User_isAdmin.appendChild(add_User_isAdmin_0);
+    add_User_isAdmin.appendChild(add_User_isAdmin_1);
+
+    var add_User_Submit = document.createElement("input");
+    add_User_Submit.id = "add_User_Submit";
+    add_User_Submit.type = "button";
+    add_User_Submit.value = "Add User";
+    
+    div_users.appendChild(title_Add_User);
+    div_users.appendChild(add_User_idCard);
+    div_users.appendChild(add_User_mail);
+    div_users.appendChild(add_User_password);
+    div_users.appendChild(add_User_isAdmin);
+    div_users.appendChild(add_User_Submit);
+
+   document.getElementById("add_User_Submit").addEventListener('click', function()
+    {
+        if ((add_User_idCard.value != "") && (add_User_mail.value != "") && (add_User_password.value != "")) {
+            var message = "User;addUser;" + add_User_idCard.value + ";" + add_User_mail.value + ";" + add_User_password.value + ";" + add_User_isAdmin.value;
+            socket.send(message)
+        } 
+    });
+}
+
+// Create form to add user
+function form_ModifyUser(div_users){
+    // Add Form to create new user
+    var form_ModifyUser = document.createElement('form');
+    form_ModifyUser.id = "form_ModifyUser";
+
+    var title_Modify_User = document.createElement("h2");
+    title_Modify_User.textContent = "Modify User";
+
+    div_users.appendChild(title_Modify_User);
+
+    var Modify_User_idCard = document.createElement("select");
+    Modify_User_idCard.id = "Modify_User_idCard";
+    Modify_User_idCard.placeholder = "ID Card";
+
+    var Modify_idCard_Default = document.createElement("option");
+    Modify_idCard_Default.value = "0";
+    Modify_idCard_Default.innerText = "ID Card"
+    Modify_idCard_Default.id = "0";
+    Modify_User_idCard.appendChild(Modify_idCard_Default);
+
+    socket.send("User;getUser");
+    
+    var Modify_User_mail = document.createElement("input");
+    Modify_User_mail.type = "mail";
+    Modify_User_mail.id = "Modify_User_mail";
+    Modify_User_mail.placeholder = "Mail la providence";
+
+    var Modify_User_password = document.createElement("input");
+    Modify_User_password.type = "text";
+    Modify_User_password.id = "Modify_User_password";
+    Modify_User_password.placeholder = "Mot de passe";
+
+    var Modify_User_isAdmin = document.createElement("select");
+    Modify_User_isAdmin.id = "Modify_User_isAdmin";
+
+    var Modify_User_isAdmin_0 = document.createElement("option");
+    Modify_User_isAdmin_0.value = "0";
+    Modify_User_isAdmin_0.innerText = "No Admin";
+
+    var Modify_User_isAdmin_1 = document.createElement("option");
+    Modify_User_isAdmin_1.value = "1";
+    Modify_User_isAdmin_1.innerText = "Admin";
+
+    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_0);
+    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_1);
+
+    var Modify_User_Submit = document.createElement("input");
+    Modify_User_Submit.id = "Modify_User_Submit";
+    Modify_User_Submit.type = "button";
+    Modify_User_Submit.value = "Modify User";
+
+    var Delete_User_Submit = document.createElement("input");
+    Delete_User_Submit.id = "Delete_User_Submit";
+    Delete_User_Submit.type = "button";
+    Delete_User_Submit.value = "Delete User";
+    
+    div_users.appendChild(Modify_User_idCard);
+    div_users.appendChild(Modify_User_mail);
+    div_users.appendChild(Modify_User_password);
+    div_users.appendChild(Modify_User_isAdmin);
+    div_users.appendChild(Modify_User_Submit);
+    div_users.appendChild(Delete_User_Submit);
+
+
+    // Modify User
+    document.getElementById("Modify_User_Submit").
+    addEventListener('click', function()
+    {
+        var test = document.getElementById('Modify_User_idCard').selectedIndex - 1;
+        if (test != -1) {
+            if((Modify_User_mail.value != "") && (Modify_User_password.value != "")){
+                var idCardSelected = document.getElementById('Modify_User_idCard').selectedIndex - 1
+                var message = "User;updateUser;" + usersIDCard[idCardSelected] + ";"  + Modify_User_mail.value + ";" + Modify_User_password.value + ";" + Modify_User_isAdmin.selectedIndex;
+                socket.send(message);
+            }
+            
+        }
+    });
+
+    // Delete User
+    document.getElementById("Delete_User_Submit").
+    addEventListener('click', function()
+    {
+        var e = document.getElementById("Modify_User_idCard");
+        var result = e.options[e.selectedIndex].id;
+        var message = "User;deleteUser;" + usersIDCard[result];
+        socket.send(message);
+    });
+
+    // Choose different id Card to generate other fields
+    document.getElementById("Modify_User_idCard").
+    addEventListener('change', function()
+    {
+        var selectIndex = document.getElementById('Modify_User_idCard').selectedIndex - 1;
+        if(selectIndex != -1){
+            Modify_User_mail.value = usersMail[selectIndex];
+            Modify_User_password.value = usersPassword[selectIndex];
+            Modify_User_isAdmin.selectedIndex = selectIndex;
+        }
+        else{
+            Modify_User_mail.value = "";
+            Modify_User_password.value = "";
+        }
+
+    });
+}
+
+
+/* -- Alarm & Settings Panels -- */
 
 // Set Alarm Panel Buttons Color
 function AlarmPaneltextColor(){
@@ -733,392 +1120,4 @@ function createAlarmPanel(tableBody){
         
     }
         
-}
-
-// Display all sensor state value in table
-function getAllSensorState()
-{
-
-    let div_sensor = document.createElement("div");
-    div_sensor.classList.add("div_sensor");
-    div_sensor.id = "div_sensor";
-
-    let table_sensor = document.createElement("table");
-    table_sensor.classList.add("table_sensor");
-    table_sensor.id = "table_sensor";
-
-    let thead = document.createElement('thead');
-    let tr = document.createElement('tr');
-    
-    for( var i=0; i<=3; i++ ) {
-        
-        let td   = document.createElement('td')
-            , cell = document.createTextNode(room[i]);
-
-        td.appendChild(cell);
-        tr.appendChild(td);
-    }
-    
-    thead.appendChild(tr);
-    table_sensor.appendChild(thead);
-
-    let tbody = document.createElement('tbody');
-            
-    table_sensor.appendChild(tbody);
-    div_sensor.appendChild(table_sensor);
-
-    content.appendChild(div_sensor);
-
-    // Send value in the server
-    socket.send("State");
-
-}
-
-// Get sensor state value 
-function CreateStateTab(message)
-{
-
-    const tableBody = document.getElementById( "table_sensor" );
-    const value = message.split(';');
-
-    let SensorActualState = [];
-
-    tableBody.innerHTML = "";
-
-    for( j = 0; j < 4; j++ ) {
-        const tr = document.createElement( "tr" );
-            for( i = 1; i <= 4; i++ )
-            {
-                const td = document.createElement( "td" );
-                const span = document.createElement( "span" );
-                
-                if ((value[i + j * 4] == "true") || (value[i + j * 4] == "false")) {
-                    span.className = "SensorStateActualValue";
-
-                    if(SensorActualState[i+j*4] != value[i+j*4]){
-                        SensorActualState[i+j*4] = value[i+j*4];
-                    }
-
-                    span.id = SensorActualState[i+j*4];
-                    span.innerText = SensorActualState[i+j*4];
-                }
-                else{
-                    span.innerText = value[ i + j * 4 ];
-                }
-
-                td.appendChild( span );
-                tr.appendChild( td );
-
-            }
-            tableBody.appendChild(tr);
-    }
-
-    sensorTabCreated = 1;
-    
-    // Send value in the server
-    setInterval(
-        function () 
-        {
-            socket.send('State');
-        }, 1000);
-    
-}
-
-// Update sensor Tab values
-function updateStateTab(message){
-    const newMessage = message.split(';');
-    let newSensorvalues = [];
-    let spans = document.getElementsByClassName("SensorStateActualValue");
-
-    // Create new tab with receive message but only with true / false state
-    for (let i = 0; i < newMessage.length; i++) {
-        if ((newMessage[i] == 'true') || (newMessage[i] == 'false')) {
-            newSensorvalues.push(newMessage[i]);
-        }
-    }
-
-    for (let i = 0; i < spans.length; i++) {
-        if (spans[i].textContent != newSensorvalues[i]) {
-            spans[i].id = newSensorvalues[i];
-            spans[i].textContent = newSensorvalues[i];
-        }
-        
-    }
-
-}
-
-// unused
-function updateStateValue(){
-    let spanArray = document.getElementsByClassName('SensorStateActualValue');
-                
-                if ((value[i + j * 4] == "true") || (value[i + j * 4] == "false")) {
-                    span.className = "SensorStateActualValue";
-
-                    if(SensorActualState[i+j*4] != value[i+j*4]){
-                        SensorActualState[i+j*4] = value[i+j*4];
-                    }
-                    spanArray[i+j*4].id = SensorActualState[i+j*4];
-                    spanArray[i+j*4].innerText = SensorActualState[i+j*4];
-                }
-                else{
-                    span.innerText = value[ i + j * 4 ];
-                }
-
-}
-
-function SetAllIdCard(message){
-
-    let value = message.split( ";" );
-
-    usersIDCard.push(value[1]);
-    usersMail.push(value[2]);
-    usersPassword.push(value[3]);
-    usersIsAdmin.push(value[4]);
-
-    var Modify_idCard = document.createElement("option");
-    Modify_idCard.value = value[0]+1;
-    Modify_idCard.innerText = value[1]+1;
-    Modify_idCard.id = index;
-    document.getElementById('Modify_User_idCard').appendChild(Modify_idCard);
-
-    index++;
-
-}
-
-// Get historical value
-function getHistoSensorValue(message)
-{
-    let value = message.split( ";" );
-    const table = document.getElementById( "table_event_sensor" );
-
-    while( true ) {
-
-        const histoElement = value.slice( 2, 6 );
-        value = value.splice( 2, 6 )
-
-        const tr = document.createElement( "tr" )
-
-        for( const elem of histoElement ) {
-            const row = document.createElement( "td" );
-            row.innerText = elem
-            tr.appendChild( row  )
-        }
-        
-
-        table.appendChild( tr )
-        
-        if ( value.length )
-            break;
-
-    }
-
-}
-
-// Get historical value
-function getHistoPassageValue(message)
-{
-    let value = message.split( ";" );
-    const table = document.getElementById( "table_event_users" );
-
-    while( true ) {
-
-        const histoElement = value.slice( 2, 5 );
-        value = value.splice( 1, 5 )
-
-        const tr = document.createElement( "tr" )
-
-        for( const elem of histoElement ) {
-            const row = document.createElement( "td" );
-            row.innerText = elem
-            tr.appendChild( row  )
-        }
-            
-
-        table.appendChild( tr )
-        
-        if ( value.length )
-            break;
-
-    }
-
-}
-
-// Creation cell with value inside
-function cellValue( i, value )
-{
-    let td = document.createElement('td');
-    let cell = document.createTextNode(value[i]);
-    td.appendChild(cell);
-    tr.appendChild(td);
-    
-    addCellClass(td, i);
-
-}
-
-// Create form to add user
-function form_AddUser(div_users){
-    // Add Form to create new user
-    var form_Add_User = document.createElement('form');
-    form_Add_User.id = "form_Add_User";
-
-    var title_Add_User = document.createElement("h2");
-    title_Add_User.textContent = "Add User";
-
-    var add_User_idCard = document.createElement("input");
-    add_User_idCard.type = "text";
-    add_User_idCard.id = "add_User_idCard";
-    add_User_idCard.placeholder = "ID Card";
-
-    var add_User_mail = document.createElement("input");
-    add_User_mail.type = "mail";
-    add_User_mail.id = "add_User_mail";
-    add_User_mail.placeholder = "Mail la providence";
-
-    var add_User_password = document.createElement("input");
-    add_User_password.type = "text";
-    add_User_password.id = "add_User_password";
-    add_User_password.placeholder = "Mot de passe";
-
-    var add_User_isAdmin = document.createElement("select");
-    add_User_isAdmin.id = "add_User_isAdmin";
-
-    var add_User_isAdmin_0 = document.createElement("option");
-    add_User_isAdmin_0.value = "0";
-    add_User_isAdmin_0.innerText = "No Admin";
-
-    var add_User_isAdmin_1 = document.createElement("option");
-    add_User_isAdmin_1.value = "1";
-    add_User_isAdmin_1.innerText = "Admin";
-
-    add_User_isAdmin.appendChild(add_User_isAdmin_0);
-    add_User_isAdmin.appendChild(add_User_isAdmin_1);
-
-    var add_User_Submit = document.createElement("input");
-    add_User_Submit.id = "add_User_Submit";
-    add_User_Submit.type = "button";
-    add_User_Submit.value = "Add User";
-    
-    div_users.appendChild(title_Add_User);
-    div_users.appendChild(add_User_idCard);
-    div_users.appendChild(add_User_mail);
-    div_users.appendChild(add_User_password);
-    div_users.appendChild(add_User_isAdmin);
-    div_users.appendChild(add_User_Submit);
-
-   document.getElementById("add_User_Submit").addEventListener('click', function()
-    {
-        if ((add_User_idCard.value != "") && (add_User_mail.value != "") && (add_User_password.value != "")) {
-            var message = "User;addUser;" + add_User_idCard.value + ";" + add_User_mail.value + ";" + add_User_password.value + ";" + add_User_isAdmin.value;
-            socket.send(message)
-        } 
-    });
-}
-
-
-// Create form to add user
-function form_ModifyUser(div_users){
-    // Add Form to create new user
-    var form_ModifyUser = document.createElement('form');
-    form_ModifyUser.id = "form_ModifyUser";
-
-    var title_Modify_User = document.createElement("h2");
-    title_Modify_User.textContent = "Modify User";
-
-    div_users.appendChild(title_Modify_User);
-
-    var Modify_User_idCard = document.createElement("select");
-    Modify_User_idCard.id = "Modify_User_idCard";
-    Modify_User_idCard.placeholder = "ID Card";
-
-    var Modify_idCard_Default = document.createElement("option");
-    Modify_idCard_Default.value = "0";
-    Modify_idCard_Default.innerText = "ID Card"
-    Modify_idCard_Default.id = "0";
-    Modify_User_idCard.appendChild(Modify_idCard_Default);
-
-    socket.send("User;getUser");
-    
-    var Modify_User_mail = document.createElement("input");
-    Modify_User_mail.type = "mail";
-    Modify_User_mail.id = "Modify_User_mail";
-    Modify_User_mail.placeholder = "Mail la providence";
-
-    var Modify_User_password = document.createElement("input");
-    Modify_User_password.type = "text";
-    Modify_User_password.id = "Modify_User_password";
-    Modify_User_password.placeholder = "Mot de passe";
-
-    var Modify_User_isAdmin = document.createElement("select");
-    Modify_User_isAdmin.id = "Modify_User_isAdmin";
-
-    var Modify_User_isAdmin_0 = document.createElement("option");
-    Modify_User_isAdmin_0.value = "0";
-    Modify_User_isAdmin_0.innerText = "No Admin";
-
-    var Modify_User_isAdmin_1 = document.createElement("option");
-    Modify_User_isAdmin_1.value = "1";
-    Modify_User_isAdmin_1.innerText = "Admin";
-
-    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_0);
-    Modify_User_isAdmin.appendChild(Modify_User_isAdmin_1);
-
-    var Modify_User_Submit = document.createElement("input");
-    Modify_User_Submit.id = "Modify_User_Submit";
-    Modify_User_Submit.type = "button";
-    Modify_User_Submit.value = "Modify User";
-
-    var Delete_User_Submit = document.createElement("input");
-    Delete_User_Submit.id = "Delete_User_Submit";
-    Delete_User_Submit.type = "button";
-    Delete_User_Submit.value = "Delete User";
-    
-    div_users.appendChild(Modify_User_idCard);
-    div_users.appendChild(Modify_User_mail);
-    div_users.appendChild(Modify_User_password);
-    div_users.appendChild(Modify_User_isAdmin);
-    div_users.appendChild(Modify_User_Submit);
-    div_users.appendChild(Delete_User_Submit);
-
-
-    // Modify User
-    document.getElementById("Modify_User_Submit").
-    addEventListener('click', function()
-    {
-        var test = document.getElementById('Modify_User_idCard').selectedIndex - 1;
-        if (test != -1) {
-            if((Modify_User_mail.value != "") && (Modify_User_password.value != "")){
-                var idCardSelected = document.getElementById('Modify_User_idCard').selectedIndex - 1
-                var message = "User;updateUser;" + usersIDCard[idCardSelected] + ";"  + Modify_User_mail.value + ";" + Modify_User_password.value + ";" + Modify_User_isAdmin.selectedIndex;
-                socket.send(message);
-            }
-            
-        }
-    });
-
-    // Delete User
-    document.getElementById("Delete_User_Submit").
-    addEventListener('click', function()
-    {
-        var e = document.getElementById("Modify_User_idCard");
-        var result = e.options[e.selectedIndex].id;
-        var message = "User;deleteUser;" + usersIDCard[result];
-        socket.send(message);
-    });
-
-    // Choose different id Card to generate other fields
-    document.getElementById("Modify_User_idCard").
-    addEventListener('change', function()
-    {
-        var selectIndex = document.getElementById('Modify_User_idCard').selectedIndex - 1;
-        if(selectIndex != -1){
-            Modify_User_mail.value = usersMail[selectIndex];
-            Modify_User_password.value = usersPassword[selectIndex];
-            Modify_User_isAdmin.selectedIndex = selectIndex;
-        }
-        else{
-            Modify_User_mail.value = "";
-            Modify_User_password.value = "";
-        }
-
-    });
 }
