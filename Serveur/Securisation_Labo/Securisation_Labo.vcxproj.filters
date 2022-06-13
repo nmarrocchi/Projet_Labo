@@ -112,6 +112,12 @@
     <ClCompile Include="Operation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SendRFIDUserOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SendAddHistoOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mail.h">
@@ -202,6 +208,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConfigData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SendRFIDUserOperation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SendAddHistoOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

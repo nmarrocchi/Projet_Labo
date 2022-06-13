@@ -21,7 +21,6 @@ class webServer : public QObject {
 
 		QWebSocketServer *webSocketServer;
 		QWebSocket * webSocket;
-		QList<QWebSocket*> wsclients;
 		SystemData systemState;
 		QMutex systemDataMutex;
 
@@ -30,6 +29,9 @@ class webServer : public QObject {
 		QMutex operationMutex;
 
 		QTimer operationTimer;
+
+public:
+	QList<QWebSocket*> wsclients;
 
 private:
 	static webServer * instance;

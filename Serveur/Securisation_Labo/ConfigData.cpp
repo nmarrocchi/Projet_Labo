@@ -23,7 +23,8 @@ ConfigData::ConfigData()
 	QStringList list = settings->allKeys();
 
 	if (!settings->contains("WebSocket/port") || !settings->contains("Database/hostname") || !settings->contains("Database/username") 
-		|| !settings->contains("Database/password") || !settings->contains("Database/database"))
+		|| !settings->contains("Database/password") || !settings->contains("Database/database") || !settings->contains("TimeSlot/coursStartTime")
+		|| !settings->contains("TimeSlot/coursEndTime"))
 	{
 		settings->beginGroup("WebSocket");
 		settings->setValue("port", "2569");
@@ -37,13 +38,21 @@ ConfigData::ConfigData()
 		settings->setValue("database", "labotest");
 		settings->endGroup();
 		settings->sync();
+
+		settings->beginGroup("TimeSlot");
+		settings->setValue("coursStartTime", "06:00:00");
+		settings->setValue("coursEndTime", "23:00:00");
+		settings->endGroup();
+		settings->sync();
 	}
 
-	this->port		= settings->value("WebSocket/port", "config").toInt();
-	this->hostname	= settings->value("Database/hostname", "config").toString();
-	this->username	= settings->value("Database/username", "config").toString();
-	this->password	= settings->value("Database/password", "config").toString();
-	this->database	= settings->value("Database/database", "config").toString();
+	this->port				= settings->value("WebSocket/port", "config").toInt();
+	this->hostname			= settings->value("Database/hostname", "config").toString();
+	this->username			= settings->value("Database/username", "config").toString();
+	this->password			= settings->value("Database/password", "config").toString();
+	this->database			= settings->value("Database/database", "config").toString();
+	this->coursStartTime	= settings->value("TimeSlot/coursStartTime", "config").toString();
+	this->coursEndTime		= settings->value("TimeSlot/coursEndTime", "config").toString();
 }
 
 /* Return port value on config.ini file */
@@ -74,4 +83,14 @@ QString ConfigData::getPassword()
 QString ConfigData::getDatabase()
 {
 	return database;
+}
+
+QString ConfigData::getCoursStartTime()
+{
+	return coursStartTime;
+}
+
+QString ConfigData::getCoursEndTime()
+{
+	return coursEndTime;
 }

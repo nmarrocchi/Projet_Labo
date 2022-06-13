@@ -22,7 +22,7 @@ void CheckUserCredentialsOperation::run()
 		result = query.value(0).toInt();
 
 		// Verification if user is an administrator in database
-		query.exec("SELECT `isAdmin` FROM `user` WHERE `mail`='" + mail + "' , `password`='" + password + "'");
+		query.exec("SELECT `isAdmin` FROM `user` WHERE `mail`='" + mail + "' AND `password`='" + password + "'");
 		if (query.next()) 
 		{
 			isAdmin = query.value(0).toInt();

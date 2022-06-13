@@ -12,6 +12,9 @@ private:
 	QString password;
 	QString database;
 
+	QString coursStartTime;
+	QString coursEndTime;
+
 public:
 	// - Create ConfigData Instance
 	static ConfigData * getInstance();
@@ -33,6 +36,12 @@ public:
 
 	/* Return database value on config.ini file */
 	QString getDatabase();
+
+	/* Return start time cours value on config.ini file */
+	QString getCoursStartTime();
+
+	/* Return end time cours value on config.ini file */
+	QString getCoursEndTime();
 
 	static ConfigData * instance;
 };
