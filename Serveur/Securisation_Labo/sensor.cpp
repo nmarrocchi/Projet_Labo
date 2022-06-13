@@ -31,7 +31,7 @@ QList<bool> sensor::selectStatut()
 			// Verification with preceding state
 			if (lastState[i] != actualState[i])
 			{
-				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], i));
+				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], 1, i));
 			}
 		}
 		else

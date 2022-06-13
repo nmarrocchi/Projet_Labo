@@ -31,7 +31,7 @@ QList<bool> continuity::selectStatut()
 			// Verification with preceding state
 			if (lastState[i] != actualState[i])
 			{
-				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], i));
+				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], 0, i));
 			}
 		}
 		else

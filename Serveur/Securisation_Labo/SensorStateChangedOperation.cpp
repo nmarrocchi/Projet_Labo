@@ -1,12 +1,13 @@
 #include "SensorStateChangedOperation.h"
 
 /* Constructor SensorStateChangedOperation class */
-SensorStateChangedOperation::SensorStateChangedOperation(security * sensor, bool sensorState, int sensorByte)
+SensorStateChangedOperation::SensorStateChangedOperation(security * sensor, bool sensorState, int sensorByte, int room)
 	: Operation()
 {
 	this->sensor = sensor;
 	this->sensorState = sensorState;
 	this->sensorByte = sensorByte;
+	this->room = room;
 }
 
 /* Run SensorStateChangedOperation thread */
@@ -25,9 +26,9 @@ void SensorStateChangedOperation::run()
 		}
 
 		// Insert values on historical table in database
-		sensor->insertValue(sensorState, sensorByte);
+		sensor->insertValue(sensorState, room);
 
-		//mail::sendMail();
+		database::getInstance()->addOperation(new mail(sensorByte, room));
 	}
 }
 

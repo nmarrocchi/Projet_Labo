@@ -32,7 +32,7 @@ QList<bool> presence::selectStatut()
 			// Verification with preceding state
 			if (lastState[i] != actualState[i])
 			{
-				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], i));
+				database::getInstance()->addOperation(new SensorStateChangedOperation(this, actualState[i], 3, i));
 			}
 		}
 		else
