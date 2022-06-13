@@ -37,7 +37,7 @@ void securitySysteme::run()
 	card = new PCI_7248_Card();
 	database * db = database::getInstance();
 
-	timeSlot::getInstance(db);
+	timeSlot::getInstance(NULL, NULL);
 
 	secDevices.push_back(new continuity(card, db));
 	secDevices.push_back(new sensor(card, db));

@@ -8,11 +8,11 @@ QString timeSlot::access	= NULL;
 timeSlot * timeSlot::instance = NULL;
 
 /* Create timeSlot instance */
-timeSlot * timeSlot::getInstance(database * db)
+timeSlot * timeSlot::getInstance(QString startTime, QString endTime)
 {
 	if (instance == NULL)
 	{
-		timeSlot * timeslot = new timeSlot(db);
+		timeSlot * timeslot = new timeSlot(startTime, endTime);
 		instance = timeslot;
 	}
 
@@ -20,9 +20,11 @@ timeSlot * timeSlot::getInstance(database * db)
 }
 
 /* Constructor */
-timeSlot::timeSlot(database * db)
+timeSlot::timeSlot(QString startTime, QString endTime)
 {
 	this->db = db;
+	this->startTime = startTime;
+	this->endTime = endTime;
 
 	initTimeSlot();
 }
@@ -40,7 +42,7 @@ bool timeSlot::validateTime()
 
 	if (dayNow != "samedi" || dayNow != "dimanche")
 	{
-		if (timeNow >= coursStartTime && timeNow <= coursEndTime)
+		if (timeNow >= startTime && timeNow <= endTime)
 		{
 			return true;
 		}

@@ -1,27 +1,23 @@
 #pragma once
 
 #include "database.h"
+#include "ConfigData.h"
 
 #include <qdatetime.h>
 #include <qdebug.h>
 
 class timeSlot
 {
-
-/* Define time */
-#define coursStartTime		"06:00:00"
-#define coursEndTime		"22:30:00"
-
 public:
 
 	/* Constructor */
-	timeSlot(database * db);
+	timeSlot(QString startTime, QString endTime);
 
 	/* Destructor */
 	~timeSlot();
 
 	/* Create timeSlot instance */
-	static timeSlot * getInstance(database * db);
+	static timeSlot * getInstance(QString startTime, QString endTime);
 
 	/* Validate the actual time slot */
 	static bool validateTime();
@@ -34,9 +30,10 @@ public:
 
 private:
 
+	static QString access;
+
 	static QString startTime;
 	static QString endTime;
-	static QString access;
 
 	/* Set securitySystem Instance to NULL */
 	static timeSlot * instance;
