@@ -210,10 +210,10 @@ font-weight: bold;
     }
 }
 
-.false, .OFF {
+#false, .OFF {
     color: red;
 }
 
-.true, .ON {
+#true, .ON {
     color: green;
 }
