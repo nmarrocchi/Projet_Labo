@@ -1,8 +1,6 @@
 #nav{
     background-color: #2f3336;
     height: 5vh;
-    width: 100%;
-    flex-direction: row;
     text-align: right;
   }
 
@@ -37,4 +35,16 @@
   display: block;
   position: absolute;
   margin-top: 0.5vh;
+}
+
+/* ----- Responsive max-width screen : 600px ----- */
+@media screen and (max-width: 600px) {
+  #nav{
+    text-align: center;
+  }
+
+  .table_sensor td , .table_event_sensor td, .table_event_users td{
+    width: fit-content;
+    padding: 1vh 1vw;
+}
 }

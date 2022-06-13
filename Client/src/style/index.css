@@ -7,6 +7,10 @@ html{
     background-image: url(../img/Background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    width: 100vw;
+    min-height: 100vh;
+    height: max-content;
+    font-size: medium;
 }
 
 body{
@@ -19,65 +23,6 @@ a:visited {color: white; text-decoration: none;}
 a:hover {color: white; text-decoration: underline;}
 a:active {color: white; text-decoration: none;}
 
-
-/* Login Form */
-#login_form{
-    position: relative;
-    border: solid black;
-    border-width: 0px 1px 1px 0px;
-    box-shadow: #0000008f 7px 9px;
-    border-radius: 25px;
-    width: 25vw;
-    margin: 10vh auto;
-    padding-top: 2vh;
-    text-align: center;
-    background-color: #00000013;
-}
-
-#login_form h1{
-    text-align: center;
-    color: #747474;
-    font-family: monospace;
-    font-size: xxx-large;
-    margin: 2vh auto;
-    text-shadow: rgb(0, 0, 0) -2px 2px;
-}
-
-#LoginError{
-    margin: 1vh auto;
-    color: red;
-    font-size: larger;
-    font-family: system-ui;
-}
-
-
-#login_form input{
-    width: 70%;
-    margin: 2vh 0.5vw;
-    padding: 2vh 1vw;
-    border: solid white 1px;
-    border-radius: 25px;
-    background-color: rgba(53, 53, 53, 0.863);
-    color: white;
-    font-size: medium;
-    text-align: center;
-}
-
-#login_form input::placeholder{
-    color: white;
-}
-
-#login_form input[type='button']{
-    margin: 2vh auto 3vh auto;
-    background-color: #2e2727cb;
-    color: white;
-    border: solid black 1px;
-    font-weight: bold;
-}
-
-#login_form input[type='button']:hover{
-    background-color: #3a3535cb;
-}
 
 #input_sensor, #input_histo, #input_settings, #input_users{
     display: inline-block;
@@ -114,6 +59,7 @@ a:active {color: white; text-decoration: none;}
     background-color: #3a3535cb;
 }
 
+
 /* Sensor State Supervision & Historical Table */
 .div_sensor, .div_event, #div_settings{
     margin: 2vh auto;
@@ -127,15 +73,14 @@ thead{
 
 .table_sensor, .table_event_sensor, .table_event_users{
     border-collapse: collapse;
-    display: block;
+    display: inline-block;
     overflow-y: scroll;
-    height: 50vh;
     max-height: 50vh;
 }
 
 .table_event_sensor, .table_event_users{
     display: inline-block;
-    margin: 0vh 2vw;
+    margin: 2vh 2vw;
 }
 
 .div_sensor td, .div_event td{
@@ -191,6 +136,27 @@ font-weight: bold;
     #login_form{
         width: 50vw;
     }
+
+    .table_sensor, .table_event_sensor, .table_event_users{
+        display: block;
+        width: max-content;
+        max-width: 100vw;
+        margin: 5vh auto;
+    }
+
+    .table_event_sensor td, .table_event_users{
+        margin: 0vh 0.5vw;
+        padding: 0.5vh 0.5vw;
+    }
+
+    #div_sensor td{
+        padding: 1vh 1vw;
+    }
+
+    #table_alarm{
+        width: 80vw;
+    }
+
 }
 
 
@@ -199,6 +165,7 @@ font-weight: bold;
 
 /* ----- Responsive max-width screen : 600px ----- */
 @media screen and (max-width: 600px) {
+
     #login_form{
         width: 80vw;
     }
@@ -208,6 +175,26 @@ font-weight: bold;
         margin: 1vh 0.5vw;
         padding: 2vh 3vw;
     }
+    #div_sensor td{
+        padding: 2vh 2vw;
+    }
+
+    .table_event_sensor, .table_event_users{
+        display: block;
+        width: max-content;
+        width: 100vw;
+        margin: 5vh auto;
+    }
+
+    .table_event_sensor td, .table_event_users td{
+        margin: 0vh 0.5vw;
+        padding: 0.5vh 0.5vw;
+    }
+
+    #table_alarm{
+        width: 80vw;
+    }
+
 }
 
 #false, .OFF {
