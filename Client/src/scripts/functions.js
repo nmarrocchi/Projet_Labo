@@ -40,7 +40,12 @@ socket.onmessage = function(event)
         case 'Auth':
             if(message[1] == 1)
             {
-                supervision();
+                if (message[2] == 1) {
+                    supervision();
+                }
+                else{
+                    document.getElementById('LoginError').innerText = "Ce compte ne possède pas les droits d'accès, veuillez contacter un administrateur pour vous connecter";
+                }
             }
             else {
                 document.getElementById('LoginError').innerText = "Les identifiants sont incorrects"
@@ -61,6 +66,7 @@ socket.onmessage = function(event)
 
         // Protocol historical Sensor event
         case 'HistoSystem':
+            console.log('passage');
             if(message[1] == "Sensor"){
                 getHistoSensorValue(event.data);
             }
@@ -73,12 +79,43 @@ socket.onmessage = function(event)
         case 'getUser':
             SetAllIdCard(event.data);
             break;
+
+        case 'AddHisto':
+            if (message[1] == 'Sensor') {
+                addHistoSensorValue(event.data);
+            }
+            else{
+                addHistoPassageValue(event.data);
+            }
+            break;
             
         default:
             break;
 
     }
 };
+
+// Insert data in Sensor Histo
+function addHistoSensorValue(message){
+    const value = message.split(';');
+    var SensorHisto = document.getElementById('table_event_sensor');
+    var newRow = SensorHisto.insertRow(0);
+
+    for (let i = 0; i < value.length - 2; i++) {
+        newRow.insertCell(i).innerText = value[i+2]; 
+    }
+}
+
+// Insert data in Passage Histo
+function addHistoPassageValue(message){
+    const value = message.split(';');
+    var PassageHisto = document.getElementById('table_event_users');
+    var newRow = PassageHisto.insertRow(0);
+
+    for (let i = 0; i < value.length - 2; i++) {
+        newRow.insertCell(i).innerText = value[i+2]; 
+    }
+}
 
 // Function user connection 
 function connexion()
