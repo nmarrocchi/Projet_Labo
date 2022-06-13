@@ -3,7 +3,7 @@
 const socket = new WebSocket("ws://192.168.65.31:2569");
 
 var content = document.getElementById('content');
-var tab, userMail, index = 0;
+var tab, userMail, index = 0, sensorTabCreated = 0;
 let usersIDCard = [], usersMail = [], usersPassword = [], usersIsAdmin = [];
 
 var room = ['', 'SN1', 'SN2', 'PHY'];
@@ -50,7 +50,13 @@ socket.onmessage = function(event)
 
         // Protocol state sensor value    
         case 'State':
-            getStateValue(event.data);
+            if (sensorTabCreated == 0) {
+                CreateStateTab(event.data);
+            }
+            else{
+                updateStateTab(event.data);
+            }
+            
             break;
 
         // Protocol historical Sensor event
@@ -579,8 +585,7 @@ function createAlarmPanel(tableBody){
                         activeButton.addEventListener('click', function()
                         {
                             
-                            var message = "Alarm_" + Panel_tr[4] + "_" + this.value;
-                        console.log(message);    
+                            var message = "Alarm_" + Panel_tr[4] + "_" + this.value;   
                         socket.send(message);
                         });
     
@@ -733,11 +738,13 @@ function getAllSensorState()
 }
 
 // Get sensor state value 
-function getStateValue(message)
+function CreateStateTab(message)
 {
 
     const tableBody = document.getElementById( "table_sensor" );
     const value = message.split(';');
+
+    let SensorActualState = [];
 
     tableBody.innerHTML = "";
 
@@ -745,30 +752,81 @@ function getStateValue(message)
         const tr = document.createElement( "tr" );
             for( i = 1; i <= 4; i++ )
             {
+                const td = document.createElement( "td" );
+                const span = document.createElement( "span" );
+                
+                if ((value[i + j * 4] == "true") || (value[i + j * 4] == "false")) {
+                    span.className = "SensorStateActualValue";
 
-                const td = document.createElement( "td" )
-                const span = document.createElement( "span" )
-                span.innerText = value[ i + j * 4 ]
-                span.classList.add( `${value[ i + j * 4 ]}` );
+                    if(SensorActualState[i+j*4] != value[i+j*4]){
+                        SensorActualState[i+j*4] = value[i+j*4];
+                    }
 
-                td.appendChild( span )
-                tr.appendChild( td )
+                    span.id = SensorActualState[i+j*4];
+                    span.innerText = SensorActualState[i+j*4];
+                }
+                else{
+                    span.innerText = value[ i + j * 4 ];
+                }
+
+                td.appendChild( span );
+                tr.appendChild( td );
 
             }
             tableBody.appendChild(tr);
     }
 
-    /*
+    sensorTabCreated = 1;
+    
     // Send value in the server
     setInterval(
         function () 
         {
-            tbody.remove();
-            socket.send("State");
-            tbody = document.createElement('tbody');
-            table.appendChild(tbody);
+            socket.send('State');
         }, 1000);
-    */
+    
+}
+
+// Update sensor Tab values
+function updateStateTab(message){
+    const newMessage = message.split(';');
+    let newSensorvalues = [];
+    let spans = document.getElementsByClassName("SensorStateActualValue");
+
+    // Create new tab with receive message but only with true / false state
+    for (let i = 0; i < newMessage.length; i++) {
+        if ((newMessage[i] == 'true') || (newMessage[i] == 'false')) {
+            newSensorvalues.push(newMessage[i]);
+        }
+    }
+
+    for (let i = 0; i < spans.length; i++) {
+        if (spans[i].textContent != newSensorvalues[i]) {
+            spans[i].id = newSensorvalues[i];
+            spans[i].textContent = newSensorvalues[i];
+        }
+        
+    }
+
+}
+
+// unused
+function updateStateValue(){
+    let spanArray = document.getElementsByClassName('SensorStateActualValue');
+                
+                if ((value[i + j * 4] == "true") || (value[i + j * 4] == "false")) {
+                    span.className = "SensorStateActualValue";
+
+                    if(SensorActualState[i+j*4] != value[i+j*4]){
+                        SensorActualState[i+j*4] = value[i+j*4];
+                    }
+                    spanArray[i+j*4].id = SensorActualState[i+j*4];
+                    spanArray[i+j*4].innerText = SensorActualState[i+j*4];
+                }
+                else{
+                    span.innerText = value[ i + j * 4 ];
+                }
+
 }
 
 function SetAllIdCard(message){
@@ -942,8 +1000,6 @@ function form_ModifyUser(div_users){
     Modify_User_idCard.appendChild(Modify_idCard_Default);
 
     socket.send("User;getUser");
-
-    console.log(usersIDCard);
     
     var Modify_User_mail = document.createElement("input");
     Modify_User_mail.type = "mail";
@@ -997,7 +1053,6 @@ function form_ModifyUser(div_users){
                 var idCardSelected = document.getElementById('Modify_User_idCard').selectedIndex - 1
                 var message = "User;updateUser;" + usersIDCard[idCardSelected] + ";"  + Modify_User_mail.value + ";" + Modify_User_password.value + ";" + Modify_User_isAdmin.selectedIndex;
                 socket.send(message);
-                console.log(message);
             }
             
         }
